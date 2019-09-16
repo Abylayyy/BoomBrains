@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Boom Brains</string>
+
+    <string name="AppLanguageText">Қаз</string>
+    <string name="ChangeLanguage">Тілді ауыстыру</string>
+
+    <string name="PlayBtn">Ойнау</string>
+    <string name="Pause">Кідіру</string>
+    <string name="YourRecord">Сіздің жетістігіңіз</string>
+    <string name="HowToPlay">Қалай ойнайды?</string>
+    <string name="Task">Тапсырма</string>
+    <string name="Continue">Жалғастыру</string>
+    <string name="Restart">Басынан</string>
+    <string name="Sound">Дыбыс</string>
+    <string name="Mute">Дыбыссыз</string>
+    <string name="Cancel">Бас тарту</string>
+
+    <string name="YourScore">Сіздің балыңыз: </string>
+    <string name="Record">Рекорд: </string>
+    <string name="Score">Балл: </string>
+    <string name="Level">Деңгей: </string>
+    <string name="PreviousRecord">Алдынғы рекорд: </string>
+    <string name="Mistakes">Қателер: </string>
+    <string name="Point">балл</string>
+    <string name="Rules">Ереже</string>
+    <string name="Aim">Мақсат:</string>
+    <string name="Ok">Келесі</string>
+
+
+    <string name="Next">Келесі</string>
+    <string name="Again">Қайтадан</string>
+    <string name="Exit">Шығу</string>
+    <string name="Finish">Бітіру</string>
+
+    <string name="CongratulationNewRecord">Құттықтаймыз! \n Сіз рекорд орнаттыңыз!</string>
+    <string name="GameEnded">Ойын аяқталды!</string>
+
+    <string name="Attention">Назар аудару</string>
+    <string name="AttentionSchulteTable">Шульте кестесі</string>
+    <string name="SchulteNextNumber">Келесі сан: </string>
+
+
+    <string name="AttentionColorfulFish">Түсті балықтар</string>
+    <string name="AttentionFigure">Санды тап</string>
+
+
+
+    <string name="Memory">Есте сақта</string>
+    <string name="MemoryRemNum">Санды жатта</string>
+
+    <string name="YesNoTimeOutAnswer">Time out</string>
+
+    <string name="SchulteInfo">Шульте кестесі - назарыңызды кестінің ортасына қоя отырып, барлық сандарды өсу ретімен табуыңыз керек.</string>
+    <string name="RemNumInfo">Санды жатта - есте сақтау қабілетті сандарды қайталау арқылы, жаттықтыратын ойын.</string>
+    <string name="FindNumberInfo">Санды тап - жоғарыда көрсетілген санды, төменде көрсетілген тізімдердің ішінен, барынша жылдамырақ тап.</string>
+</resources>

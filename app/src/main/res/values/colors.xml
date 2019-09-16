@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Main colors -->
+    <color name="colorPrimary">#7272FF</color>
+    <color name="colorPrimaryDark">#7272FF</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <!-- Type colors -->
+    <color name="vnimanieColor">#EB9500</color>
+    <color name="pamiatColor">#603A9E</color>
+    <color name="myshLenieColor">#1C7BF4</color>
+    <color name="lovkostColor">#05A524</color>
+
+    <!-- Bottom layer colors -->
+    <color name="bottomShulte">#E8AE00</color>
+    <color name="bottomZapomni">#9554FF</color>
+    <color name="bottomLovkost">#47D71A</color>
+
+    <!-- Kak igrat teksts -->
+    <color name="kakIgratShulte">#FE6100</color>
+    <color name="kakIgratZapomni">#8434FF</color>
+    <color name="kakIgratDaNet">#1F5091</color>
+    <color name="kakIgratLovkost">#36B917</color>
+
+    <!-- Pause backgrounds -->
+    <color name="pauseShulte">#6D480F</color>
+    <color name="pauseZapomni">#433558</color>
+    <color name="pauseDaNet">#003477</color>
+    <color name="pauseLovkost">#008000</color>
+
+    <!-- Top action bar colors -->
+    <color name="topShulte">#F1B300</color>
+    <color name="topSlovo">#903BFF</color>
+    <color name="topDaNet">#297FEE</color>
+    <color name="topLovkost">#36BB17</color>
+
+    <!-- Under action bar colors -->
+    <color name="underShulte">#EB9700</color>
+    <color name="underSlovo">#9D3EFF</color>
+    <color name="underDaNet">#498CF4</color>
+    <color name="underLovkost">#51CA0E</color>
+
+    <!-- Default colors -->
+    <color name="colorWhite">#ffffff</color>
+    <color name="howtoplay">#686868</color>
+    <color name="daColor">#80004FC7</color>
+    <color name="netColor">#003477</color>
+
+
+    <color name="viewColor">#80FFFFFF</color>
+
+    <!-- opasity colors -->
+    <color name="shulteOps">#66FFFFFF</color>
+
+
+    <!-- Result colors -->
+    <color name="resultShulte">#977C33</color>
+    <color name="resultZapomni">#7D5A99</color>
+    <color name="resultDaNet">#355D91</color>
+    <color name="resultLovkost">#36BB17</color>
+
+    <color name="shulteErrorColor">#80B90000</color>
+    <color name="shulteSuccessColor">#8000C74F</color>
+    <color name="shulteSuccess">#8000C74F</color>
+
+</resources>

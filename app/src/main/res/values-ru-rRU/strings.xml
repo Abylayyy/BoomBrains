@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Boom Brains</string>
+
+    <string name="AppLanguageText">Рус</string>
+    <string name="ChangeLanguage">Сменить язык</string>
+
+    <string name="PlayBtn">Играть</string>
+    <string name="Pause">Пауза</string>
+    <string name="YourRecord">Твой рекорд</string>
+    <string name="HowToPlay">Как играть?</string>
+    <string name="Task">Задание</string>
+    <string name="Continue">Вернуться к игре</string>
+    <string name="Restart">Рестарт</string>
+    <string name="Sound">Звук</string>
+    <string name="Mute">Без звука</string>
+    <string name="Cancel">Отмена</string>
+
+    <string name="YourScore">Твой счет:</string>
+    <string name="Record">Рекорд:</string>
+    <string name="Score">Очки:</string>
+    <string name="Level">Уровень:</string>
+    <string name="PreviousRecord">Предыдущий рекорд:</string>
+    <string name="Mistakes">Ошибок:</string>
+    <string name="Point">очки</string>
+    <string name="Rules">Правила</string>
+    <string name="Aim">Цель:</string>
+    <string name="Ok">Дальше</string>
+
+    <string name="Next">Далее</string>
+    <string name="Again">Заново</string>
+    <string name="Exit">Выйти</string>
+    <string name="Finish">Закончить</string>
+
+    <string name="CongratulationNewRecord">Поздравляем! \n Ты обновил рекорд!</string>
+    <string name="GameEnded">Игра закончилась</string>
+
+    <string name="Attention">Внимание</string>
+    <string name="AttentionSchulteTable">Таблица Шульте</string>
+    <string name="SchulteNextNumber">Следующая цифра:</string>
+
+    <string name="AttentionColorfulFish">Красочные рыбы</string>
+    <string name="AttentionFigure">Найди цифру</string>
+
+    <string name="Memory">Память</string>
+    <string name="MemoryRemNum">Запомни число</string>
+
+    <string name="YesNoTimeOutAnswer">Time out</string>
+
+    <string name="SchulteInfo">Таблица Шульте  - нужно набирать цифры по возрастанию</string>
+    <string name="RemNumInfo">Запомни число - показывается цифра и через 2 секунды исчезает. Нужно запомнить и повторить цифру набрав ее на клавиатуре.</string>
+    <string name="FindNumberInfo">Найди цифру - должен найти указанную цифру среди остальных как можно быстрее что бы за короткое время достичь большого результата.</string>
+</resources>
