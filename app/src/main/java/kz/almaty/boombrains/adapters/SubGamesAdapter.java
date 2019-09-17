@@ -2,7 +2,6 @@ package kz.almaty.boombrains.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -41,6 +41,9 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
 
         holder.nameTxt.setText(types.getName());
         holder.gameImage.setImageResource(types.getImage());
+        holder.inLayout.setBackgroundResource(types.getIn());
+        holder.outLayout.setBackgroundResource(types.getOut());
+        holder.recordTxt.setText(types.getRecord());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, GamesStartActivity.class);
@@ -49,19 +52,6 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
-
-        setColors(holder.nameTxt, position);
-    }
-
-    private void setColors(TextView view, int index) {
-        switch (index) {
-            case 0:
-                view.setTextColor(Color.parseColor("#603A9E"));
-                break;
-            case 1: case 2:
-                view.setTextColor(Color.parseColor("#EB9500"));
-                break;
-        }
     }
 
     @Override
@@ -71,14 +61,18 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
 
     class MySubGamesViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTxt;
+        TextView nameTxt, recordTxt;
         ImageView gameImage;
+        ConstraintLayout outLayout, inLayout;
 
         MySubGamesViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nameTxt = itemView.findViewById(R.id.gameName);
-            gameImage = itemView.findViewById(R.id.gameImage);
+            gameImage = itemView.findViewById(R.id.gameImg);
+            recordTxt = itemView.findViewById(R.id.gameRecord);
+            outLayout = itemView.findViewById(R.id.outLayout);
+            inLayout = itemView.findViewById(R.id.inLayout);
         }
     }
 }

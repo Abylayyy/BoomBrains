@@ -7,14 +7,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.game_pages.equation.EquationActivity;
 import kz.almaty.boombrains.game_pages.find_number.FindNumberActivity;
+import kz.almaty.boombrains.game_pages.number_znaki.NumberZnakiActivity;
 import kz.almaty.boombrains.game_pages.shulte_page.ShulteActivity;
 import kz.almaty.boombrains.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
@@ -22,10 +22,8 @@ import kz.almaty.boombrains.helpers.SharedPrefManager;
 public class GamesStartActivity extends AppCompatActivity {
 
     @BindView(R.id.name_of_game) TextView nameOfGame;
-    @BindView(R.id.type_of_game) TextView typeOfGame;
     @BindView(R.id.gameRecordTxt) TextView gameRecord;
     @BindView(R.id.playBtn) Button playBtn;
-
     @BindView(R.id.game_image) ImageView gameImage;
     @BindView(R.id.startBackConst) ConstraintLayout backConst;
     @BindView(R.id.kubok_grad_id) ConstraintLayout recordLayout;
@@ -46,7 +44,6 @@ public class GamesStartActivity extends AppCompatActivity {
         position = getIntent().getIntExtra("position", 0);
 
         nameOfGame.setText(gameName);
-        typeOfGame.setText(setTypeOfGame(position));
 
         setBackgrounds(position);
 
@@ -62,20 +59,6 @@ public class GamesStartActivity extends AppCompatActivity {
         playBtn.setOnClickListener(v -> setGames(position));
     }
 
-    private String setTypeOfGame(int type) {
-        String t = "";
-        switch (type) {
-            case 0:
-                t = getString(R.string.Memory);
-                break;
-
-            case 1: case 2:
-                t = getString(R.string.Attention);
-                break;
-        }
-        return t;
-    }
-
     private void setBackgrounds(int position) {
         switch (position) {
             case 0: {
@@ -83,11 +66,19 @@ public class GamesStartActivity extends AppCompatActivity {
                 break;
             }
             case 1: {
-                setFindBackgrounds();
+                setShulteBackgrounds();
                 break;
             }
             case 2: {
-                setShulteBackgrounds();
+                setFindBackgrounds();
+                break;
+            }
+            case 3: {
+                setNumZnakiBackgrounds();
+                break;
+            }
+            case 4: {
+                setEquationBackgrounds();
                 break;
             }
         }
@@ -100,11 +91,19 @@ public class GamesStartActivity extends AppCompatActivity {
                 break;
             }
             case 1: {
-                startIntent(new Intent(this, FindNumberActivity.class), position);
+                startIntent(new Intent(this, ShulteActivity.class), position);
                 break;
             }
             case 2: {
-                startIntent(new Intent(this, ShulteActivity.class), position);
+                startIntent(new Intent(this, FindNumberActivity.class), position);
+                break;
+            }
+            case 3: {
+                startIntent(new Intent(this, NumberZnakiActivity.class), position);
+                break;
+            }
+            case 4: {
+                startIntent(new Intent(this, EquationActivity.class), position);
                 break;
             }
         }
@@ -124,19 +123,29 @@ public class GamesStartActivity extends AppCompatActivity {
         backConst.setBackgroundResource(back);
     }
 
+    private void setEquationBackgrounds() {
+        setBackgroundsByType(R.drawable.equation_top_icon, R.color.equationColor, R.drawable.equation_kubok_grad, R.color.bottomEquation, R.drawable.equation_back);
+        setRecords(SharedPrefManager.getEquationRecord(getApplication()));
+    }
+
     private void setShulteBackgrounds() {
         setBackgroundsByType(R.drawable.shult_top_icon, R.color.vnimanieColor, R.drawable.shulte_kubok_grad, R.color.bottomShulte, R.drawable.shulte_back);
         setRecords(SharedPrefManager.getShulteRecord(getApplication()));
     }
 
     private void setFindBackgrounds() {
-        setBackgroundsByType(R.drawable.find_top_back, R.color.vnimanieColor, R.drawable.shulte_kubok_grad, R.color.bottomShulte, R.drawable.shulte_back);
+        setBackgroundsByType(R.drawable.find_top_back, R.color.findColor, R.drawable.find_kubok_grad, R.color.bottomFind, R.drawable.find_back);
         setRecords(SharedPrefManager.getFindRecord(getApplication()));
     }
 
     private void setZapomniChisloBackgrounds() {
         setBackgroundsByType(R.drawable.zapomni_chislo_top_icon, R.color.pamiatColor, R.drawable.zapomni_kubok_grad, R.color.bottomZapomni, R.drawable.zapomni_slovo_back);
         setRecords(SharedPrefManager.getChisloRecord(getApplication()));
+    }
+
+    private void setNumZnakiBackgrounds() {
+        setBackgroundsByType(R.drawable.number_znaki_top_icon, R.color.numZnakiColor, R.drawable.number_znaki_kubok_grad, R.color.bottomNumZnak, R.drawable.number_znaki_back);
+        setRecords(SharedPrefManager.getNumZnakiRecord(getApplication()));
     }
 
     @SuppressLint("SetTextI18n")

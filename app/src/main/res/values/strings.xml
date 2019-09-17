@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Boom Brains</string>
 
-    <string name="AppLanguageText"> "En</string>
-    <string name="ChangeLanguage"> "Change language</string>
+    <string name="AppLanguageText">English</string>
+    <string name="ChangeLanguage">Language</string>
 
-    <string name="PlayBtn"> "Play</string>
+    <string name="PlayBtn">Play</string>
     <string name="Pause">Pause</string>
     <string name="YourRecord">Your record</string>
     <string name="HowToPlay">How to play?</string>
@@ -16,6 +16,9 @@
     <string name="Mute">Mute</string>
     <string name="Exit">Exit</string>
     <string name="Cancel">Cancel</string>
+    <string name="Settings">Settings</string>
+
+
 
     <string name="YourScore">Your score: </string>
     <string name="Score">Score: </string>
@@ -30,24 +33,26 @@
     <string name="Next">Next</string>
     <string name="Again">Again</string>
     <string name="Finish">Finish</string>
+    <string name="not_ready">This page is not available yet.</string>
+
 
     <string name="CongratulationNewRecord">Congratulations! \n You set a new record!</string>
     <string name="GameEnded">Game over!</string>
 
-    <string name="Attention">Attention</string>
     <string name="AttentionSchulteTable">Schulte Table</string>
     <string name="SchulteNextNumber">Next number: </string>
 
-    <string name="AttentionColorfulFish">Colorful fish</string>
     <string name="AttentionFigure">Find Number</string>
-
-
-    <string name="Memory">Memory</string>
     <string name="MemoryRemNum">Remember Number</string>
+    <string name="NumberZnaki">Calculation</string>
+    <string name="Equation">Equation</string>
 
     <string name="YesNoTimeOutAnswer">Time out</string>
 
     <string name="SchulteInfo">Schulte Table - is a game for your concentration and for your fast reading. You need to collect numbers in ascending order.</string>
     <string name="RemNumInfo">Remember Number - is a game for your memory.</string>
     <string name="FindNumberInfo">Find Number - find number on the display as much as it possible, to earn more money.</string>
+    <string name="NumberZnakiInfo">Calculation - solve the problem and find the answer among these numbers as quickly as possible in order to achieve a great result.</string>
+    <string name="EquationInfo">Equation - set the order of arithmetic operations from the list so that it matches the answer. You need to decide as quickly as possible in order to achieve a great result.</string>
+
 </resources>

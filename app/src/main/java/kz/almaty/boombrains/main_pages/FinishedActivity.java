@@ -13,7 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.game_pages.equation.EquationActivity;
 import kz.almaty.boombrains.game_pages.find_number.FindNumberActivity;
+import kz.almaty.boombrains.game_pages.number_znaki.NumberZnakiActivity;
 import kz.almaty.boombrains.game_pages.shulte_page.ShulteActivity;
 import kz.almaty.boombrains.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
@@ -45,9 +47,7 @@ public class FinishedActivity extends AppCompatActivity {
         setBtnColor(position);
         setBackgrounds(position);
 
-        zanovoBtn.setOnClickListener(v -> {
-            startActivities(position);
-        });
+        zanovoBtn.setOnClickListener(v -> startActivities(position));
 
         quitBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
@@ -63,11 +63,19 @@ public class FinishedActivity extends AppCompatActivity {
                 break;
             }
             case 1: {
-                finishAndStart(new Intent(this, FindNumberActivity.class), position);
+                finishAndStart(new Intent(this, ShulteActivity.class), position);
                 break;
             }
             case 2: {
-                finishAndStart(new Intent(this, ShulteActivity.class), position);
+                finishAndStart(new Intent(this, FindNumberActivity.class), position);
+                break;
+            }
+            case 3: {
+                finishAndStart(new Intent(this, NumberZnakiActivity.class), position);
+                break;
+            }
+            case 4: {
+                finishAndStart(new Intent(this, EquationActivity.class), position);
                 break;
             }
         }
@@ -87,18 +95,44 @@ public class FinishedActivity extends AppCompatActivity {
                 break;
             }
             case 1: {
-                setFindNumBackgrounds();
+                setShulteBackgrounds();
                 break;
             }
             case 2: {
-                setShulteBackgrounds();
+                setFindNumBackgrounds();
                 break;
+            }
+            case 3: {
+                setNumZnakiBackgrounds();
+                break;
+            }
+            case 4: {
+                setEquationBackgrounds();
             }
         }
     }
 
+    private void setEquationBackgrounds() {
+        parent.setBackgroundResource(R.drawable.equation_blur);
+        score = getIntent().getIntExtra("equationScore", 0);
+        error = getIntent().getIntExtra("equationErrors", 0);
+        String message = getIntent().getStringExtra("equationRecord");
+        if (message != null) {
+            successMessage.setText(message);
+            setMeasures(successImg, R.drawable.zapomni_new_record);
+            setAudio(R.raw.new_record);
+        } else {
+            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
+            setMeasures(successImg, R.drawable.zapomni_timed_out);
+            setAudio(R.raw.game_over);
+        }
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
+        setRecords(SharedPrefManager.getEquationRecord(getApplication()));
+    }
+
     private void setFindNumBackgrounds() {
-        parent.setBackgroundResource(R.drawable.shulte_blur);
+        parent.setBackgroundResource(R.drawable.find_blur);
         score = getIntent().getIntExtra("findScore", 0);
         error = getIntent().getIntExtra("findErrors", 0);
         String message = getIntent().getStringExtra("findRecord");
@@ -114,7 +148,7 @@ public class FinishedActivity extends AppCompatActivity {
         }
         scoreTxt.setText(getString(R.string.YourScore) + " " + score);
         errors.setText(getString(R.string.Mistakes) + " " + error);
-        recordTxt.setText(getString(R.string.Record) + " " + SharedPrefManager.getFindRecord(getApplication()));
+        setRecords(SharedPrefManager.getFindRecord(getApplication()));
     }
 
     private void setAudio(int raw) {
@@ -145,7 +179,7 @@ public class FinishedActivity extends AppCompatActivity {
         }
         scoreTxt.setText(getString(R.string.YourScore) + " " + score);
         errors.setText(getString(R.string.Mistakes) + " " + error);
-        recordTxt.setText(getString(R.string.Record) + " " + SharedPrefManager.getChisloRecord(getApplication()));
+        setRecords(SharedPrefManager.getChisloRecord(getApplication()));
     }
 
     private void setShulteBackgrounds() {
@@ -163,8 +197,27 @@ public class FinishedActivity extends AppCompatActivity {
         }
         scoreTxt.setText(getString(R.string.YourScore) + " " + score);
         errors.setText(getString(R.string.Mistakes) + " " + error);
-        recordTxt.setText(getString(R.string.Record) + " " + SharedPrefManager.getShulteRecord(getApplication()));
+        setRecords(SharedPrefManager.getShulteRecord(getApplication()));
         parent.setBackgroundResource(R.drawable.shulte_blur);
+    }
+
+    private void setNumZnakiBackgrounds() {
+        score = getIntent().getIntExtra("znakiScore", 0);
+        error = getIntent().getIntExtra("znakiErrors", 0);
+        String message = getIntent().getStringExtra("znakiRecord");
+        if (message != null) {
+            successMessage.setText(message);
+            setMeasures(successImg, R.drawable.zapomni_new_record);
+            setAudio(R.raw.new_record);
+        } else {
+            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
+            setMeasures(successImg, R.drawable.zapomni_timed_out);
+            setAudio(R.raw.game_over);
+        }
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
+        setRecords(SharedPrefManager.getNumZnakiRecord(getApplication()));
+        parent.setBackgroundResource(R.drawable.number_znaki_blur);
     }
 
     private void setBtnColor(int position) {
@@ -172,9 +225,26 @@ public class FinishedActivity extends AppCompatActivity {
             case 0:
                 setColors(R.color.resultZapomni);
                 break;
-            case 1: case 2:
+            case 1:
                 setColors(R.color.resultShulte);
                 break;
+            case 2:
+                setColors(R.color.resultFind);
+                break;
+            case 3:
+                setColors(R.color.resultNumZnaki);
+                break;
+            case 4:
+                setColors(R.color.resultEquation);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setRecords(String record) {
+        if (record != null) {
+            recordTxt.setText(getString(R.string.Record) + " " + record);
+        } else {
+            recordTxt.setText(getString(R.string.Record) + " 0");
         }
     }
 

@@ -23,7 +23,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.game_pages.find_number.find_adapter.FindNumberAdapter;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
@@ -53,7 +52,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_number);
         ButterKnife.bind(this);
-        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte);
+        setupDialog(this, R.style.findTheme, R.drawable.pause_find);
         startTimer(60000, timeTxt);
 
         position = getIntent().getIntExtra("position", 0);
@@ -260,15 +259,16 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     }
 
     @Override
-    public void onItemSelected(TextView numTxt, String value) {
-        setBackByName(numTxt, value);
+    public void onItemSelected(ConstraintLayout layout, TextView numTxt, String value) {
+        setBackByName(layout, numTxt, value);
     }
 
-    private void setBackByName(TextView numTxt, String value) {
+    private void setBackByName(ConstraintLayout layout, TextView numTxt, String value) {
         if (value.equals(randomNumberTxt.getText().toString())) {
 
-            randomNumberTxt.setTextColor(Color.GREEN);
-            numTxt.setTextColor(Color.GREEN);
+            randomNumberTxt.setTextColor(getResources().getColor(R.color.successFind));
+            numTxt.setTextColor(Color.WHITE);
+            layout.setBackgroundResource(R.drawable.find_success);
 
             new Handler().postDelayed(()-> {
                 randomNumberTxt.setTextColor(Color.WHITE);
@@ -279,8 +279,9 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
             },200);
         } else {
 
-            randomNumberTxt.setTextColor(Color.RED);
-            numTxt.setTextColor(Color.RED);
+            randomNumberTxt.setTextColor(getResources().getColor(R.color.errorColor));
+            numTxt.setTextColor(Color.WHITE);
+            layout.setBackgroundResource(R.drawable.find_error);
 
             new Handler().postDelayed(()-> {
                 randomNumberTxt.setTextColor(Color.WHITE);

@@ -1,67 +1,45 @@
 package kz.almaty.boombrains.main_pages;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.res.Configuration;
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.adapters.SubGamesAdapter;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.models.SubGames;
+import kz.almaty.boombrains.main_fragments.MainFragment;
+import kz.almaty.boombrains.main_fragments.SettingsFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.underRecycler) RecyclerView typeRecycler;
-    @BindView(R.id.languages) TextView languageTxt;
-    SubGamesAdapter adapter;
-    List<SubGames> gameTypesList;
-    Dialog dialog;
-    TextView ru, en, kaz, cancel;
+    @BindView(R.id.mainBtn) ImageView main;
+    @BindView(R.id.profile) RelativeLayout profile;
+    @BindView(R.id.settings) RelativeLayout settings;
+
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        dialog = new Dialog(this, R.style.mytheme);
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-        dialog.setContentView(R.layout.language_layout);
-        ru = dialog.findViewById(R.id.russionTxt);
-        en = dialog.findViewById(R.id.englishTxt);
-        kaz = dialog.findViewById(R.id.kazakhTxt);
-        cancel = dialog.findViewById(R.id.cancelTxt);
-        gameTypesList = new ArrayList<>();
         loadLocale();
 
-        languageTxt.setText(getString(R.string.AppLanguageText));
-        languageTxt.setPaintFlags(languageTxt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        languageTxt.setOnClickListener(v -> showDialog());
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadLocale();
+        replaceFragment(new MainFragment(), "main_fragment", false);
     }
 
     private void setLocale(String lang) {
@@ -78,49 +56,40 @@ public class MainActivity extends AppCompatActivity {
         if (lang != null) {
             setLocale(lang);
         } else {
-            setLocale("en");
-        }
-        loadData();
-    }
-
-    private void loadData() {
-        gameTypesList.clear();
-        gameTypesList = new ArrayList<>(Arrays.asList(
-                new SubGames(getString(R.string.MemoryRemNum), R.drawable.zapomni_chislo),
-                new SubGames(getString(R.string.AttentionFigure), R.drawable.find_number),
-                new SubGames(getString(R.string.AttentionSchulteTable), R.drawable.shulte)
-        ));
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
-        adapter = new SubGamesAdapter(gameTypesList, getApplication());
-        typeRecycler.setAdapter(adapter);
-        typeRecycler.setLayoutManager(layoutManager);
-        typeRecycler.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyDataSetChanged();
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void showDialog() {
-        ru.setOnClickListener(v -> {
             setLocale("ru");
-            loadLocale();
-            languageTxt.setText(getString(R.string.AppLanguageText));
-            dialog.dismiss();
-        });
-        kaz.setOnClickListener(v -> {
-            setLocale("kk");
-            loadLocale();
-            languageTxt.setText(getString(R.string.AppLanguageText));
-            dialog.dismiss();
-        });
-        en.setOnClickListener(v -> {
-            setLocale("en");
-            loadLocale();
-            languageTxt.setText(getString(R.string.AppLanguageText));
-            dialog.dismiss();
-        });
-        cancel.setOnClickListener(v -> dialog.dismiss());
-        dialog.show();
+        }
+    }
+
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+
+    public void replaceFragment(Fragment fragment, String fragmentTag, boolean withBackStack){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
+        if(withBackStack){
+            fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            transaction.addToBackStack(BACK_STACK_ROOT_TAG);
+        }
+        transaction.replace(R.id.fragment_container, fragment,fragmentTag);
+        transaction.commit();
+    }
+
+    public void onclick(View view) {
+        switch (view.getId()) {
+            case R.id.mainBtn: {
+                currentFragment = new MainFragment();
+                replaceFragment(currentFragment, "main_fragment", false);
+                break;
+            }
+            case R.id.settings: {
+                currentFragment = new SettingsFragment();
+                replaceFragment(currentFragment, "settings_fragment", true);
+                break;
+            }
+            case R.id.profile: {
+                Toast.makeText(getApplication(), getString(R.string.not_ready), Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
     }
 }

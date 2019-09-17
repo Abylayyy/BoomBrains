@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="1"
-        android:textColor="#FD9200"
+        android:textColor="@color/successFind"
         android:textSize="30sp"
         app:fontFamily="@font/roboto"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Boom Brains</string>
 
-    <string name="AppLanguageText">Рус</string>
-    <string name="ChangeLanguage">Сменить язык</string>
+    <string name="AppLanguageText">Русский</string>
+    <string name="ChangeLanguage">Язык</string>
 
     <string name="PlayBtn">Играть</string>
     <string name="Pause">Пауза</string>
@@ -15,6 +15,7 @@
     <string name="Sound">Звук</string>
     <string name="Mute">Без звука</string>
     <string name="Cancel">Отмена</string>
+    <string name="Settings">Настройки</string>
 
     <string name="YourScore">Твой счет:</string>
     <string name="Record">Рекорд:</string>
@@ -31,23 +32,23 @@
     <string name="Again">Заново</string>
     <string name="Exit">Выйти</string>
     <string name="Finish">Закончить</string>
+    <string name="not_ready">Данная страница временно недоступна</string>
 
     <string name="CongratulationNewRecord">Поздравляем! \n Ты обновил рекорд!</string>
     <string name="GameEnded">Игра закончилась</string>
 
-    <string name="Attention">Внимание</string>
     <string name="AttentionSchulteTable">Таблица Шульте</string>
     <string name="SchulteNextNumber">Следующая цифра:</string>
-
-    <string name="AttentionColorfulFish">Красочные рыбы</string>
     <string name="AttentionFigure">Найди цифру</string>
-
-    <string name="Memory">Память</string>
     <string name="MemoryRemNum">Запомни число</string>
+    <string name="NumberZnaki">Вычисление</string>
+    <string name="Equation">Уравнение</string>
 
     <string name="YesNoTimeOutAnswer">Time out</string>
 
     <string name="SchulteInfo">Таблица Шульте  - нужно набирать цифры по возрастанию</string>
     <string name="RemNumInfo">Запомни число - показывается цифра и через 2 секунды исчезает. Нужно запомнить и повторить цифру набрав ее на клавиатуре.</string>
     <string name="FindNumberInfo">Найди цифру - должен найти указанную цифру среди остальных как можно быстрее что бы за короткое время достичь большого результата.</string>
+    <string name="NumberZnakiInfo">Вычисление - должен решить задачу и найти ответ среди указанных цифр как можно быстрее чтобы достичь большого результата.</string>
+    <string name="EquationInfo">Уравнение - установите порядок арифметических операции из списка так, чтобы он соответствовал ответу. Нужно решить как можно быстрее чтобы достичь большого результата.</string>
 </resources>

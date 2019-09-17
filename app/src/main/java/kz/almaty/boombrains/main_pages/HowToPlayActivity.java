@@ -45,7 +45,16 @@ public class HowToPlayActivity extends AppCompatActivity {
             setZapomniChislo();
         } else if (name.equals(getString(R.string.AttentionFigure))) {
             setFindNumber();
+        } else if (name.equals(getString(R.string.NumberZnaki))) {
+            setNumZnaki();
+        } else if (name.equals(getString(R.string.Equation))) {
+            setEquation();
         }
+    }
+
+    private void setEquation() {
+        setInfoByType(R.drawable.equation_gradient, R.drawable.kak_igrat_equation, R.color.kakIgratEquation,
+                R.drawable.equation_back, R.string.EquationInfo);
     }
 
     private void setZapomniChislo() {
@@ -58,7 +67,12 @@ public class HowToPlayActivity extends AppCompatActivity {
     }
 
     private void setFindNumber() {
-        setInfoByType(R.drawable.shulte_gradient, R.drawable.kak_igrat_find_number, R.color.kakIgratShulte, R.drawable.shulte_back, R.string.FindNumberInfo);
+        setInfoByType(R.drawable.find_gradient, R.drawable.kak_igrat_find_number, R.color.kakIgratFind, R.drawable.find_back, R.string.FindNumberInfo);
+    }
+
+    private void setNumZnaki() {
+        setInfoByType(R.drawable.number_znaki_gradient, R.drawable.kak_igrat_num_znaki, R.color.kakIgratNumZnaki,
+                R.drawable.number_znaki_back, R.string.NumberZnakiInfo);
     }
 
     private void setInfoByType(int grad, int measure, int prav, int back, int text) {

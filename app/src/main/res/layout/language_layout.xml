@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
-            android:background="#373780"
+            android:background="#AA4F2B"
             android:gravity="center"
             android:text="@string/ChangeLanguage"
             android:textColor="#fff"

@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.game_pages.shulte_page.shulte_adapter;
+package kz.almaty.boombrains.game_pages.shulte_page;
 
 import android.content.Context;
 import android.view.LayoutInflater;

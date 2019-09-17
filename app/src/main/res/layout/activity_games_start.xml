@@ -80,18 +80,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/back_to_main" />
 
-            <TextView
-                android:id="@+id/type_of_game"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:layout_marginLeft="36dp"
-                android:text="Внимание"
-                android:textColor="#fff"
-                app:fontFamily="@font/roboto"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/name_of_game" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bottomLayerConst"
                 android:layout_width="0dp"

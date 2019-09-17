@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Boom Brains</string>
 
-    <string name="AppLanguageText">Қаз</string>
-    <string name="ChangeLanguage">Тілді ауыстыру</string>
+    <string name="AppLanguageText">Қазақша</string>
+    <string name="ChangeLanguage">Тіл</string>
 
     <string name="PlayBtn">Ойнау</string>
     <string name="Pause">Кідіру</string>
@@ -26,32 +26,30 @@
     <string name="Rules">Ереже</string>
     <string name="Aim">Мақсат:</string>
     <string name="Ok">Келесі</string>
+    <string name="Settings">Баптаулар</string>
 
 
     <string name="Next">Келесі</string>
     <string name="Again">Қайтадан</string>
     <string name="Exit">Шығу</string>
     <string name="Finish">Бітіру</string>
+    <string name="not_ready">Бұл бет уақытша қол жетімсіз</string>
 
     <string name="CongratulationNewRecord">Құттықтаймыз! \n Сіз рекорд орнаттыңыз!</string>
     <string name="GameEnded">Ойын аяқталды!</string>
-
-    <string name="Attention">Назар аудару</string>
-    <string name="AttentionSchulteTable">Шульте кестесі</string>
     <string name="SchulteNextNumber">Келесі сан: </string>
 
-
-    <string name="AttentionColorfulFish">Түсті балықтар</string>
+    <string name="AttentionSchulteTable">Шульте кестесі</string>
     <string name="AttentionFigure">Санды тап</string>
-
-
-
-    <string name="Memory">Есте сақта</string>
     <string name="MemoryRemNum">Санды жатта</string>
+    <string name="NumberZnaki">Есепте</string>
+    <string name="Equation">Теңестір</string>
 
     <string name="YesNoTimeOutAnswer">Time out</string>
 
     <string name="SchulteInfo">Шульте кестесі - назарыңызды кестінің ортасына қоя отырып, барлық сандарды өсу ретімен табуыңыз керек.</string>
     <string name="RemNumInfo">Санды жатта - есте сақтау қабілетті сандарды қайталау арқылы, жаттықтыратын ойын.</string>
     <string name="FindNumberInfo">Санды тап - жоғарыда көрсетілген санды, төменде көрсетілген тізімдердің ішінен, барынша жылдамырақ тап.</string>
+    <string name="NumberZnakiInfo">Есепте - жоғарыда берілген есептің жауабын төменде көрсетілген тізімнің ішінен барынша жылдамырақ тап.</string>
+    <string name="EquationInfo">Теңестір - жоғарыда көрсетілген сұрақ белгісінің орнына тізімдегі берілген амалдарды жауабымен сәйкес келетіндей етіп, ретімен, барынша жылдам қой.</string>
 </resources>

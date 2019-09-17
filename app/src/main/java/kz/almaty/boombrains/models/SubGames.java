@@ -1,12 +1,27 @@
 package kz.almaty.boombrains.models;
 
 public class SubGames {
-    private String name;
-    private int image;
+    private String name, record;
+    private int image, in, out;
 
-    public SubGames(String name, int image) {
+    public SubGames(String name, String record, int image, int in, int out) {
         this.name = name;
+        this.record = record;
         this.image = image;
+        this.in = in;
+        this.out = out;
+    }
+
+    public int getIn() {
+        return in;
+    }
+
+    public int getOut() {
+        return out;
+    }
+
+    public String getRecord() {
+        return record;
     }
 
     public String getName() {
@@ -19,9 +34,5 @@ public class SubGames {
 
     public int getImage() {
         return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 }

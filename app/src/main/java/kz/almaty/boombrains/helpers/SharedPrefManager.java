@@ -12,6 +12,8 @@ public class SharedPrefManager {
     private static final String GAME_LANGUAGE = "GAME_LANGUAGE";
     private static final String SOUND_ENABLED = "SOUND_ENABLED";
     private static final String FIND_RECORD = "FIND_RECORD";
+    private static final String NUM_ZNAKI_RECORD = "NUM_ZNAKI_RECORD";
+    private static final String EQUATION_RECORD = "EQUATION_RECORD";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -66,5 +68,25 @@ public class SharedPrefManager {
 
     public static String getChisloRecord(Context context) {
         return getSharedPreferences(context).getString(CHISLO_RECORD, null);
+    }
+
+    public static void setNumZnakiRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(NUM_ZNAKI_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getNumZnakiRecord(Context context) {
+        return getSharedPreferences(context).getString(NUM_ZNAKI_RECORD, null);
+    }
+
+    public static void setEquationRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(EQUATION_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getEquationRecord(Context context) {
+        return getSharedPreferences(context).getString(EQUATION_RECORD, null);
     }
 }

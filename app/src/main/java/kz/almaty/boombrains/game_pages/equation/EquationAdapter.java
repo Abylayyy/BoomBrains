@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.game_pages.find_number.find_adapter;
+package kz.almaty.boombrains.game_pages.equation;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,13 +12,13 @@ import java.util.List;
 
 import kz.almaty.boombrains.R;
 
-public class FindNumberAdapter extends RecyclerView.Adapter<FindNumberAdapter.FindViewHolder> {
+public class EquationAdapter extends RecyclerView.Adapter<EquationAdapter.EquationViewHolder> {
 
     private List<Integer> numberList;
     private Context context;
-    private FindListener listener;
+    private EquationAdapter.FindListener listener;
 
-    public FindNumberAdapter(List<Integer> numberList, Context context, FindListener listener) {
+    public EquationAdapter(List<Integer> numberList, Context context, EquationAdapter.FindListener listener) {
         this.numberList = numberList;
         this.context = context;
         this.listener = listener;
@@ -26,17 +26,17 @@ public class FindNumberAdapter extends RecyclerView.Adapter<FindNumberAdapter.Fi
 
     @NonNull
     @Override
-    public FindNumberAdapter.FindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public EquationAdapter.EquationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.find_item, parent, false);
-        return new FindViewHolder(view);
+        return new EquationViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FindNumberAdapter.FindViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EquationAdapter.EquationViewHolder holder, int position) {
         holder.numTxt.setText(String.valueOf(numberList.get(position)));
         listener.getItem(holder.layout, holder.numTxt);
 
-        holder.itemView.setOnClickListener(v -> listener.onItemSelected(holder.numTxt, holder.numTxt.getText().toString()));
+        holder.itemView.setOnClickListener(v -> listener.onItemSelected(holder.layout, holder.numTxt, holder.numTxt.getText().toString()));
     }
 
     @Override
@@ -44,10 +44,10 @@ public class FindNumberAdapter extends RecyclerView.Adapter<FindNumberAdapter.Fi
         return numberList.size();
     }
 
-    class FindViewHolder extends RecyclerView.ViewHolder {
+    class EquationViewHolder extends RecyclerView.ViewHolder {
         TextView numTxt;
         ConstraintLayout layout;
-        FindViewHolder(@NonNull View itemView) {
+        EquationViewHolder(@NonNull View itemView) {
             super(itemView);
             numTxt = itemView.findViewById(R.id.numTxt);
             layout = itemView.findViewById(R.id.shulteConst);
@@ -56,6 +56,6 @@ public class FindNumberAdapter extends RecyclerView.Adapter<FindNumberAdapter.Fi
 
     public interface FindListener {
         void getItem(ConstraintLayout layout, TextView text);
-        void onItemSelected(TextView textView, String value);
+        void onItemSelected(ConstraintLayout layout, TextView textView, String value);
     }
 }
