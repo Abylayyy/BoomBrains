@@ -44,7 +44,7 @@
     <string name="NumberZnaki">Вычисление</string>
     <string name="Equation">Уравнение</string>
 
-    <string name="YesNoTimeOutAnswer">Time out</string>
+    <string name="YesNoTimeOutAnswer">Время вышло</string>
 
     <string name="SchulteInfo">Таблица Шульте  - нужно набирать цифры по возрастанию</string>
     <string name="RemNumInfo">Запомни число - показывается цифра и через 2 секунды исчезает. Нужно запомнить и повторить цифру набрав ее на клавиатуре.</string>

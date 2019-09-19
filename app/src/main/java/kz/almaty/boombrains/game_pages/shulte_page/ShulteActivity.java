@@ -155,6 +155,10 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
                 setSizes(view, text,8);
                 break;
             }
+            default: {
+                setSizes(view, text, 9);
+                break;
+            }
         }
     }
 

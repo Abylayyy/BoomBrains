@@ -271,6 +271,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
             layout.setBackgroundResource(R.drawable.find_success);
 
             new Handler().postDelayed(()-> {
+                setAudio(R.raw.click);
                 randomNumberTxt.setTextColor(Color.WHITE);
                 score += 100;
                 currentLevel += 1;
@@ -284,6 +285,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
             layout.setBackgroundResource(R.drawable.find_error);
 
             new Handler().postDelayed(()-> {
+                setAudio(R.raw.wrong_clicked);
                 randomNumberTxt.setTextColor(Color.WHITE);
                 if (score > 0) {
                     score -= 50;

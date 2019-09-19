@@ -130,6 +130,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
             recordTxt.setText("" + score);
             showSuccess(word);
+            setAudio(R.raw.level_complete);
         } else {
             if (currentLevel > 1) {
                 currentLevel -= 1;
@@ -141,6 +142,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
             recordTxt.setText("" + score);
             showError(word);
+            setAudio(R.raw.wrong_clicked);
         }
 
         new Handler().postDelayed(()-> getLevels(currentLevel), 500);

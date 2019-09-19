@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -38,7 +40,7 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.langTxt) TextView language;
 
     private Dialog dialog;
-    private TextView ru, en, kaz, cancel;
+    private TextView ru, en, kaz, cancel, diLang;
 
     public SettingsFragment() { }
 
@@ -46,6 +48,12 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         dialog = new Dialog(getActivity(), R.style.mytheme);
         dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
@@ -54,9 +62,11 @@ public class SettingsFragment extends Fragment {
         en = dialog.findViewById(R.id.englishTxt);
         kaz = dialog.findViewById(R.id.kazakhTxt);
         cancel = dialog.findViewById(R.id.cancelTxt);
+        diLang = dialog.findViewById(R.id.diLang);
 
         languageTxt.setText(getString(R.string.AppLanguageText));
         languageTxt.setOnClickListener(v -> showDialog());
+        language.setOnClickListener(v -> showDialog());
 
         back.setOnClickListener(v -> getActivity().onBackPressed());
 
@@ -69,14 +79,6 @@ public class SettingsFragment extends Fragment {
         });
 
         soundSwitch.setChecked(SharedPrefManager.isSoundEnabled(getActivity()));
-
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadLocale();
     }
 
     private void setLocale(String lang) {
@@ -103,6 +105,7 @@ public class SettingsFragment extends Fragment {
         sound.setText(getString(R.string.Sound));
         settings.setText(getString(R.string.Settings));
         cancel.setText(getString(R.string.Cancel));
+        diLang.setText(getString(R.string.ChangeLanguage));
     }
 
     @SuppressLint("SetTextI18n")

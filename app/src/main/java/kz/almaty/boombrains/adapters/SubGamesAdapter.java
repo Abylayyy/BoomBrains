@@ -49,7 +49,6 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
             Intent intent = new Intent(context, GamesStartActivity.class);
             intent.putExtra("position", position);
             intent.putExtra("gameName", types.getName());
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
     }

@@ -10,8 +10,8 @@ android {
         applicationId "kdo.one.boombrains"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3
-        versionName "2.1"
+        versionCode 5
+        versionName "2.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -76,4 +76,5 @@ dependencies {
         transitive = true;
     }
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'io.apisense:rhino-android:1.0'
 }

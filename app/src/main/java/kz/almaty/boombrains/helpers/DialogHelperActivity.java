@@ -38,17 +38,17 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         pauseBack = dialog.findViewById(R.id.pauseBack);
 
         if (SharedPrefManager.isSoundEnabled(getApplication())) {
-            sound.setText(getString(R.string.Mute));
-        } else {
             sound.setText(getString(R.string.Sound));
+        } else {
+            sound.setText(getString(R.string.Mute));
         }
 
         sound.setOnClickListener(v -> {
-            if (sound.getText().toString().equals(getString(R.string.Sound))) {
-                sound.setText(getString(R.string.Mute));
+            if (sound.getText().toString().equals(getString(R.string.Mute))) {
+                sound.setText(getString(R.string.Sound));
                 SharedPrefManager.setSoundEnabled(getApplication(), true);
             } else {
-                sound.setText(getString(R.string.Sound));
+                sound.setText(getString(R.string.Mute));
                 SharedPrefManager.setSoundEnabled(getApplication(), false);
             }
         });

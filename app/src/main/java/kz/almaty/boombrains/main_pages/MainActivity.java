@@ -7,15 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
@@ -38,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadLocale();
-
         replaceFragment(new MainFragment(), "main_fragment", false);
     }
 
@@ -91,5 +87,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadLocale();
     }
 }

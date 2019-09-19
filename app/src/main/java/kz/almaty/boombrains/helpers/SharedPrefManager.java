@@ -89,4 +89,12 @@ public class SharedPrefManager {
     public static String getEquationRecord(Context context) {
         return getSharedPreferences(context).getString(EQUATION_RECORD, null);
     }
+
+    public static void clearResults(Context context) {
+        setShulteRecord(context, "0");
+        setChisoRecord(context, "0");
+        setFindRecord(context, "0");
+        setNumZnakiRecord(context, "0");
+        setEquationRecord(context, "0");
+    }
 }
