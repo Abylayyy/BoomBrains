@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1078714327590",
+    "firebase_url": "https://api-7111631779123989020-577220.firebaseio.com",
+    "project_id": "api-7111631779123989020-577220",
+    "storage_bucket": "api-7111631779123989020-577220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078714327590:android:1bcd4826a9b02591b27ce7",
+        "android_client_info": {
+          "package_name": "kdo.one.boombrains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078714327590-vrrgcp7l1ap4ml81njm9mdncucov4r11.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kdo.one.boombrains",
+            "certificate_hash": "d911d491d7c3ea8027b575bae360aee50308eb54"
+          }
+        },
+        {
+          "client_id": "1078714327590-plp3bcmubledndvqme95o76f8hbio5m5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2kBdSfbt3oHUYpOhy6MUceD4UtBi_l3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078714327590-plp3bcmubledndvqme95o76f8hbio5m5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1078714327590-add1366d4c4h7oppuhva2c58hghf29ag.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "top.animation.Boom-Brains"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
