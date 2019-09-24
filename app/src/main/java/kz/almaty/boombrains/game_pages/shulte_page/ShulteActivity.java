@@ -56,6 +56,8 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         ButterKnife.bind(this);
         setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte);
         startTimer(120000, timeTxt);
+        setCount();
+
         numbersList = new ArrayList<>();
         setRecycler();
 
@@ -176,19 +178,19 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
                 break;
             }
             case 5: {
-                size = (float)((width / i) / 6);
+                size = (float)((width / i) / 6.2);
                 break;
             }
             case 6: {
-                size = (float)((width / i) / 5.4);
+                size = (float)((width / i) / 5.8);
                 break;
             }
             case 7: {
-                size = (float)((width / i) / 4.8);
+                size = (float)((width / i) / 5.4);
                 break;
             }
             case 8: {
-                size = (float)((width / i) / 4.2);
+                size = (float)((width / i) / 5.0);
                 break;
             }
         }

@@ -54,6 +54,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         ButterKnife.bind(this);
         setupDialog(this, R.style.findTheme, R.drawable.pause_find);
         startTimer(60000, timeTxt);
+        setCount();
 
         position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());
@@ -277,7 +278,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
                 currentLevel += 1;
                 recordTxt.setText("" + score);
                 setRecyclerByLevel(currentLevel);
-            },200);
+            },100);
         } else {
 
             randomNumberTxt.setTextColor(getResources().getColor(R.color.errorColor));

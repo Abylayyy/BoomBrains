@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
@@ -59,11 +61,11 @@ public class FinishedActivity extends AppCompatActivity {
     private void startActivities(int position) {
         switch (position) {
             case 0: {
-                finishAndStart(new Intent(this, ZapomniChisloActivity.class), position);
+                finishAndStart(new Intent(this, ShulteActivity.class), position);
                 break;
             }
             case 1: {
-                finishAndStart(new Intent(this, ShulteActivity.class), position);
+                finishAndStart(new Intent(this, ZapomniChisloActivity.class), position);
                 break;
             }
             case 2: {
@@ -91,11 +93,11 @@ public class FinishedActivity extends AppCompatActivity {
     private void setBackgrounds(int position) {
         switch (position) {
             case 0: {
-                setZapomniChisloBackgrounds();
+                setShulteBackgrounds();
                 break;
             }
             case 1: {
-                setShulteBackgrounds();
+                setZapomniChisloBackgrounds();
                 break;
             }
             case 2: {
@@ -223,10 +225,10 @@ public class FinishedActivity extends AppCompatActivity {
     private void setBtnColor(int position) {
         switch (position) {
             case 0:
-                setColors(R.color.resultZapomni);
+                setColors(R.color.resultShulte);
                 break;
             case 1:
-                setColors(R.color.resultShulte);
+                setColors(R.color.resultZapomni);
                 break;
             case 2:
                 setColors(R.color.resultFind);

@@ -56,7 +56,7 @@
                 android:gravity="center"
                 android:text="-"
                 android:textColor="#FE1E45"
-                android:textSize="70sp" />
+                android:textSize="75sp" />
 
         </LinearLayout>
 
@@ -77,9 +77,9 @@
                 android:background="@drawable/find_item_back"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:text="*"
+                android:text="×"
                 android:textColor="#FE1E45"
-                android:textSize="60sp" />
+                android:textSize="50sp" />
 
             <TextView
                 android:id="@+id/divBtn"
@@ -91,7 +91,7 @@
                 android:background="@drawable/find_item_back"
                 android:fontFamily="@font/roboto"
                 android:gravity="center"
-                android:text="/"
+                android:text="÷"
                 android:textColor="#FE1E45"
                 android:textSize="50sp" />
 

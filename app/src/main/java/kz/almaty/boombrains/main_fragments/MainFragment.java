@@ -70,8 +70,8 @@ public class MainFragment extends Fragment {
 
     private void loadData() {
         final List<SubGames> gameTypesList = new ArrayList<>(Arrays.asList(
-                new SubGames(getString(R.string.MemoryRemNum), zapomniChisloRecord, R.drawable.zap_chislo_icon, R.drawable.zapomni_draw, R.drawable.zapomni_draw_back),
                 new SubGames(getString(R.string.AttentionSchulteTable), shulteRecord, R.drawable.shulte_icon, R.drawable.shulte_draw, R.drawable.shulte_draw_back),
+                new SubGames(getString(R.string.MemoryRemNum), zapomniChisloRecord, R.drawable.zap_chislo_icon, R.drawable.zapomni_draw, R.drawable.zapomni_draw_back),
                 new SubGames(getString(R.string.AttentionFigure), findNumRecord, R.drawable.find_icon, R.drawable.find_num_draw, R.drawable.find_num_draw_back),
                 new SubGames(getString(R.string.NumberZnaki), numZnakiRecord, R.drawable.num_znaki_icon, R.drawable.num_znaki_draw, R.drawable.num_znaki_draw_back),
                 new SubGames(getString(R.string.Equation), equationRecord, R.drawable.equation_icon, R.drawable.equation_draw, R.drawable.equation_draw_back)

@@ -9,17 +9,13 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.Display;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
@@ -36,7 +32,6 @@ public class EquationActivity extends DialogHelperActivity {
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.findNumContainer) ConstraintLayout container;
     @BindView(R.id.nextNumShulte2) TextView levelTxt;
-
     @BindView(R.id.plusBtn) TextView plusBtn;
     @BindView(R.id.minusBtn) TextView minusBtn;
     @BindView(R.id.multBtn) TextView multBtn;
@@ -54,6 +49,7 @@ public class EquationActivity extends DialogHelperActivity {
         ButterKnife.bind(this);
         setupDialog(this, R.style.equationTheme, R.drawable.pause_equation);
         startTimer(60000, timeTxt);
+        setCount();
 
         symbols = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
         variants = new TextView[] {plusBtn, minusBtn, multBtn, divBtn};
@@ -63,7 +59,8 @@ public class EquationActivity extends DialogHelperActivity {
 
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
 
-        getLevels(currentLevel);
+        setTextSizes(20);
+        generate(2);
         container.getLayoutParams().height = (int) (height("y") / 2.8);
     }
 
@@ -87,7 +84,7 @@ public class EquationActivity extends DialogHelperActivity {
     private void generate(int length) {
         String a = generateProblem(length);
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("rhino");
-        Object result = null;
+        Object result = new Object();
         try {
             result = engine.eval(a);
         } catch (ScriptException e) {
@@ -103,7 +100,7 @@ public class EquationActivity extends DialogHelperActivity {
 
     private void generateRandomQuestion(String text, int length, String answer) {
         int count = 0, randomQuestion = getRandom(1, length);
-        String symbol = "";
+        String symbol = null;
         String[] list = text.split("");
         for (int i = 0; i < list.length; i++) {
             if (symbols.contains(list[i])) {
@@ -114,40 +111,52 @@ public class EquationActivity extends DialogHelperActivity {
                 }
             }
         }
+
         StringBuilder new_word = new StringBuilder();
         for (String s : list) {
             new_word.append(s);
         }
 
-        StringBuilder whole = new StringBuilder();
-        String old_word = new_word.toString() + "=" + answer;
+        if (!new_word.toString().contains("?")) {
+                getLevels(currentLevel);
+        } else {
+            StringBuilder whole = new StringBuilder();
+            String old_word = new_word.toString() + "=" + answer;
 
-        for (int i = 0; i < old_word.length(); i++) {
-            String part = String.valueOf(old_word.charAt(i));
-            if (part.equals("?")) {
-                part = "&nbsp;<span style=\"background: #ffffff; color: #FE1E45; font-size: 22px; \">" + "&nbsp;" + part + "&nbsp;" + "</span>&nbsp;";
-            }
-            whole.append(part);
-        }
-
-        randomNumberTxt.setText(Html.fromHtml(whole.toString()));
-
-        for (TextView view : variants) {
-            String finalSymbol = symbol;
-            view.setOnClickListener(v -> {
-                if (view.getText().toString().equals(finalSymbol)) {
-                    setBackgroundSuccess(view);
-                } else {
-                    setBackgroundError(view);
+            for (int i = 0; i < old_word.length(); i++) {
+                String part = String.valueOf(old_word.charAt(i));
+                if (part.equals("?")) {
+                    part = "&nbsp;<span style=\"background: #ffffff; color: #FE1E45; font-size: 22px; \">" + "&nbsp;" + part + "&nbsp;" + "</span>&nbsp;";
                 }
-            });
+                whole.append(part);
+            }
+
+            randomNumberTxt.setText(Html.fromHtml(whole.toString()));
+
+            for (TextView view : variants) {
+                String finalSymbol = symbol;
+                view.setOnClickListener(v -> {
+                    String result = view.getText().toString();
+                    if (result.equals("×")) {
+                        result = "*";
+                    } else if (result.equals("÷")) {
+                        result = "/";
+                    }
+
+                    if (result.equals(finalSymbol)) {
+                        setBackgroundSuccess(view);
+                    } else {
+                        setBackgroundError(view);
+                    }
+                });
+            }
         }
     }
 
     private void setBackgroundSuccess(TextView view) {
         view.setBackgroundResource(R.drawable.find_success);
         view.setTextColor(Color.WHITE);
-        new Handler().postDelayed(()-> countSuccess(view), 200);
+        new Handler().postDelayed(()-> countSuccess(view), 100);
     }
 
     private void countSuccess(TextView view) {
@@ -164,7 +173,7 @@ public class EquationActivity extends DialogHelperActivity {
     private void setBackgroundError(TextView view) {
         view.setBackgroundResource(R.drawable.find_item_red);
         view.setTextColor(Color.WHITE);
-        new Handler().postDelayed(()-> countError(view), 200);
+        new Handler().postDelayed(()-> countError(view), 100);
     }
 
     private void countError(TextView view) {
@@ -182,42 +191,42 @@ public class EquationActivity extends DialogHelperActivity {
     private void getLevels(int level) {
         switch(level) {
             case 1: case 2: case 3: case 4: case 5: {
-                setTextSizes(20);
+                setTextSizes(21);
                 generate(2);
                 break;
             }
             case 6: case 7: case 8: case 9: case 10: {
-                setTextSizes(21);
+                setTextSizes(22);
                 generate(3);
                 break;
             }
             case 11: case 12: case 13: case 14: case 15: {
-                setTextSizes(22);
+                setTextSizes(23);
                 generate(4);
                 break;
             }
             case 16: case 17: case 18: case 19: case 20: {
-                setTextSizes(23);
+                setTextSizes(24);
                 generate(5);
                 break;
             }
             case 21: case 22: case 23: case 24: case 25: {
-                setTextSizes(24);
+                setTextSizes(25);
                 generate(6);
                 break;
             }
             case 26: case 27: case 28: case 29: case 30: {
-                setTextSizes(25);
+                setTextSizes(26);
                 generate(7);
                 break;
             }
             case 31: case 32: case 33: case 34: case 35: {
-                setTextSizes(26);
+                setTextSizes(27);
                 generate(8);
                 break;
             }
             default: {
-                setTextSizes(27);
+                setTextSizes(28);
                 generate(9);
                 break;
             }
@@ -226,7 +235,7 @@ public class EquationActivity extends DialogHelperActivity {
 
     private void setTextSizes(float size) {
         int width = height("x");
-        randomNumberTxt.setTextSize(width / size);
+        randomNumberTxt.setTextSize(width / size - 1);
     }
 
     private String generateProblem(Integer length) {

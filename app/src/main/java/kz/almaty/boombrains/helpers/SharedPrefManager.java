@@ -14,6 +14,8 @@ public class SharedPrefManager {
     private static final String FIND_RECORD = "FIND_RECORD";
     private static final String NUM_ZNAKI_RECORD = "NUM_ZNAKI_RECORD";
     private static final String EQUATION_RECORD = "EQUATION_RECORD";
+    private static final String PLAY_COUNT = "PLAY_COUNT";
+    private static final String SHOW_AGAIN = "SHOW_AGAIN";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -90,11 +92,35 @@ public class SharedPrefManager {
         return getSharedPreferences(context).getString(EQUATION_RECORD, null);
     }
 
+    public static void setPlayCount(Context context, int newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt(PLAY_COUNT, newValue);
+        editor.apply();
+    }
+
+    public static int getPlayCount(Context context) {
+        return getSharedPreferences(context).getInt(PLAY_COUNT, 0);
+    }
+
     public static void clearResults(Context context) {
         setShulteRecord(context, "0");
         setChisoRecord(context, "0");
         setFindRecord(context, "0");
         setNumZnakiRecord(context, "0");
         setEquationRecord(context, "0");
+        setSoundEnabled(context, false);
+        setLanguage(context, null);
+        setPlayCount(context, 0);
+        setNeverShowAgain(context, false);
+    }
+
+    public static boolean getNeverShowAgain(Context context) {
+        return getSharedPreferences(context).getBoolean(SHOW_AGAIN, false);
+    }
+
+    public static void setNeverShowAgain(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(SHOW_AGAIN, newValue);
+        editor.apply();
     }
 }

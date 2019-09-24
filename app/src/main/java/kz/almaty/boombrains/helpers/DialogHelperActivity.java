@@ -91,6 +91,10 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         }
     }
 
+    public void setCount() {
+        SharedPrefManager.setPlayCount(getApplication(), SharedPrefManager.getPlayCount(getApplication()) + 1);
+    }
+
     public void setProgressBar(int i, ProgressBar bar, int millSec) {
         bar.setProgress(i * 100 / (millSec / 1000));
     }

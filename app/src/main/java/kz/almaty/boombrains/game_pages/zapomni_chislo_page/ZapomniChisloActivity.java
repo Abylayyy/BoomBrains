@@ -11,13 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.poovam.pinedittextfield.LinePinField;
-
 import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
@@ -69,6 +65,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
 
         setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni);
         startTimer(60000, timeTxt);
+        setCount();
 
         position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());

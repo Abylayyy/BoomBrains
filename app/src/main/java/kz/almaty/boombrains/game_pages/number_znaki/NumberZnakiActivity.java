@@ -52,6 +52,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         ButterKnife.bind(this);
         setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki);
         startTimer(60000, timeTxt);
+        setCount();
 
         symbols = new String[] {"+", "-", "*", "/"};
         variants = new TextView[] {first, second, third, forth};
@@ -89,7 +90,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
 
         String a = generateProblem(length);
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("rhino");
-        Object result = null;
+        Object result = new Object();
 
         try {
             result = engine.eval(a);

@@ -54,5 +54,7 @@
     <string name="FindNumberInfo">Find Number - find number on the display as much as it possible, to earn more money.</string>
     <string name="NumberZnakiInfo">Calculation - solve the problem and find the answer among these numbers as quickly as possible in order to achieve a great result.</string>
     <string name="EquationInfo">Equation - set the order of arithmetic operations from the list so that it matches the answer. You need to decide as quickly as possible in order to achieve a great result.</string>
+    <string name="RatingMessage">Your opinion is very important to us!</string>
+    <string name="RateApp">Rate</string>
 
 </resources>
