@@ -7,20 +7,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
@@ -38,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     Fragment currentFragment;
     private Dialog dialog;
     TextView rateTxt, cancelTxt;
+    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadLocale();
-        replaceFragment(new MainFragment(), "main_fragment", false);
 
         dialog = new Dialog(this, R.style.mytheme);
         dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
@@ -53,7 +57,47 @@ public class MainActivity extends AppCompatActivity {
         rateTxt = dialog.findViewById(R.id.rate_app);
         cancelTxt = dialog.findViewById(R.id.cancel_rate);
 
+        loadGoogleAd();
         showRateAppDialog();
+    }
+
+    private void loadGoogleAd() {
+        MobileAds.initialize(this, initializationStatus -> Log.d("INITIALIZATION::", "COMPLETED"));
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7342268862236285/2044423261");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                showGoogleAdd();
+                Log.d("LOADING::", "LOADED");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d("LOADING::", "FAILED");
+            }
+            @Override
+            public void onAdOpened() { }
+            @Override
+            public void onAdClicked() { }
+            @Override
+            public void onAdLeftApplication() { }
+            @Override
+            public void onAdClosed() {
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+    }
+
+    private void showGoogleAdd() {
+        if (SharedPrefManager.getAddCount(getApplication()) >= 3) {
+            new Handler().postDelayed(() -> {
+                mInterstitialAd.show();
+                SharedPrefManager.setAddCount(getApplication(), 0);
+            }, 30);
+        }
     }
 
     private void setLocale(String lang) {
@@ -69,22 +113,27 @@ public class MainActivity extends AppCompatActivity {
         String lang = SharedPrefManager.getLanguage(getApplication());
         if (lang != null) {
             setLocale(lang);
+            replaceFragment(new MainFragment(), BACK_STACK_ROOT_TAG);
         } else {
-            setLocale("ru");
+            setLocale("en");
+            replaceFragment(new MainFragment(), BACK_STACK_ROOT_TAG);
         }
     }
 
-    private static final String BACK_STACK_ROOT_TAG = "root_fragment";
-
-    public void replaceFragment(Fragment fragment, String fragmentTag, boolean withBackStack){
+    private void replaceFragment(Fragment fragment, String fragmentTag, boolean withBackStack){
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
         if(withBackStack){
             fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             transaction.addToBackStack(BACK_STACK_ROOT_TAG);
         }
-        transaction.replace(R.id.fragment_container, fragment,fragmentTag);
+        transaction.replace(R.id.fragment_container, fragment, fragmentTag);
+        transaction.commit();
+    }
+
+    private void replaceFragment(Fragment fragment, String fragmentTag){
+        FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment, fragmentTag);
         transaction.commit();
     }
 
@@ -92,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.mainBtn: {
                 currentFragment = new MainFragment();
-                replaceFragment(currentFragment, "main_fragment", false);
+                replaceFragment(currentFragment, BACK_STACK_ROOT_TAG);
                 break;
             }
             case R.id.settings: {
@@ -110,9 +159,7 @@ public class MainActivity extends AppCompatActivity {
     private void showRateAppDialog() {
         if (SharedPrefManager.getPlayCount(getApplication()) >= 5) {
             if (!SharedPrefManager.getNeverShowAgain(getApplication())) {
-                new Handler().postDelayed(()-> {
-                    dialog.show();
-                }, 1000);
+                new Handler().postDelayed(()-> dialog.show(), 1000);
             }
         }
 

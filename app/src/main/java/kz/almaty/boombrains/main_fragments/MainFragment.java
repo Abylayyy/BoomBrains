@@ -22,13 +22,14 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.adapters.SubGamesAdapter;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.StatefulFragment;
 import kz.almaty.boombrains.models.SubGames;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 
-public class MainFragment extends Fragment {
+public class MainFragment extends StatefulFragment {
 
     @BindView(R.id.underRecycler) RecyclerView typeRecycler;
 
@@ -84,5 +85,15 @@ public class MainFragment extends Fragment {
         typeRecycler.setLayoutManager(layoutManager);
         typeRecycler.setItemAnimator(new DefaultItemAnimator());
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected boolean hasSavedState() {
+        return true;
+    }
+
+    @Override
+    protected Bundle getStateToSave() {
+        return null;
     }
 }

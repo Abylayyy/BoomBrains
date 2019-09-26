@@ -57,6 +57,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte);
         startTimer(120000, timeTxt);
         setCount();
+        loadGoogleAd();
 
         numbersList = new ArrayList<>();
         setRecycler();

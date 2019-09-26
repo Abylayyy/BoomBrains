@@ -25,12 +25,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.StatefulFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends StatefulFragment {
 
     @BindView(R.id.languageTxt) TextView languageTxt;
     @BindView(R.id.soundSwitch) Switch soundSwitch;
@@ -67,6 +68,10 @@ public class SettingsFragment extends Fragment {
         languageTxt.setText(getString(R.string.AppLanguageText));
         languageTxt.setOnClickListener(v -> showDialog());
         language.setOnClickListener(v -> showDialog());
+
+        if (!SharedPrefManager.getIsFirstShown(getActivity())) {
+            showDialog();
+        }
 
         back.setOnClickListener(v -> getActivity().onBackPressed());
 
@@ -110,6 +115,7 @@ public class SettingsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void showDialog() {
+        SharedPrefManager.setIsFirstShown(getActivity(), true);
         ru.setOnClickListener(v -> {
             setLocale("ru");
             loadLocale();
@@ -128,7 +134,19 @@ public class SettingsFragment extends Fragment {
             setAllTexts();
             dialog.dismiss();
         });
-        cancel.setOnClickListener(v -> dialog.dismiss());
+        cancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
         dialog.show();
+    }
+
+    @Override
+    protected boolean hasSavedState() {
+        return true;
+    }
+
+    @Override
+    protected Bundle getStateToSave() {
+        return null;
     }
 }

@@ -66,6 +66,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni);
         startTimer(60000, timeTxt);
         setCount();
+        loadGoogleAd();
 
         position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());
@@ -217,6 +218,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         slovo.setText(String.valueOf(random));
         hideAllViews();
         showBtn.setEnabled(false);
+        pauseImg.setEnabled(false);
         pauseTimer();
         new Handler().postDelayed(()-> {
             showBtn.setEnabled(true);
@@ -225,6 +227,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
             slovo_new.setText("");
             slovo_new.setBackgroundResource(R.drawable.trans_color);
             resumeTimer();
+            pauseImg.setEnabled(true);
         }, 2000);
     }
 

@@ -8,6 +8,7 @@ import android.text.Html;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,18 +36,20 @@ public class GamesStartActivity extends AppCompatActivity {
     @BindView(R.id.back_to_main) RelativeLayout backToMain;
     @BindView(R.id.kakIgratIcon) ImageView kakIcon;
     @BindView(R.id.descTxt) TextView description;
+    @BindView(R.id.scroll) ScrollView scroll;
 
     String gameName;
     int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        position = getIntent().getIntExtra("position", 0);
+        setThemes(position);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games_start);
         ButterKnife.bind(this);
 
         gameName = getIntent().getStringExtra("gameName");
-        position = getIntent().getIntExtra("position", 0);
 
         nameOfGame.setText(gameName);
 
@@ -84,6 +87,31 @@ public class GamesStartActivity extends AppCompatActivity {
         }
     }
 
+    private void setThemes(int position) {
+        switch (position) {
+            case 0: {
+                setTheme(R.style.LightTheme);
+                break;
+            }
+            case 1: {
+                setTheme(R.style.ZapomniTheme);
+                break;
+            }
+            case 2: {
+                setTheme(R.style.FindNumTheme);
+                break;
+            }
+            case 3: {
+                setTheme(R.style.CalculationTheme);
+                break;
+            }
+            case 4: {
+                setTheme(R.style.EquationTheme);
+                break;
+            }
+        }
+    }
+
     private void setGames(int position) {
         switch (position) {
             case 0: {
@@ -115,40 +143,46 @@ public class GamesStartActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void setBackgroundsByType(int game, int play, int kubok, int bottom, int back) {
+    private void setBackgroundsByType(int game, int play, int kubok, int bottom, int back, int color) {
         playBtn.setTextColor(getResources().getColor(play));
         gameImage.setImageResource(game);
         recordLayout.setBackgroundResource(kubok);
         bottomLayer.setBackgroundResource(bottom);
         backConst.setBackgroundResource(back);
+        scroll.setBackgroundColor(getResources().getColor(color));
     }
 
     private void setEquationBackgrounds() {
-        setBackgroundsByType(R.drawable.equation_top_icon, R.color.equationColor, R.drawable.equation_kubok_grad, R.color.bottomEquation, R.drawable.equation_back);
+        setBackgroundsByType(R.drawable.equation_top_icon, R.color.equationColor, R.drawable.equation_kubok_grad, R.color.bottomEquation,
+                R.drawable.equation_back, R.color.bottomEquation);
         setRecords(SharedPrefManager.getEquationRecord(getApplication()));
         setEquation();
     }
 
     private void setShulteBackgrounds() {
-        setBackgroundsByType(R.drawable.shult_top_icon, R.color.vnimanieColor, R.drawable.shulte_kubok_grad, R.color.bottomShulte, R.drawable.shulte_back);
+        setBackgroundsByType(R.drawable.shult_top_icon, R.color.vnimanieColor, R.drawable.shulte_kubok_grad, R.color.bottomShulte,
+                R.drawable.shulte_back, R.color.bottomShulte);
         setRecords(SharedPrefManager.getShulteRecord(getApplication()));
         setShulteInfo();
     }
 
     private void setFindBackgrounds() {
-        setBackgroundsByType(R.drawable.find_top_back, R.color.findColor, R.drawable.find_kubok_grad, R.color.bottomFind, R.drawable.find_back);
+        setBackgroundsByType(R.drawable.find_top_back, R.color.findColor, R.drawable.find_kubok_grad, R.color.bottomFind,
+                R.drawable.find_back, R.color.bottomFind);
         setRecords(SharedPrefManager.getFindRecord(getApplication()));
         setFindNumber();
     }
 
     private void setZapomniChisloBackgrounds() {
-        setBackgroundsByType(R.drawable.zapomni_chislo_top_icon, R.color.pamiatColor, R.drawable.zapomni_kubok_grad, R.color.bottomZapomni, R.drawable.zapomni_slovo_back);
+        setBackgroundsByType(R.drawable.zapomni_chislo_top_icon, R.color.pamiatColor, R.drawable.zapomni_kubok_grad, R.color.bottomZapomni,
+                R.drawable.zapomni_slovo_back, R.color.bottomZapomni);
         setRecords(SharedPrefManager.getChisloRecord(getApplication()));
         setZapomniChislo();
     }
 
     private void setNumZnakiBackgrounds() {
-        setBackgroundsByType(R.drawable.number_znaki_top_icon, R.color.numZnakiColor, R.drawable.number_znaki_kubok_grad, R.color.bottomNumZnak, R.drawable.number_znaki_back);
+        setBackgroundsByType(R.drawable.number_znaki_top_icon, R.color.numZnakiColor, R.drawable.number_znaki_kubok_grad, R.color.bottomNumZnak,
+                R.drawable.number_znaki_back, R.color.bottomNumZnak);
         setRecords(SharedPrefManager.getNumZnakiRecord(getApplication()));
         setNumZnaki();
     }

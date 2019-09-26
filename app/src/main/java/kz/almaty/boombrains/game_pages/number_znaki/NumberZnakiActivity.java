@@ -53,6 +53,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki);
         startTimer(60000, timeTxt);
         setCount();
+        loadGoogleAd();
 
         symbols = new String[] {"+", "-", "*", "/"};
         variants = new TextView[] {first, second, third, forth};

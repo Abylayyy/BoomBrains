@@ -55,6 +55,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         setupDialog(this, R.style.findTheme, R.drawable.pause_find);
         startTimer(60000, timeTxt);
         setCount();
+        loadGoogleAd();
 
         position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());

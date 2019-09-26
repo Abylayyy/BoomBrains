@@ -1,19 +1,44 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
+    <!-- ACTIVITY THEMES -->
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ShulteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/shulteTheme</item>
+        <item name="colorPrimaryDark">@color/shulteTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ZapomniTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/chisloTheme</item>
+        <item name="colorPrimaryDark">@color/chisloTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FindNumTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/findTheme</item>
+        <item name="colorPrimaryDark">@color/findTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CalculationTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/calcTheme</item>
+        <item name="colorPrimaryDark">@color/calcTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="EquationTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/eqTheme</item>
+        <item name="colorPrimaryDark">@color/eqTheme</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- DIALOG THEMES -->
     <style name="mytheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>

@@ -41,6 +41,12 @@
     <color name="topNumZnaki">#1F9DBD</color>
     <color name="topEquation">#FF2265</color>
 
+    <color name="shulteTheme">#CE9D1A</color>
+    <color name="chisloTheme">#58249B</color>
+    <color name="findTheme">#44A004</color>
+    <color name="calcTheme">#066C86</color>
+    <color name="eqTheme">#B8073D</color>
+
     <!-- Under action bar colors -->
     <color name="underShulte">#EB9700</color>
     <color name="underSlovo">#9D3EFF</color>

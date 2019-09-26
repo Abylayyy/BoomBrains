@@ -6,12 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ankushgrover.hourglass.Hourglass;
+import com.google.android.gms.ads.InterstitialAd;
 
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.main_pages.MainActivity;
@@ -20,12 +20,10 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
 
     TextView returnGame, restart, sound, exit;
     LinearLayout pauseBack;
-    Dialog dialog, dialog2;
+    Dialog dialog;
     private static final String format = "%02d:%02d";
     Hourglass countDownTimer;
-    private boolean finished = false;
-    private boolean questions_completed = false;
-    private int i = 0;
+    private InterstitialAd mInterstitialAd;
 
     public void setupDialog(Context context, int style, int drawable) {
         dialog = new Dialog(context, style);
@@ -95,12 +93,11 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         SharedPrefManager.setPlayCount(getApplication(), SharedPrefManager.getPlayCount(getApplication()) + 1);
     }
 
-    public void setProgressBar(int i, ProgressBar bar, int millSec) {
-        bar.setProgress(i * 100 / (millSec / 1000));
+    public void loadGoogleAd() {
+        SharedPrefManager.setAddCount(getApplication(), SharedPrefManager.getAddCount(getApplication()) + 1);
     }
 
     public void startTimer(int millSec, TextView timeTxt) {
-        finished = false;
         countDownTimer = new Hourglass(millSec, 1000) {
 
             @SuppressLint("DefaultLocale")
@@ -114,10 +111,7 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
 
             @Override
             public void onTimerFinish() {
-                finished = true;
-                if (!questions_completed) {
-                    startNewActivity();
-                }
+                startNewActivity();
             }
         };
         countDownTimer.startTimer();

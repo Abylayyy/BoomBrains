@@ -3,6 +3,8 @@ package kz.almaty.boombrains.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.UUID;
+
 public class SharedPrefManager {
 
     private static final String TAG = SharedPrefManager.class.getSimpleName();
@@ -16,6 +18,9 @@ public class SharedPrefManager {
     private static final String EQUATION_RECORD = "EQUATION_RECORD";
     private static final String PLAY_COUNT = "PLAY_COUNT";
     private static final String SHOW_AGAIN = "SHOW_AGAIN";
+    private static final String ADD_COUNT = "ADD_COUNT";
+    private static final String FIRST_SHOWN = "FIRST_SHOWN";
+    private static final String DEVICE_ID = "DEVICE_ID";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -102,6 +107,24 @@ public class SharedPrefManager {
         return getSharedPreferences(context).getInt(PLAY_COUNT, 0);
     }
 
+    public static void setAddCount(Context context, int newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt(ADD_COUNT, newValue);
+        editor.apply();
+    }
+
+    public static int getAddCount(Context context) {
+        return getSharedPreferences(context).getInt(ADD_COUNT, 0);
+    }
+
+    public static void clearSettings(Context context) {
+        setLanguage(context, null);
+        setPlayCount(context, 0);
+        setAddCount(context, 0);
+        setNeverShowAgain(context, false);
+        setIsFirstShown(context, false);
+    }
+
     public static void clearResults(Context context) {
         setShulteRecord(context, "0");
         setChisoRecord(context, "0");
@@ -114,6 +137,18 @@ public class SharedPrefManager {
         setNeverShowAgain(context, false);
     }
 
+    public static void setDeviceId(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(DEVICE_ID, newValue);
+        editor.apply();
+    }
+
+    public static String getDeviceId(Context context) {
+        String uniqueId = UUID.randomUUID().toString();
+        setDeviceId(context, uniqueId);
+        return getSharedPreferences(context).getString(DEVICE_ID, null);
+    }
+
     public static boolean getNeverShowAgain(Context context) {
         return getSharedPreferences(context).getBoolean(SHOW_AGAIN, false);
     }
@@ -121,6 +156,16 @@ public class SharedPrefManager {
     public static void setNeverShowAgain(Context context, boolean newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(SHOW_AGAIN, newValue);
+        editor.apply();
+    }
+
+    public static boolean getIsFirstShown(Context context) {
+        return getSharedPreferences(context).getBoolean(FIRST_SHOWN, false);
+    }
+
+    public static void setIsFirstShown(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(FIRST_SHOWN, newValue);
         editor.apply();
     }
 }

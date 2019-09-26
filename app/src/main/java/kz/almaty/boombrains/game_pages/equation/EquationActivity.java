@@ -50,6 +50,7 @@ public class EquationActivity extends DialogHelperActivity {
         setupDialog(this, R.style.equationTheme, R.drawable.pause_equation);
         startTimer(60000, timeTxt);
         setCount();
+        loadGoogleAd();
 
         symbols = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
         variants = new TextView[] {plusBtn, minusBtn, multBtn, divBtn};
