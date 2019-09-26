@@ -9,7 +9,6 @@
     <string name="Pause">Пауза</string>
     <string name="YourRecord">Твой рекорд</string>
     <string name="HowToPlay">Как играть?</string>
-    <string name="Task">Задание</string>
     <string name="Continue">Вернуться к игре</string>
     <string name="Restart">Рестарт</string>
     <string name="Sound">Звук</string>
@@ -21,21 +20,12 @@
     <string name="Record">Рекорд:</string>
     <string name="Score">Очки:</string>
     <string name="Level">Уровень:</string>
-    <string name="PreviousRecord">Предыдущий рекорд:</string>
     <string name="Mistakes">Ошибок:</string>
-    <string name="Point">очки</string>
-    <string name="Rules">Правила</string>
-    <string name="Aim">Цель:</string>
-    <string name="Ok">Дальше</string>
 
-    <string name="Next">Далее</string>
     <string name="Again">Заново</string>
     <string name="Exit">Выйти</string>
-    <string name="Finish">Закончить</string>
-    <string name="not_ready">Данная страница временно недоступна</string>
 
     <string name="CongratulationNewRecord">Поздравляем! \n Ты обновил рекорд!</string>
-    <string name="GameEnded">Игра закончилась</string>
 
     <string name="AttentionSchulteTable">Таблица Шульте</string>
     <string name="SchulteNextNumber">Следующая цифра:</string>

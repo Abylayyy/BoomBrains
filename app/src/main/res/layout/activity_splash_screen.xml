@@ -8,7 +8,6 @@
     tools:context=".main_pages.SplashScreen">
 
     <ImageView
-        android:id="@+id/imageView10"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center"

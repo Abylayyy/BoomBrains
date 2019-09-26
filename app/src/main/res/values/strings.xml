@@ -8,7 +8,6 @@
     <string name="Pause">Pause</string>
     <string name="YourRecord">Your record</string>
     <string name="HowToPlay">How to play?</string>
-    <string name="Task">Task</string>
     <string name="Record">Record: </string>
     <string name="Continue">Continue</string>
     <string name="Restart">Restart</string>
@@ -23,21 +22,12 @@
     <string name="YourScore">Your score: </string>
     <string name="Score">Score: </string>
     <string name="Level">Level: </string>
-    <string name="PreviousRecord">Previous record: </string>
     <string name="Mistakes">Mistakes: </string>
-    <string name="Point">points</string>
-    <string name="Rules">Rules</string>
-    <string name="Aim">Aim:</string>
-    <string name="Ok">OK</string>
 
-    <string name="Next">Next</string>
     <string name="Again">Again</string>
-    <string name="Finish">Finish</string>
-    <string name="not_ready">This page is not available yet.</string>
 
 
     <string name="CongratulationNewRecord">Congratulations! \n You set a new record!</string>
-    <string name="GameEnded">Game over!</string>
 
     <string name="AttentionSchulteTable">Schulte Table</string>
     <string name="SchulteNextNumber">Next number: </string>

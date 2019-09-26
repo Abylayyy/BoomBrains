@@ -3,8 +3,6 @@ package kz.almaty.boombrains.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.UUID;
-
 public class SharedPrefManager {
 
     private static final String TAG = SharedPrefManager.class.getSimpleName();
@@ -21,6 +19,7 @@ public class SharedPrefManager {
     private static final String ADD_COUNT = "ADD_COUNT";
     private static final String FIRST_SHOWN = "FIRST_SHOWN";
     private static final String DEVICE_ID = "DEVICE_ID";
+    private static final String FIRST_USER = "FIRST_USER";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -137,7 +136,7 @@ public class SharedPrefManager {
         setNeverShowAgain(context, false);
     }
 
-    public static void setDeviceId(Context context, String newValue) {
+    /*public static void setDeviceId(Context context, String newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(DEVICE_ID, newValue);
         editor.apply();
@@ -147,7 +146,7 @@ public class SharedPrefManager {
         String uniqueId = UUID.randomUUID().toString();
         setDeviceId(context, uniqueId);
         return getSharedPreferences(context).getString(DEVICE_ID, null);
-    }
+    }*/
 
     public static boolean getNeverShowAgain(Context context) {
         return getSharedPreferences(context).getBoolean(SHOW_AGAIN, false);
@@ -166,6 +165,16 @@ public class SharedPrefManager {
     public static void setIsFirstShown(Context context, boolean newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(FIRST_SHOWN, newValue);
+        editor.apply();
+    }
+
+    public static boolean getIsFirstUser(Context context) {
+        return getSharedPreferences(context).getBoolean(FIRST_USER, false);
+    }
+
+    public static void setIsFirstUser(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(FIRST_USER, newValue);
         editor.apply();
     }
 }

@@ -21,11 +21,6 @@
     <color name="bottomEquation">#FF6277</color>
 
     <!-- Kak igrat teksts -->
-    <color name="kakIgratShulte">#FE6100</color>
-    <color name="kakIgratZapomni">#8434FF</color>
-    <color name="kakIgratFind">#469B12</color>
-    <color name="kakIgratNumZnaki">#1EA1BF</color>
-    <color name="kakIgratEquation">#FD2D4B</color>
 
     <!-- Pause backgrounds -->
     <color name="pauseShulte">#6D480F</color>
@@ -55,7 +50,6 @@
 
     <!-- Default colors -->
     <color name="colorWhite">#ffffff</color>
-    <color name="howtoplay">#686868</color>
 
     <color name="viewColor">#80FFFFFF</color>
 
@@ -72,7 +66,6 @@
 
     <color name="shulteErrorColor">#80B90000</color>
     <color name="shulteSuccessColor">#8000C74F</color>
-    <color name="shulteSuccess">#8000C74F</color>
 
     <color name="successFind">#469B12</color>
 

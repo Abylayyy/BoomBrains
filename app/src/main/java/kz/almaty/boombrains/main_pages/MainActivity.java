@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if (!SharedPrefManager.getIsFirstUser(getApplication())) {
+            SharedPrefManager.clearSettings(getApplication());
+            SharedPrefManager.setIsFirstUser(getApplication(), true);
+        }
+
         loadLocale();
 
         dialog = new Dialog(this, R.style.mytheme);

@@ -41,7 +41,7 @@ public class SettingsFragment extends StatefulFragment {
     @BindView(R.id.langTxt) TextView language;
 
     private Dialog dialog;
-    private TextView ru, en, kaz, cancel, diLang;
+    private TextView ru, en, es, kaz, cancel, diLang;
 
     public SettingsFragment() { }
 
@@ -61,6 +61,7 @@ public class SettingsFragment extends StatefulFragment {
         dialog.setContentView(R.layout.language_layout);
         ru = dialog.findViewById(R.id.russionTxt);
         en = dialog.findViewById(R.id.englishTxt);
+        es = dialog.findViewById(R.id.espanolTxt);
         kaz = dialog.findViewById(R.id.kazakhTxt);
         cancel = dialog.findViewById(R.id.cancelTxt);
         diLang = dialog.findViewById(R.id.diLang);
@@ -130,6 +131,12 @@ public class SettingsFragment extends StatefulFragment {
         });
         en.setOnClickListener(v -> {
             setLocale("en");
+            loadLocale();
+            setAllTexts();
+            dialog.dismiss();
+        });
+        es.setOnClickListener(v -> {
+            setLocale("es");
             loadLocale();
             setAllTexts();
             dialog.dismiss();

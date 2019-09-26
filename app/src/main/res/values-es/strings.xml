@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Boom Brains</string>
+    <string name="AppLanguageText">Español</string>
+    <string name="ChangeLanguage">Cambiar idioma</string>
+
+    <string name="PlayBtn">Jugar</string>
+    <string name="Pause">Pausa</string>
+    <string name="YourRecord">Tu récord</string>
+    <string name="HowToPlay">Cómo jugar?</string>
+    <string name="Record">Récord: </string>
+    <string name="Continue">Continuar</string>
+    <string name="Restart">Reiniciar</string>
+    <string name="Sound">Sonido</string>
+    <string name="Mute">Silenciar</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Settings">Ajustes</string>
+
+    <string name="YourScore">Tu Puntuación: </string>
+    <string name="Score">Puntuación: </string>
+    <string name="Level">Nivel: </string>
+    <string name="Mistakes">Errores: </string>
+
+    <string name="Again">Repetir</string>
+    <string name="Exit">Salir</string>
+
+    <string name="YesNoTimeOutAnswer">Se acabó el tiempo</string>
+    <string name="CongratulationNewRecord">¡Felicidades! \n establece un nuevo récord!</string>
+    <string name="SchulteNextNumber">Siguiente número: </string>
+
+    <string name="AttentionSchulteTable">Tabla Schulte</string>
+    <string name="AttentionFigure">Buscar Número</string>
+    <string name="MemoryRemNum">Recordar número</string>
+    <string name="NumberZnaki">Calcular</string>
+    <string name="Equation">Ecuación</string>
+
+    <string name="RatingMessage">¡Su opinión es muy importante para nosotros!</string>
+    <string name="RateApp">Califica</string>
+
+    <string name="SchulteInfo">Tabla Schulte es un juego para desarrollar tu velocidad mental, tu objetivo será seleccionar los números en orden ascendente.</string>
+    <string name="RemNumInfo">Es un juego para desarrollar tu memoria.</string>
+    <string name="FindNumberInfo">es el juego en el cual tendrás que mejorar tu velocidad visual y tu concentración encontrando el cuadrado con el número correcto.</string>
+    <string name="NumberZnakiInfo">Calcular es el juego en el que tienes que encontrar la solución a la operación matemática y pulsar sobre el botón correcto.</string>
+    <string name="EquationInfo">Ecuación-establecer el orden de las operaciones aritméticas de la lista para que coincida con la respuesta. Usted necesita decidir lo más rápidamente posible con el fin de lograr un gran resultado.</string>
+</resources>

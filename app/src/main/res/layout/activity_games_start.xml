@@ -63,7 +63,6 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageView"
                     android:layout_width="17dp"
                     android:layout_height="17dp"
                     app:srcCompat="@drawable/arrow_left_icon" />

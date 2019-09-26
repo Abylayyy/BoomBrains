@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="260dp"
-    android:layout_height="350dp"
+    android:layout_height="375dp"
     android:layout_gravity="center"
     android:background="@android:color/transparent"
     android:orientation="vertical">
@@ -55,6 +55,18 @@
             app:fontFamily="@font/roboto" />
 
         <TextView
+            android:id="@+id/espanolTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/card_background"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Español"
+            android:textColor="#000"
+            app:fontFamily="@font/roboto" />
+
+        <TextView
             android:id="@+id/kazakhTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,6 +77,7 @@
             android:text="Қазақ тілі"
             android:textColor="#000"
             app:fontFamily="@font/roboto" />
+
 
     </LinearLayout>
 

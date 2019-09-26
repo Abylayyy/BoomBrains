@@ -9,7 +9,6 @@
     <string name="Pause">Кідіру</string>
     <string name="YourRecord">Сіздің жетістігіңіз</string>
     <string name="HowToPlay">Қалай ойнайды?</string>
-    <string name="Task">Тапсырма</string>
     <string name="Continue">Жалғастыру</string>
     <string name="Restart">Басынан</string>
     <string name="Sound">Дыбыс</string>
@@ -20,23 +19,14 @@
     <string name="Record">Рекорд: </string>
     <string name="Score">Балл: </string>
     <string name="Level">Деңгей: </string>
-    <string name="PreviousRecord">Алдынғы рекорд: </string>
     <string name="Mistakes">Қателер: </string>
-    <string name="Point">балл</string>
-    <string name="Rules">Ереже</string>
-    <string name="Aim">Мақсат:</string>
-    <string name="Ok">Келесі</string>
     <string name="Settings">Баптаулар</string>
 
 
-    <string name="Next">Келесі</string>
     <string name="Again">Қайтадан</string>
     <string name="Exit">Шығу</string>
-    <string name="Finish">Бітіру</string>
-    <string name="not_ready">Бұл бет уақытша қол жетімсіз</string>
 
     <string name="CongratulationNewRecord">Құттықтаймыз! \n Сіз рекорд орнаттыңыз!</string>
-    <string name="GameEnded">Ойын аяқталды!</string>
     <string name="SchulteNextNumber">Келесі сан: </string>
 
     <string name="AttentionSchulteTable">Шульте кестесі</string>

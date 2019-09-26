@@ -62,7 +62,6 @@
         app:layout_constraintTop_toTopOf="@+id/langTxt" />
 
     <View
-        android:id="@+id/view6"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
@@ -111,7 +110,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
