@@ -10,8 +10,8 @@ android {
         applicationId "kdo.one.boombrains"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 16
-        versionName "3.3"
+        versionCode 17
+        versionName "3.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true

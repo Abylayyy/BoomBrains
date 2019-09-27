@@ -192,12 +192,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        loadLocale();
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
