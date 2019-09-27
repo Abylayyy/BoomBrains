@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +44,15 @@ public class FinishedActivity extends AppCompatActivity {
     @BindView(R.id.view4) View view2;
 
     int position, score, error;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
         ButterKnife.bind(this);
+
+        loadGoogleAd();
 
         position = getIntent().getIntExtra("position", 0);
 
@@ -56,6 +66,45 @@ public class FinishedActivity extends AppCompatActivity {
             finishAffinity();
             overridePendingTransition(0,0);
         });
+    }
+
+    private void loadGoogleAd() {
+        MobileAds.initialize(this, initializationStatus -> Log.d("INITIALIZATION::", "COMPLETED"));
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7342268862236285/2044423261");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                showGoogleAdd();
+                Log.d("LOADING::", "LOADED");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d("LOADING::", "FAILED");
+            }
+            @Override
+            public void onAdOpened() { }
+            @Override
+            public void onAdClicked() { }
+            @Override
+            public void onAdLeftApplication() { }
+            @Override
+            public void onAdClosed() {
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+    }
+
+    private void showGoogleAdd() {
+        if (SharedPrefManager.getAddCount(getApplication()) >= 3) {
+            new Handler().postDelayed(() -> {
+                mInterstitialAd.show();
+                SharedPrefManager.setAddCount(getApplication(), 0);
+            }, 30);
+        }
     }
 
     private void startActivities(int position) {

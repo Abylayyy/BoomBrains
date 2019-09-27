@@ -31,18 +31,6 @@
             app:fontFamily="@font/roboto" />
 
         <TextView
-            android:id="@+id/russionTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@drawable/card_background"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Русский"
-            android:textColor="#000"
-            app:fontFamily="@font/roboto" />
-
-        <TextView
             android:id="@+id/englishTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,6 +51,18 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="Español"
+            android:textColor="#000"
+            app:fontFamily="@font/roboto" />
+
+        <TextView
+            android:id="@+id/russionTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/card_background"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Русский"
             android:textColor="#000"
             app:fontFamily="@font/roboto" />
 
