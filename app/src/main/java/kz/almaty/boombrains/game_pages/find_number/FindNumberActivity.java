@@ -52,12 +52,11 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_number);
         ButterKnife.bind(this);
-        setupDialog(this, R.style.findTheme, R.drawable.pause_find);
+        position = getIntent().getIntExtra("position", 0);
+        setupDialog(this, R.style.findTheme, R.drawable.pause_find, position);
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
-
-        position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());
         setupRecycler();
 

@@ -50,15 +50,14 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_znaki);
         ButterKnife.bind(this);
-        setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki);
+        position = getIntent().getIntExtra("position", 0);
+        setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki, position);
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
         symbols = new String[] {"+", "-", "*", "/"};
         variants = new TextView[] {first, second, third, forth};
-
-        position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());
 
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);

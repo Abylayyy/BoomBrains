@@ -25,9 +25,12 @@
         app:fontFamily="@font/roboto" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:elevation="1dp"
+        android:id="@+id/rateStarConst"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        tools:targetApi="lollipop">
 
         <ImageView
             android:id="@+id/imageView5"

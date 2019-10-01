@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment currentFragment;
     private Dialog dialog;
     TextView rateTxt, cancelTxt;
+    ConstraintLayout rateStars;
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     private InterstitialAd mInterstitialAd;
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.rating_layout);
         rateTxt = dialog.findViewById(R.id.rate_app);
         cancelTxt = dialog.findViewById(R.id.cancel_rate);
+        rateStars = dialog.findViewById(R.id.rateStarConst);
 
         loadGoogleAd();
         showRateAppDialog();
@@ -170,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         rateTxt.setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "kdo.one.boombrains")));
+            SharedPrefManager.setNeverShowAgain(getApplication(), true);
+            dialog.dismiss();
+        });
+
+        rateStars.setOnClickListener(v -> {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + "kdo.one.boombrains")));
             SharedPrefManager.setNeverShowAgain(getApplication(), true);
             dialog.dismiss();

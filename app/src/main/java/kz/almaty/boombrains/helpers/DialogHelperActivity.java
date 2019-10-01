@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ankushgrover.hourglass.Hourglass;
-import com.google.android.gms.ads.InterstitialAd;
 
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.main_pages.MainActivity;
 
 public abstract class DialogHelperActivity extends AppCompatActivity {
@@ -23,9 +23,8 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
     Dialog dialog;
     private static final String format = "%02d:%02d";
     Hourglass countDownTimer;
-    private InterstitialAd mInterstitialAd;
 
-    public void setupDialog(Context context, int style, int drawable) {
+    public void setupDialog(Context context, int style, int drawable, int position) {
         dialog = new Dialog(context, style);
         dialog.setContentView(R.layout.pause_layout);
         dialog.setCancelable(false);
@@ -58,7 +57,7 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         restart.setOnClickListener(v -> {
             finish();
             overridePendingTransition( 0, 0);
-            startActivity(getIntent());
+            startIntent(new Intent(getApplication(), AreYouReadyActivity.class), position);
             overridePendingTransition( 0, 0);
         });
 
@@ -66,6 +65,11 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
             startActivity(new Intent(context, MainActivity.class));
             finishAffinity();
         });
+    }
+
+    public void startIntent(Intent intent, int position) {
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
     public void showPauseDialog() {

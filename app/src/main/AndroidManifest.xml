@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="kz.almaty.boombrains">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/boom_brains"
@@ -17,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".game_pages.equation.EquationActivity"
+        <activity android:name=".game_pages.start_page.AreYouReadyActivity"></activity>
+        <activity
+            android:name=".game_pages.equation.EquationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EquationTheme" />
         <activity
@@ -62,10 +58,14 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7342268862236285~6997367048"/>
+            android:value="ca-app-pub-7342268862236285~6997367048" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

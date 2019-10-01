@@ -17,11 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.game_pages.equation.EquationActivity;
-import kz.almaty.boombrains.game_pages.find_number.FindNumberActivity;
-import kz.almaty.boombrains.game_pages.number_znaki.NumberZnakiActivity;
-import kz.almaty.boombrains.game_pages.shulte_page.ShulteActivity;
-import kz.almaty.boombrains.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
+import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 
 public class GamesStartActivity extends AppCompatActivity {
@@ -114,24 +110,8 @@ public class GamesStartActivity extends AppCompatActivity {
 
     private void setGames(int position) {
         switch (position) {
-            case 0: {
-                startIntent(new Intent(this, ShulteActivity.class), position);
-                break;
-            }
-            case 1: {
-                startIntent(new Intent(this, ZapomniChisloActivity.class), position);
-                break;
-            }
-            case 2: {
-                startIntent(new Intent(this, FindNumberActivity.class), position);
-                break;
-            }
-            case 3: {
-                startIntent(new Intent(this, NumberZnakiActivity.class), position);
-                break;
-            }
-            case 4: {
-                startIntent(new Intent(this, EquationActivity.class), position);
+            case 0: case 1: case 2: case 3: case 4: {
+                startIntent(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
         }

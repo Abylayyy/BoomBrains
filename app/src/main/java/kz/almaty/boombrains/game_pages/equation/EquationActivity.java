@@ -47,15 +47,15 @@ public class EquationActivity extends DialogHelperActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equation);
         ButterKnife.bind(this);
-        setupDialog(this, R.style.equationTheme, R.drawable.pause_equation);
+        position = getIntent().getIntExtra("position", 0);
+        setupDialog(this, R.style.equationTheme, R.drawable.pause_equation, position);
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
-
         symbols = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
         variants = new TextView[] {plusBtn, minusBtn, multBtn, divBtn};
 
-        position = getIntent().getIntExtra("position", 0);
+
         pauseImg.setOnClickListener(v -> showPauseDialog());
 
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);

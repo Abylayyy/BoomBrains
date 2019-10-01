@@ -22,11 +22,7 @@ import com.google.android.gms.ads.MobileAds;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.game_pages.equation.EquationActivity;
-import kz.almaty.boombrains.game_pages.find_number.FindNumberActivity;
-import kz.almaty.boombrains.game_pages.number_znaki.NumberZnakiActivity;
-import kz.almaty.boombrains.game_pages.shulte_page.ShulteActivity;
-import kz.almaty.boombrains.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
+import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 
 @SuppressLint("SetTextI18n")
@@ -109,24 +105,8 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void startActivities(int position) {
         switch (position) {
-            case 0: {
-                finishAndStart(new Intent(this, ShulteActivity.class), position);
-                break;
-            }
-            case 1: {
-                finishAndStart(new Intent(this, ZapomniChisloActivity.class), position);
-                break;
-            }
-            case 2: {
-                finishAndStart(new Intent(this, FindNumberActivity.class), position);
-                break;
-            }
-            case 3: {
-                finishAndStart(new Intent(this, NumberZnakiActivity.class), position);
-                break;
-            }
-            case 4: {
-                finishAndStart(new Intent(this, EquationActivity.class), position);
+            case 0: case 1: case 2: case 3: case 4: {
+                finishAndStart(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
         }

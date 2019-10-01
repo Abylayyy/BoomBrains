@@ -54,15 +54,14 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shulte);
         ButterKnife.bind(this);
-        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte);
+        position = getIntent().getIntExtra("position", 0);
+        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position);
         startTimer(120000, timeTxt);
         setCount();
         loadGoogleAd();
 
         numbersList = new ArrayList<>();
         setRecycler();
-
-        position = getIntent().getIntExtra("position", 0);
 
         pauseImg.setOnClickListener(v -> showPauseDialog());
 

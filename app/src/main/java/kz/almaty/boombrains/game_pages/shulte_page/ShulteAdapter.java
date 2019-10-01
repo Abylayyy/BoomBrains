@@ -40,7 +40,7 @@ public class ShulteAdapter extends RecyclerView.Adapter<ShulteAdapter.ShulteView
 
         listener.setSize(holder.itemView, holder.textView);
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.textView.setOnClickListener(v -> {
             listener.setNumber(holder.textView.getText().toString(), holder.itemView);
             listener.updateNumbers();
         });

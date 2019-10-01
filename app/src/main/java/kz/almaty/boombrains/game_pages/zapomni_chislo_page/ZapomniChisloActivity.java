@@ -61,14 +61,14 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
 
         ButterKnife.bind(this);
 
+        position = getIntent().getIntExtra("position", 0);
         numbers = new View[] {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0};
 
-        setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni);
-        startTimer(60000, timeTxt);
+        setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position);
+        startTimer(90000, timeTxt);
         setCount();
         loadGoogleAd();
 
-        position = getIntent().getIntExtra("position", 0);
         pauseImg.setOnClickListener(v -> showPauseDialog());
 
         for (View view : numbers) {
@@ -219,14 +219,15 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         hideAllViews();
         showBtn.setEnabled(false);
         pauseImg.setEnabled(false);
-        pauseTimer();
         new Handler().postDelayed(()-> {
+
             showBtn.setEnabled(true);
             slovo.setVisibility(View.INVISIBLE);
+
             slovo_new.setVisibility(View.VISIBLE);
             slovo_new.setText("");
             slovo_new.setBackgroundResource(R.drawable.trans_color);
-            resumeTimer();
+
             pauseImg.setEnabled(true);
         }, 2000);
     }
