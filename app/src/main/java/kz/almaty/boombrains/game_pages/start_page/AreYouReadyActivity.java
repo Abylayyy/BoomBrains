@@ -40,7 +40,7 @@ public class AreYouReadyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_are_you_ready);
         ButterKnife.bind(this);
         setBackgrounds(position);
-        startTimer(3000, numStart, position);
+        startTimer(2000, numStart, position);
     }
 
     private void zoomInZoomOut(TextView textView) {
@@ -63,7 +63,7 @@ public class AreYouReadyActivity extends AppCompatActivity {
 
             @Override
             public void onTimerTick(long timeRemaining) {
-                int seconds = (int) (timeRemaining / 1000);
+                int seconds = (int) (timeRemaining / 1000 + 1);
                 timeTxt.setText("" + seconds);
                 zoomInZoomOut(timeTxt);
             }
