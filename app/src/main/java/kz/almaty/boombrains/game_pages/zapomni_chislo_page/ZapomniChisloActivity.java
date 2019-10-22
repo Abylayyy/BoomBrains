@@ -64,7 +64,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         position = getIntent().getIntExtra("position", 0);
         numbers = new View[] {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0};
 
-        setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position);
+        setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position, "");
         startTimer(90000, timeTxt);
         setCount();
         loadGoogleAd();
@@ -141,6 +141,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
             recordTxt.setText("" + score);
             showError(word);
             setAudio(R.raw.wrong_clicked);
+            vibrate(100);
         }
 
         new Handler().postDelayed(()-> getLevels(currentLevel), 500);

@@ -39,6 +39,8 @@ public class SettingsFragment extends StatefulFragment {
     @BindView(R.id.settingTxt) TextView settings;
     @BindView(R.id.soundTxt) TextView sound;
     @BindView(R.id.langTxt) TextView language;
+    @BindView(R.id.vibrationSwitch) Switch vibSwitch;
+    @BindView(R.id.vibrationTxt) TextView vibTxt;
 
     private Dialog dialog;
     private TextView ru, en, es, kaz, cancel, diLang;
@@ -66,7 +68,6 @@ public class SettingsFragment extends StatefulFragment {
         cancel = dialog.findViewById(R.id.cancelTxt);
         diLang = dialog.findViewById(R.id.diLang);
 
-        languageTxt.setText(getString(R.string.AppLanguageText));
         languageTxt.setOnClickListener(v -> showDialog());
         language.setOnClickListener(v -> showDialog());
 
@@ -84,6 +85,15 @@ public class SettingsFragment extends StatefulFragment {
             }
         });
 
+        vibSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                SharedPrefManager.setVibrateEnabled(getActivity(), true);
+            } else {
+                SharedPrefManager.setVibrateEnabled(getActivity(), false);
+            }
+        });
+
+        vibSwitch.setChecked(SharedPrefManager.isVibrateEnabled(getActivity()));
         soundSwitch.setChecked(SharedPrefManager.isSoundEnabled(getActivity()));
     }
 
@@ -101,7 +111,7 @@ public class SettingsFragment extends StatefulFragment {
         if (lang != null) {
             setLocale(lang);
         } else {
-            setLocale("ru");
+            setLocale("en");
         }
     }
 
@@ -112,6 +122,7 @@ public class SettingsFragment extends StatefulFragment {
         settings.setText(getString(R.string.Settings));
         cancel.setText(getString(R.string.Cancel));
         diLang.setText(getString(R.string.ChangeLanguage));
+        vibTxt.setText(getString(R.string.Vibration));
     }
 
     @SuppressLint("SetTextI18n")

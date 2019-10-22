@@ -53,14 +53,14 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         setContentView(R.layout.activity_find_number);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        setupDialog(this, R.style.findTheme, R.drawable.pause_find, position);
+        setupDialog(this, R.style.findTheme, R.drawable.pause_find, position, "");
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
         pauseImg.setOnClickListener(v -> showPauseDialog());
         setupRecycler();
 
-        container.getLayoutParams().height = height() / 5;
+        container.getLayoutParams().height = height() / 4;
     }
 
     private int height() {
@@ -105,8 +105,8 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     private void setSizes(ConstraintLayout view) {
         int width = findRecycler.getWidth();
         int height = findRecycler.getHeight();
-        view.getLayoutParams().width = width / 4 - 6 ;
-        view.getLayoutParams().height = height / 5 - 7;
+        view.getLayoutParams().width = width / 4 - 10 ;
+        view.getLayoutParams().height = height / 5 - 13;
     }
 
     private void setRecyclerByLevel(int currentLevel) {
@@ -287,6 +287,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
 
             new Handler().postDelayed(()-> {
                 setAudio(R.raw.wrong_clicked);
+                vibrate(100);
                 randomNumberTxt.setTextColor(Color.WHITE);
                 if (score > 0) {
                     score -= 50;

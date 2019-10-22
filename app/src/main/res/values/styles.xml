@@ -5,36 +5,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="ShulteTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/shulteTheme</item>
-        <item name="colorPrimaryDark">@color/shulteTheme</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="ZapomniTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/chisloTheme</item>
-        <item name="colorPrimaryDark">@color/chisloTheme</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="FindNumTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/findTheme</item>
-        <item name="colorPrimaryDark">@color/findTheme</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="CalculationTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/calcTheme</item>
-        <item name="colorPrimaryDark">@color/calcTheme</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="EquationTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/eqTheme</item>
-        <item name="colorPrimaryDark">@color/eqTheme</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 
@@ -44,36 +15,56 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:background">@drawable/trans_color</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="shulteTheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/shulte_blur</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="findTheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/find_blur</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="numZnakiTheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/number_znaki_blur</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="equationTheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/equation_blur</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="chisloTheme" parent="android:style/Theme.Translucent">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/zapomni_chislo_blur</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="slovoTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/rem_words_blur</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="shulteLetterTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/shulte_letter_blur</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>

@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.main_fragments.MainFragment;
+import kz.almaty.boombrains.main_fragments.ProfileFragment;
 import kz.almaty.boombrains.main_fragments.SettingsFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.mainBtn) ImageView main;
     @BindView(R.id.profile) RelativeLayout profile;
     @BindView(R.id.settings) RelativeLayout settings;
+    @BindView(R.id.prof_img) ImageView profImg;
+    @BindView(R.id.setting_img) ImageView settingImg;
 
     Fragment currentFragment;
     private Dialog dialog;
@@ -149,20 +152,36 @@ public class MainActivity extends AppCompatActivity {
     public void onclick(View view) {
         switch (view.getId()) {
             case R.id.mainBtn: {
+                setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
                 currentFragment = new MainFragment();
                 replaceFragment(currentFragment, BACK_STACK_ROOT_TAG);
                 break;
             }
             case R.id.settings: {
+                setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.pressed));
                 currentFragment = new SettingsFragment();
                 replaceFragment(currentFragment, "settings_fragment", true);
                 break;
             }
             case R.id.profile: {
                 shareTextUrl();
+                setTintColor();
+                //setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+                //currentFragment = new ProfileFragment();
+                //replaceFragment(currentFragment, "profile_fragment", true);
                 break;
             }
         }
+    }
+
+    private void setTintColor() {
+        profImg.setColorFilter(getResources().getColor(R.color.pressed));
+        new Handler().postDelayed(()-> profImg.setColorFilter(getResources().getColor(R.color.disabled)),100);
+    }
+
+    private void setColorsWhenPressed(int prof, int setting) {
+        profImg.setColorFilter(prof);
+        settingImg.setColorFilter(setting);
     }
 
     private void showRateAppDialog() {
@@ -202,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
         super.onBackPressed();
     }
 }

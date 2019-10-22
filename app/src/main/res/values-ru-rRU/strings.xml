@@ -15,6 +15,7 @@
     <string name="Mute">Без звука</string>
     <string name="Cancel">Отмена</string>
     <string name="Settings">Настройки</string>
+    <string name="Vibration">Вибрация</string>
 
     <string name="YourScore">Твой счет:</string>
     <string name="Record">Рекорд:</string>
@@ -29,18 +30,31 @@
 
     <string name="AttentionSchulteTable">Таблица Шульте</string>
     <string name="SchulteNextNumber">Следующая цифра:</string>
-    <string name="AttentionFigure">Найди цифру</string>
-    <string name="MemoryRemNum">Запомни число</string>
+    <string name="AttentionFigure">Найди Цифру</string>
+    <string name="MemoryRemNum">Запомни Число</string>
     <string name="NumberZnaki">Вычисление</string>
     <string name="Equation">Уравнение</string>
+    <string name="RememberWords">Запомни Слова</string>
+    <string name="ShulteLetters">Шульте Буквы</string>
 
     <string name="YesNoTimeOutAnswer">Время вышло</string>
 
     <string name="SchulteInfo">Таблица Шульте  - нужно набирать цифры по возрастанию</string>
+    <string name="SchulteLetterInfo">Таблица Букв Шульте - нужно набирать буквы по алфавиту</string>
     <string name="RemNumInfo">Запомни число - показывается цифра и через 2 секунды исчезает. Нужно запомнить и повторить цифру набрав ее на клавиатуре.</string>
     <string name="FindNumberInfo">Найди цифру - должен найти указанную цифру среди остальных как можно быстрее что бы за короткое время достичь большого результата.</string>
     <string name="NumberZnakiInfo">Вычисление - должен решить задачу и найти ответ среди указанных цифр как можно быстрее чтобы достичь большого результата.</string>
     <string name="EquationInfo">Уравнение - установите порядок арифметических операции из списка так, чтобы он соответствовал ответу. Нужно решить как можно быстрее чтобы достичь большого результата.</string>
     <string name="RatingMessage">Нам очень важно Ваше мнение!</string>
     <string name="RateApp">Оценить</string>
+    <string name="Easy">Легкий</string>
+    <string name="Medium">Средний</string>
+    <string name="Hard">Сложный</string>
+    <string name="Task">Задания</string>
+    <string name="RatingFriends">Рейтинг среди друзей</string>
+    <string name="Rules">Правила</string>
+    <string name="RemWordsInfo">Запомни слова - показываются слова и через 2 секунды исчезают. Нужно запомнить и повторить слова набрав его на клавиатуре.</string>
+    <string name="NextLetter">Следующая буква: </string>
+    <string name="Profile">Профиль</string>
+
 </resources>

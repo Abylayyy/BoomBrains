@@ -7,16 +7,10 @@
     android:background="@drawable/number_znaki_back"
     tools:context=".game_pages.number_znaki.NumberZnakiActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
-        android:weightSum="2"
+        android:background="@color/recyclerBack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -25,79 +19,105 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/button1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|fill"
-                android:layout_margin="2.5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/find_item_back"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="#0787BB"
-                android:textSize="36sp" />
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/button2"
+                <TextView
+                    android:id="@+id/button1"
+                    android:elevation="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|fill"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/find_item_back"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#2CB0B2"
+                    android:textSize="36sp"
+                    tools:targetApi="lollipop" />
+
+                <TextView
+                    android:id="@+id/button2"
+                    android:elevation="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|fill"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/find_item_back"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#2CB0B2"
+                    android:textSize="36sp"
+                    tools:targetApi="lollipop" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|fill"
-                android:layout_margin="2.5dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/find_item_back"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="#0787BB"
-                android:textSize="36sp" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/button3"
+                    android:elevation="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|fill"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/find_item_back"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="#2CB0B2"
+                    android:textSize="36sp"
+                    tools:targetApi="lollipop" />
+
+                <TextView
+                    android:id="@+id/button4"
+                    android:elevation="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|fill"
+                    android:layout_margin="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/find_item_back"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="#2CB0B2"
+                    android:textSize="36sp"
+                    tools:targetApi="lollipop" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|fill"
-                android:layout_margin="2.5dp"
-                android:layout_weight="1"
-                android:background="@drawable/find_item_back"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="#0787BB"
-                android:textSize="36sp" />
-
-            <TextView
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center|fill"
-                android:layout_margin="2.5dp"
-                android:layout_weight="1"
-                android:background="@drawable/find_item_back"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="#0787BB"
-                android:textSize="36sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/nextNumShulte2"

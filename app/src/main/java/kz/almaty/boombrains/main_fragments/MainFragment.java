@@ -1,6 +1,8 @@
 package kz.almaty.boombrains.main_fragments;
 
 
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +32,13 @@ import kz.almaty.boombrains.models.SubGames;
 /**
  * A simple {@link Fragment} subclass.
  */
-
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class MainFragment extends StatefulFragment {
 
     @BindView(R.id.underRecycler) RecyclerView typeRecycler;
+    List<SubGames> gameTypesList = new ArrayList<>();
 
-    private String shulteRecord = "0", zapomniChisloRecord = "0", findNumRecord = "0", numZnakiRecord = "0", equationRecord = "0";
+    private String shulteRecord = "0", zapomniChisloRecord = "0", findNumRecord = "0", numZnakiRecord = "0", equationRecord = "0", shulteLetterRecord = "0", remWordsRecord = "0";
 
     public MainFragment() {}
 
@@ -48,6 +53,7 @@ public class MainFragment extends StatefulFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadRecords();
+        loadLocale();
         loadData();
     }
 
@@ -67,15 +73,26 @@ public class MainFragment extends StatefulFragment {
         if (SharedPrefManager.getEquationRecord(getContext()) != null) {
             equationRecord = SharedPrefManager.getEquationRecord(getContext());
         }
+        if (SharedPrefManager.getShulteLetterRecord(getContext()) != null) {
+            shulteLetterRecord = SharedPrefManager.getShulteLetterRecord(getContext());
+        }
+        if (SharedPrefManager.getSlovoRecord(getContext()) != null) {
+            remWordsRecord = SharedPrefManager.getSlovoRecord(getContext());
+        }
     }
 
     private void loadData() {
-        final List<SubGames> gameTypesList = new ArrayList<>(Arrays.asList(
+        if(gameTypesList != null && gameTypesList.size() > 0){
+            gameTypesList.clear();
+        }
+        gameTypesList = new ArrayList<>(Arrays.asList(
                 new SubGames(getString(R.string.AttentionSchulteTable), shulteRecord, R.drawable.shulte_icon, R.drawable.shulte_draw, R.drawable.shulte_draw_back),
                 new SubGames(getString(R.string.MemoryRemNum), zapomniChisloRecord, R.drawable.zap_chislo_icon, R.drawable.zapomni_draw, R.drawable.zapomni_draw_back),
                 new SubGames(getString(R.string.AttentionFigure), findNumRecord, R.drawable.find_icon, R.drawable.find_num_draw, R.drawable.find_num_draw_back),
                 new SubGames(getString(R.string.NumberZnaki), numZnakiRecord, R.drawable.num_znaki_icon, R.drawable.num_znaki_draw, R.drawable.num_znaki_draw_back),
-                new SubGames(getString(R.string.Equation), equationRecord, R.drawable.equation_icon, R.drawable.equation_draw, R.drawable.equation_draw_back)
+                new SubGames(getString(R.string.Equation), equationRecord, R.drawable.equation_icon, R.drawable.equation_draw, R.drawable.equation_draw_back),
+                new SubGames(getString(R.string.ShulteLetters), shulteLetterRecord, R.drawable.shulte_letter_icon, R.drawable.letter_draw, R.drawable.letter_draw_back),
+                new SubGames(getString(R.string.RememberWords), remWordsRecord, R.drawable.rem_words_icon, R.drawable.rem_words_draw, R.drawable.rem_words_draw_back)
         ));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -95,5 +112,23 @@ public class MainFragment extends StatefulFragment {
     @Override
     protected Bundle getStateToSave() {
         return null;
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration conf = new Configuration();
+        conf.setLocale(locale);
+        getResources().updateConfiguration(conf, getResources().getDisplayMetrics());
+        SharedPrefManager.setLanguage(getContext(), lang);
+    }
+
+    private void loadLocale() {
+        String lang = SharedPrefManager.getLanguage(getContext());
+        if (lang != null) {
+            setLocale(lang);
+        } else {
+            setLocale("en");
+        }
     }
 }

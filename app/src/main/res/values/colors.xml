@@ -2,51 +2,49 @@
 <resources>
 
     <!-- Main colors -->
-    <color name="colorPrimary">#FFAC0A</color>
-    <color name="colorPrimaryDark">#FFAC0A</color>
-    <color name="colorAccent">#FF5C00</color>
+    <color name="colorPrimary">#357EBD</color>
+    <color name="colorPrimaryDark">#357EBD</color>
+    <color name="colorAccent">#357EBD</color>
+
+    <color name="shulteLevel">#F09800</color>
 
     <!-- Type colors -->
-    <color name="vnimanieColor">#EB9500</color>
-    <color name="pamiatColor">#603A9E</color>
-    <color name="findColor">#56CE00</color>
-    <color name="numZnakiColor">#0987B9</color>
-    <color name="equationColor">#FE2244</color>
-
-    <!-- Bottom layer colors -->
-    <color name="bottomShulte">#E8AE00</color>
-    <color name="bottomZapomni">#9554FF</color>
-    <color name="bottomFind">#9CDE00</color>
-    <color name="bottomNumZnak">#2CC2D2</color>
-    <color name="bottomEquation">#FF6277</color>
+    <color name="vnimanieColor">#F8B818</color>
+    <color name="pamiatColor">#713CA1</color>
+    <color name="findColor">#40BF67</color>
+    <color name="numZnakiColor">#2CB0B2</color>
+    <color name="equationColor">#BE1856</color>
+    <color name="remWordsColor">#F36D1E</color>
+    <color name="shulteLetterColor">#E91E22</color>
 
     <!-- Kak igrat teksts -->
+    <color name="kakIgratShulte">#FE6100</color>
 
     <!-- Pause backgrounds -->
     <color name="pauseShulte">#6D480F</color>
     <color name="pauseZapomni">#433558</color>
     <color name="pauseFind">#006400</color>
     <color name="pauseNumZnaki">#1f9393</color>
-    <color name="pauseEquation">#99004d</color>
+    <color name="pauseEquation">#692635</color>
+    <color name="pauseRemWord">#99522C</color>
+    <color name="pauseLetter">#940809</color>
 
     <!-- Top action bar colors -->
-    <color name="topShulte">#F1B300</color>
-    <color name="topSlovo">#903BFF</color>
-    <color name="topFind">#51C900</color>
-    <color name="topNumZnaki">#1F9DBD</color>
-    <color name="topEquation">#FF2265</color>
-
-    <color name="shulteTheme">#CE9D1A</color>
-    <color name="chisloTheme">#58249B</color>
-    <color name="findTheme">#44A004</color>
-    <color name="calcTheme">#066C86</color>
-    <color name="eqTheme">#B8073D</color>
+    <color name="topShulte">#F8B818</color>
+    <color name="topSlovo">#6846A4</color>
+    <color name="topFind">#4ABF61</color>
+    <color name="topNumZnaki">#2CB0B2</color>
+    <color name="topEquation">#BE1856</color>
+    <color name="topShulteLetter">#E91E22</color>
+    <color name="topRemWords">#F36D1E</color>
 
     <!-- Under action bar colors -->
-    <color name="underShulte">#EB9700</color>
-    <color name="underSlovo">#9D3EFF</color>
-    <color name="underNumZnaki">#30CEDA</color>
-    <color name="underEquation">#FF6378</color>
+    <color name="underShulte">#FCC91B</color>
+    <color name="underRemWords">#F87B22</color>
+    <color name="underShulteLetter">#F12227</color>
+    <color name="underSlovo">#774DB3</color>
+    <color name="underNumZnaki">#34C0C0</color>
+    <color name="underEquation">#CF1C61</color>
 
     <!-- Default colors -->
     <color name="colorWhite">#ffffff</color>
@@ -57,16 +55,18 @@
     <color name="shulteOps">#66FFFFFF</color>
 
 
-    <!-- Result colors -->
-    <color name="resultShulte">#977C33</color>
-    <color name="resultZapomni">#7D5A99</color>
-    <color name="resultFind">#469B12</color>
-    <color name="resultNumZnaki">#11ADCF</color>
-    <color name="resultEquation">#FD2D4B</color>
-
     <color name="shulteErrorColor">#80B90000</color>
     <color name="shulteSuccessColor">#8000C74F</color>
 
-    <color name="successFind">#469B12</color>
+    <color name="successFind">#40BF67</color>
+    <color name="recyclerBack">#EEEEEE</color>
+    <color name="howtoplay">#686868</color>
+    <color name="kakIgrat">#3F3F3F</color>
+
+    <color name="numbersColor">#713CA1</color>
+
+    <color name="pressed">#357EBD</color>
+    <color name="disabled">#B7B7B7</color>
+    <color name="underFind">#58CF6D</color>
 
 </resources>

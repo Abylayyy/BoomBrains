@@ -51,7 +51,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         setContentView(R.layout.activity_number_znaki);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki, position);
+        setupDialog(this, R.style.numZnakiTheme, R.drawable.pause_num_znaki, position, "");
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
@@ -124,7 +124,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
     private void setBackgroundSuccess(TextView view) {
         view.setBackgroundResource(R.drawable.find_success);
         view.setTextColor(Color.WHITE);
-        new Handler().postDelayed(()-> countSuccess(view), 200);
+        new Handler().postDelayed(()-> countSuccess(view), 100);
     }
 
     private void countSuccess(TextView view) {
@@ -132,7 +132,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         currentLevel += 1;
         score += 100;
         view.setBackgroundResource(R.drawable.find_item_back);
-        view.setTextColor(Color.parseColor("#0787BB"));
+        view.setTextColor(Color.parseColor("#2CB0B2"));
         recordTxt.setText("" + score);
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
         getLevels(currentLevel);
@@ -141,17 +141,18 @@ public class NumberZnakiActivity extends DialogHelperActivity {
     private void setBackgroundError(TextView view) {
         view.setBackgroundResource(R.drawable.find_item_red);
         view.setTextColor(Color.WHITE);
-        new Handler().postDelayed(()-> countError(view), 200);
+        new Handler().postDelayed(()-> countError(view), 100);
     }
 
     private void countError(TextView view) {
+        vibrate(100);
         setAudio(R.raw.wrong_clicked);
         errors += 1;
         if (score > 0) {
             score -= 50;
         }
         view.setBackgroundResource(R.drawable.find_item_back);
-        view.setTextColor(Color.parseColor("#0787BB"));
+        view.setTextColor(Color.parseColor("#2CB0B2"));
         recordTxt.setText("" + score);
         getLevels(currentLevel);
     }

@@ -48,7 +48,7 @@ public class EquationActivity extends DialogHelperActivity {
         setContentView(R.layout.activity_equation);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        setupDialog(this, R.style.equationTheme, R.drawable.pause_equation, position);
+        setupDialog(this, R.style.equationTheme, R.drawable.pause_equation, position, "");
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
@@ -127,7 +127,7 @@ public class EquationActivity extends DialogHelperActivity {
             for (int i = 0; i < old_word.length(); i++) {
                 String part = String.valueOf(old_word.charAt(i));
                 if (part.equals("?")) {
-                    part = "&nbsp;<span style=\"background: #ffffff; color: #FE1E45; font-size: 22px; \">" + "&nbsp;" + part + "&nbsp;" + "</span>&nbsp;";
+                    part = "&nbsp;<span style=\"background: #ffffff; color: #BE1856; font-size: 22px; \">" + "&nbsp;" + part + "&nbsp;" + "</span>&nbsp;";
                 }
                 whole.append(part);
             }
@@ -165,7 +165,7 @@ public class EquationActivity extends DialogHelperActivity {
         currentLevel += 1;
         score += 100;
         view.setBackgroundResource(R.drawable.find_item_back);
-        view.setTextColor(Color.parseColor("#FE1E45"));
+        view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
         getLevels(currentLevel);
@@ -179,12 +179,13 @@ public class EquationActivity extends DialogHelperActivity {
 
     private void countError(TextView view) {
         setAudio(R.raw.wrong_clicked);
+        vibrate(100);
         errors += 1;
         if (score > 0) {
             score -= 50;
         }
         view.setBackgroundResource(R.drawable.find_item_back);
-        view.setTextColor(Color.parseColor("#FE1E45"));
+        view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
         getLevels(currentLevel);
     }

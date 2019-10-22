@@ -20,6 +20,9 @@ public class SharedPrefManager {
     private static final String FIRST_SHOWN = "FIRST_SHOWN";
     private static final String DEVICE_ID = "DEVICE_ID";
     private static final String FIRST_USER = "FIRST_USER";
+    private static final String SLOVO_RECORD = "SLOVO_RECORD";
+    private static final String SHULTE_LETTER = "SHULTE_LETTER";
+    private static final String VIBRATE = "VIBRATE";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -46,6 +49,16 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    public static boolean isVibrateEnabled(Context context) {
+        return getSharedPreferences(context).getBoolean(VIBRATE, false);
+    }
+
+    public static void setVibrateEnabled(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(VIBRATE, newValue);
+        editor.apply();
+    }
+
     public static void setShulteRecord(Context context, String newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(SHULTE_RECORD, newValue);
@@ -54,6 +67,16 @@ public class SharedPrefManager {
 
     public static String getShulteRecord(Context context) {
         return getSharedPreferences(context).getString(SHULTE_RECORD, null);
+    }
+
+    public static void setShulteLetterRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(SHULTE_LETTER, newValue);
+        editor.apply();
+    }
+
+    public static String getShulteLetterRecord(Context context) {
+        return getSharedPreferences(context).getString(SHULTE_LETTER, null);
     }
 
     public static void setFindRecord(Context context, String newValue) {
@@ -79,6 +102,16 @@ public class SharedPrefManager {
     public static void setNumZnakiRecord(Context context, String newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(NUM_ZNAKI_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getSlovoRecord(Context context) {
+        return getSharedPreferences(context).getString(SLOVO_RECORD, null);
+    }
+
+    public static void setSlovoRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(SLOVO_RECORD, newValue);
         editor.apply();
     }
 
@@ -122,6 +155,7 @@ public class SharedPrefManager {
         setAddCount(context, 0);
         setNeverShowAgain(context, false);
         setIsFirstShown(context, false);
+        setVibrateEnabled(context, true);
     }
 
     public static void clearResults(Context context) {

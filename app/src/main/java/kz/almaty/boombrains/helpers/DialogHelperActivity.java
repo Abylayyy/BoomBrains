@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
     private static final String format = "%02d:%02d";
     Hourglass countDownTimer;
 
-    public void setupDialog(Context context, int style, int drawable, int position) {
+    public void setupDialog(Context context, int style, int drawable, int position, String name) {
         dialog = new Dialog(context, style);
         dialog.setContentView(R.layout.pause_layout);
         dialog.setCancelable(false);
@@ -57,7 +58,7 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         restart.setOnClickListener(v -> {
             finish();
             overridePendingTransition( 0, 0);
-            startIntent(new Intent(getApplication(), AreYouReadyActivity.class), position);
+            startIntent(new Intent(getApplication(), AreYouReadyActivity.class), position, name);
             overridePendingTransition( 0, 0);
         });
 
@@ -67,8 +68,18 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         });
     }
 
-    public void startIntent(Intent intent, int position) {
+    public void vibrate(int mill) {
+        if (SharedPrefManager.isVibrateEnabled(getApplication())) {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(mill);
+        }
+    }
+
+    public void startIntent(Intent intent, int position, String name) {
         intent.putExtra("position", position);
+        if (!name.equals("")) {
+            intent.putExtra("name", name);
+        }
         startActivity(intent);
     }
 

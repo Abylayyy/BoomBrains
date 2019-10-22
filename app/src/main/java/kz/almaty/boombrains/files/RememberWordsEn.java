@@ -11,7 +11,7 @@ public class RememberWordsEn {
             "outdoor","outlook","outside","overall","pacific","package","painted","parking","partial","partner","passage","passing","passion","passive","patient","pattern",
             "payable","payment","penalty","pending","pension","percent","perfect","perform","perhaps","phoenix","picking","picture","pioneer","plastic","pointed","popular",
             "portion","poverty","precise","predict","premier","premium","prepare","present","prevent","primary","printer","privacy","private","problem","proceed","process",
-            "produce","product","profile","program","project","promise","promote","protect","protein","protest","provide","publish","purpose","pushing","qualify","quality",
+            "produce","product","share","program","project","promise","promote","protect","protein","protest","provide","publish","purpose","pushing","qualify","quality",
             "quarter","radical","railway","readily","Reading","reality","realize","receipt","receive","recover","reflect","regular","related","release","remains","removal",
             "removed","replace","request","require","reserve","resolve","respect","respond","restore","retired","revenue","reverse","rollout","routine","running","satisfy",
             "science","section","segment","serious","service","serving","session","setting","seventh","several","shortly","showing","silence","silicon","similar","sitting",
@@ -91,4 +91,14 @@ public class RememberWordsEn {
             "were","west","what","when","whom","wide","wife","wild","will","wind","wine","wing","wire","wise","wish","with","wood","word","wore","work","yard","yeah","year","your","zero","zone"
     ));
 
+    public static ArrayList<String> letterENList = new ArrayList<>(Arrays.asList(
+            "A", "B", "C", "D", "E", "F", "G", "H",
+            "I", "J", "K", "L", "M", "N", "O", "P",
+            "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ));
+
+    public static ArrayList<String> letterESList = new ArrayList<>(Arrays.asList(
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+            "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ));
 }

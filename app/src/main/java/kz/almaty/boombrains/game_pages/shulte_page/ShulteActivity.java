@@ -27,6 +27,15 @@ import kz.almaty.boombrains.main_pages.FinishedActivity;
 @SuppressLint("SetTextI18n")
 public class ShulteActivity extends DialogHelperActivity implements ShulteAdapter.ShulteListener {
 
+    private static final int LEVEL6 = 66;
+    private static final int LEVEL7 = 77;
+    private static final int LEVEL8 = 88;
+    public static final int LEVEL1 = 11;
+    public static final int LEVEL2 = 22;
+    public static final int LEVEL3 = 33;
+    public static final int LEVEL4 = 44;
+    public static final int LEVEL5 = 55;
+
     ShulteAdapter adapter;
     List<String> numbersList;
     String number;
@@ -38,16 +47,14 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @BindView(R.id.constraintLayout2) ConstraintLayout navBarLayout;
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.shulteRecycler) RecyclerView shulteRecycler;
+    @BindView(R.id.mainShulteConst) ConstraintLayout layout;
+
     private View view;
     public int index = 1;
     public int score = 0;
-    public static final int LEVEL1 = 11;
-    public static final int LEVEL2 = 22;
-    public static final int LEVEL3 = 33;
-    public static final int LEVEL4 = 44;
-    public static final int LEVEL5 = 55;
     int currentLevel = LEVEL1;
     private int errors;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +62,17 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         setContentView(R.layout.activity_shulte);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position);
         startTimer(120000, timeTxt);
         setCount();
         loadGoogleAd();
 
+        name = getIntent().getStringExtra("name");
         numbersList = new ArrayList<>();
+        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position, name);
+
         setRecycler();
 
         pauseImg.setOnClickListener(v -> showPauseDialog());
-
         nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
     }
 
@@ -109,110 +117,106 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     }
 
     @Override
-    public void updateNumbers() {
+    public void updateNumbers(TextView text) {
         if (number.equals(String.valueOf(index))) {
-            setAudio(R.raw.click);
-            setBackgroundSuccess(view);
-            score += 100;
-            index += 1;
-            recordTxt.setText(score + "");
-            nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
-            if (number.equals(String.valueOf(numbersList.size()))) {
-                index = 1;
-                nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
-                setGameLevels(getLevel(numbersList.size()));
-            }
+            setSuccess(text, name);
         }
         else {
-            errors += 1;
-            if (score > 0) {
-                score -= 50;
-            }
-            recordTxt.setText(score + "");
-            setBackgroundError(view);
-            setAudio(R.raw.wrong_clicked);
+            setError();
+        }
+    }
+
+    private void setError() {
+        errors += 1;
+        if (score > 0) {
+            score -= 50;
+        }
+        recordTxt.setText(score + "");
+        setBackgroundError(view);
+        setAudio(R.raw.wrong_clicked);
+        vibrate(100);
+    }
+
+    private void setSuccess(TextView text, String name) {
+        if (name.equals(getString(R.string.Easy))) { setEasyLevel(text); }
+        else if (name.equals(getString(R.string.Medium))) { success(); }
+        else if (name.equals(getString(R.string.Hard))) { success();setHardLevels(currentLevel);  }
+    }
+
+
+    private void setEasyLevel(TextView text) {
+        text.setVisibility(View.INVISIBLE);
+        success();
+    }
+
+    private void success() {
+        setAudio(R.raw.click);
+        setBackgroundSuccess(view);
+        score += 100;
+        index += 1;
+        recordTxt.setText(score + "");
+        nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
+        if (number.equals(String.valueOf(numbersList.size()))) {
+            index = 1;
+            nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
+            setGameLevels(getLevel(numbersList.size()));
         }
     }
 
     @Override
     public void setSize(View view, TextView text) {
         switch (currentLevel) {
-            case LEVEL1: {
-                setSizes(view, text,4);
-                break;
-            }
-            case LEVEL2: {
-                setSizes(view, text,5);
-                break;
-            }
-            case LEVEL3: {
-                setSizes(view, text,6);
-                break;
-            }
-            case LEVEL4: {
-                setSizes(view, text,7);
-                break;
-            }
-            case LEVEL5: {
-                setSizes(view, text,8);
-                break;
-            }
-            default: {
-                setSizes(view, text, 9);
-                break;
-            }
+            case LEVEL1: { setSizes(view, text,4);break; }
+            case LEVEL2: { setSizes(view, text,5);break; }
+            case LEVEL3: { setSizes(view, text,6);break; }
+            case LEVEL4: { setSizes(view, text,7);break; }
+            case LEVEL5: { setSizes(view, text,8);break; }
+            case LEVEL6: { setSizes(view, text,9);break; }
+            default: { setSizes(view, text, 10);break; }
         }
     }
 
     private void setSizes(View view, TextView textView, int i) {
         int width = shulteRecycler.getWidth();
         int height = shulteRecycler.getHeight();
-        view.getLayoutParams().width = width / i;
-        view.getLayoutParams().height = height / i;
-
-        float size = 0f;
-
+        int new_width = 0, new_height = 0;
         switch (i) {
-            case 4: {
-                size = (float)((width / i) / 6.6);
-                break;
-            }
-            case 5: {
-                size = (float)((width / i) / 6.2);
-                break;
-            }
-            case 6: {
-                size = (float)((width / i) / 5.8);
-                break;
-            }
-            case 7: {
-                size = (float)((width / i) / 5.4);
-                break;
-            }
-            case 8: {
-                size = (float)((width / i) / 5.0);
-                break;
-            }
+            case 4: { new_width = width / i - 10; new_height = height / i - 11; break; }
+            case 5: { new_width = width / i - 9; new_height = height / i - 9; break; }
+            case 6: { new_width = width / i - 8;new_height = height / i - 8; break; }
+            case 7: { new_width = width / i - 7; new_height = height / i - 7; break; }
+            case 8: { new_width = width / i - 6; new_height = height / i - 7; break; }
+            case 9: case 10: { new_width = width / i - 5; new_height = height / i - 6; break; }
+        }
+        view.getLayoutParams().width = new_width;
+        view.getLayoutParams().height = new_height;
+        sozSizes(textView, width, i);
+    }
+
+    private void sozSizes(TextView textView, int width, int i) {
+        float size = 0f;
+        switch (i) {
+            case 4: { size = (float)((width / i) / 6.6);break; }
+            case 5: { size = (float)((width / i) / 6.2);break; }
+            case 6: { size = (float)((width / i) / 5.8);break; }
+            case 7: { size = (float)((width / i) / 5.4);break; }
+            case 8: { size = (float)((width / i) / 5.0);break; }
+            case 9: { size = (float)((width / i) / 4.7);break; }
+            case 10: { size = (float)((width / i) / 4.4);break;}
         }
         textView.setTextSize(size);
     }
 
-
     public int getLevel(int size) {
         int level = 0;
         switch (size) {
-            case 16:
-                level = LEVEL2;
-                break;
-            case 25:
-                level = LEVEL3;
-                break;
-            case 36:
-                level = LEVEL4;
-                break;
-            case 49:
-                level = LEVEL5;
-                break;
+            case 16: level = LEVEL2;break;
+            case 25: level = LEVEL3;break;
+            case 36: level = LEVEL4;break;
+            case 49: level = LEVEL5;break;
+            case 64: level = LEVEL6;break;
+            case 81: level = LEVEL7;break;
+            case 100: level = LEVEL8;break;
         }
         return level;
     }
@@ -220,8 +224,8 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     public void setGameLevels(int level) {
         switch (level) {
             case LEVEL1: {
-                setRecycler();
                 currentLevel = LEVEL1;
+                setRecycler();
                 break;
             }
             case LEVEL2: {
@@ -244,11 +248,48 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
             }
             case LEVEL5: {
                 currentLevel = LEVEL5;
-                setupList(56, 8);
+                setupList(64, 8);
+                setAudio(R.raw.level_complete);
+                break;
+            }
+            case LEVEL6: {
+                currentLevel = LEVEL6;
+                setupList(81, 9);
+                setAudio(R.raw.level_complete);
+                break;
+            }
+            case LEVEL7: {
+                currentLevel = LEVEL7;
+                setupList(100, 10);
+                setAudio(R.raw.level_complete);
+                break;
+            }
+            case LEVEL8: {
+                currentLevel = LEVEL8;
+                setupList(121, 11);
                 setAudio(R.raw.level_complete);
                 break;
             }
         }
+    }
+
+    public void setHardLevels(int level) {
+        switch (level) {
+            case LEVEL1: { setListWithHandler(16, 4);break; }
+            case LEVEL2: { setListWithHandler(25, 5);break; }
+            case LEVEL3: { setListWithHandler(36, 6);break; }
+            case LEVEL4: { setListWithHandler(49, 7);break; }
+            case LEVEL5: { setListWithHandler(64, 8);break; }
+            case LEVEL6: { setListWithHandler(81, 9);break; }
+            case LEVEL7: { setListWithHandler(100, 10);break; }
+            case LEVEL8: { setListWithHandler(121, 11);break; }
+        }
+    }
+
+    private void setListWithHandler(int i, int i1) {
+        new Handler().postDelayed(()-> {
+            setupList(i, i1);
+        }, 100);
     }
 
     @Override
@@ -275,6 +316,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         intent.putExtra("position", position);
         intent.putExtra("shulteScore", score);
         intent.putExtra("shulteErrors", errors);
+        intent.putExtra("name", name);
 
         String oldScore = SharedPrefManager.getShulteRecord(getApplication());
         if (oldScore != null) {

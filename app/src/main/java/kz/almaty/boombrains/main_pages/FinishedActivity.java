@@ -41,6 +41,7 @@ public class FinishedActivity extends AppCompatActivity {
 
     int position, score, error;
     private InterstitialAd mInterstitialAd;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class FinishedActivity extends AppCompatActivity {
         loadGoogleAd();
 
         position = getIntent().getIntExtra("position", 0);
+        name = getIntent().getStringExtra("name");
 
         setBtnColor(position);
         setBackgrounds(position);
@@ -105,7 +107,7 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void startActivities(int position) {
         switch (position) {
-            case 0: case 1: case 2: case 3: case 4: {
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: {
                 finishAndStart(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
@@ -114,6 +116,9 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void finishAndStart(Intent intent, int position) {
         intent.putExtra("position", position);
+        if (name != null) {
+            intent.putExtra("name", name);
+        }
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
@@ -139,6 +144,15 @@ public class FinishedActivity extends AppCompatActivity {
             }
             case 4: {
                 setEquationBackgrounds();
+                break;
+            }
+            case 5: {
+                setShulteLetterBackgrounds();
+                break;
+            }
+            case 6: {
+                setRemWordsBackgrounds();
+                break;
             }
         }
     }
@@ -251,22 +265,67 @@ public class FinishedActivity extends AppCompatActivity {
         parent.setBackgroundResource(R.drawable.number_znaki_blur);
     }
 
+    private void setShulteLetterBackgrounds() {
+        score = getIntent().getIntExtra("letterScore", 0);
+        error = getIntent().getIntExtra("letterErrors", 0);
+        String message = getIntent().getStringExtra("letterRecord");
+        if (message != null) {
+            successMessage.setText(message);
+            setMeasures(successImg, R.drawable.zapomni_new_record);
+            setAudio(R.raw.new_record);
+        } else {
+            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
+            setMeasures(successImg, R.drawable.zapomni_timed_out);
+            setAudio(R.raw.game_over);
+        }
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
+        setRecords(SharedPrefManager.getShulteLetterRecord(getApplication()));
+        parent.setBackgroundResource(R.drawable.shulte_letter_blur);
+    }
+
+    private void setRemWordsBackgrounds() {
+        score = getIntent().getIntExtra("slovoScore", 0);
+        error = getIntent().getIntExtra("slovoErrors", 0);
+        String message = getIntent().getStringExtra("slovoRecord");
+        if (message != null) {
+            successMessage.setText(message);
+            setMeasures(successImg, R.drawable.zapomni_new_record);
+            setAudio(R.raw.new_record);
+        } else {
+            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
+            setMeasures(successImg, R.drawable.zapomni_timed_out);
+            setAudio(R.raw.game_over);
+        }
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
+        setRecords(SharedPrefManager.getSlovoRecord(getApplication()));
+        parent.setBackgroundResource(R.drawable.rem_words_blur);
+    }
+
     private void setBtnColor(int position) {
         switch (position) {
             case 0:
-                setColors(R.color.resultShulte);
+                setColors(R.color.vnimanieColor);
                 break;
             case 1:
-                setColors(R.color.resultZapomni);
+                setColors(R.color.pamiatColor);
                 break;
             case 2:
-                setColors(R.color.resultFind);
+                setColors(R.color.findColor);
                 break;
             case 3:
-                setColors(R.color.resultNumZnaki);
+                setColors(R.color.numZnakiColor);
                 break;
             case 4:
-                setColors(R.color.resultEquation);
+                setColors(R.color.equationColor);
+                break;
+            case 5:
+                setColors(R.color.shulteLetterColor);
+                break;
+            case 6:
+                setColors(R.color.remWordsColor);
+                break;
         }
     }
 

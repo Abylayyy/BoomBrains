@@ -10,8 +10,8 @@ android {
         applicationId "kdo.one.boombrains"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 19
-        versionName "3.6"
+        versionCode 20
+        versionName "3.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -56,16 +56,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //loading icons
-    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    //implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    //implementation 'de.hdodenhof:circleimageview:2.2.0'
 
     //GLide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    //implementation 'com.github.bumptech.glide:glide:4.8.0'
+    //annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.ankushgrover:Hourglass:2.0.0'
 

@@ -13,6 +13,7 @@
     <string name="Restart">Restart</string>
     <string name="Sound">Sound</string>
     <string name="Mute">Mute</string>
+    <string name="Vibration">Vibration</string>
     <string name="Exit">Exit</string>
     <string name="Cancel">Cancel</string>
     <string name="Settings">Settings</string>
@@ -35,15 +36,27 @@
     <string name="MemoryRemNum">Remember Number</string>
     <string name="NumberZnaki">Calculation</string>
     <string name="Equation">Equation</string>
+    <string name="RememberWords">Remember Words</string>
+    <string name="ShulteLetters">Schulte Letters</string>
 
     <string name="YesNoTimeOutAnswer">Time out</string>
 
     <string name="SchulteInfo">Schulte Table - is a game for your concentration and for your fast reading. You need to collect numbers in ascending order.</string>
+    <string name="SchulteLetterInfo">Schulte Letters - is a game for your concentration and for your fast reading. You need to collect letters alphabetically.</string>
     <string name="RemNumInfo">Remember Number - is a game for your memory.</string>
     <string name="FindNumberInfo">Find Number - find number on the display as much as it possible, to earn more money.</string>
     <string name="NumberZnakiInfo">Calculation - solve the problem and find the answer among these numbers as quickly as possible in order to achieve a great result.</string>
     <string name="EquationInfo">Equation - set the order of arithmetic operations from the list so that it matches the answer. You need to decide as quickly as possible in order to achieve a great result.</string>
     <string name="RatingMessage">Your opinion is very important to us!</string>
     <string name="RateApp">Rate</string>
+    <string name="Easy">Easy</string>
+    <string name="Medium">Medium</string>
+    <string name="Hard">Hard</string>
+    <string name="Task">Tasks</string>
+    <string name="RatingFriends">Friends rating</string>
+    <string name="Rules">Rules</string>
+    <string name="RemWordsInfo">Remember Words - is a game for your memory. You need to remember words that shown in the screen and click as fast, as it possible.</string>
+    <string name="NextLetter">Next Letter: </string>
+    <string name="Profile">Profile</string>
 
 </resources>

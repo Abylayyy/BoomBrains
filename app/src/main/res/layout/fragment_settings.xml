@@ -6,6 +6,31 @@
     tools:context="kz.almaty.boombrains.main_fragments.SettingsFragment">
 
 
+    <TextView
+        android:id="@+id/vibrationTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/Vibration"
+        android:textColor="#2f2f2f"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <Switch
+        android:id="@+id/vibrationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        app:layout_constraintBottom_toBottomOf="@id/vibrationTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vibrationTxt"
+        app:layout_constraintVertical_bias="0.0" />
+
     <Switch
         android:id="@+id/soundSwitch"
         android:layout_width="wrap_content"
@@ -53,8 +78,8 @@
         android:fontFamily="@font/roboto"
         android:gravity="end"
         android:padding="10dp"
-        android:text="Russian"
-        android:textColor="#FF5C00"
+        android:text="@string/AppLanguageText"
+        android:textColor="#357EBD"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/langTxt"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,15 +111,30 @@
         android:layout_marginRight="24dp"
         android:background="#ececec"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vibrationTxt" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="#ececec"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/soundTxt" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:background="#FFAC0A"
+        android:layout_height="70dp"
+        android:background="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +142,7 @@
 
         <RelativeLayout
             android:id="@+id/back_to_main"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="0dp"
             android:padding="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +162,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/Settings"
-            android:textColor="@color/colorWhite"
+            android:textColor="#3D3D3D"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -15,6 +15,7 @@
     <string name="Mute">Silenciar</string>
     <string name="Cancel">Cancelar</string>
     <string name="Settings">Ajustes</string>
+    <string name="Vibration">Vibración</string>
 
     <string name="YourScore">Tu Puntuación: </string>
     <string name="Score">Puntuación: </string>
@@ -30,16 +31,30 @@
 
     <string name="AttentionSchulteTable">Tabla Schulte</string>
     <string name="AttentionFigure">Buscar Número</string>
-    <string name="MemoryRemNum">Recordar número</string>
+    <string name="MemoryRemNum">Recordar Número</string>
     <string name="NumberZnaki">Calcular</string>
     <string name="Equation">Ecuación</string>
+    <string name="RememberWords">Recordar Palabras</string>
+    <string name="ShulteLetters">Schulte Letras</string>
 
     <string name="RatingMessage">¡Su opinión es muy importante para nosotros!</string>
     <string name="RateApp">Califica</string>
 
     <string name="SchulteInfo">Tabla Schulte es un juego para desarrollar tu velocidad mental, tu objetivo será seleccionar los números en orden ascendente.</string>
+    <string name="SchulteLetterInfo">Schulte Letras - es un juego para tu concentración y para tu lectura rápida. Necesitas coleccionar letras alfabéticamente.</string>
     <string name="RemNumInfo">Es un juego para desarrollar tu memoria.</string>
     <string name="FindNumberInfo">es el juego en el cual tendrás que mejorar tu velocidad visual y tu concentración encontrando el cuadrado con el número correcto.</string>
     <string name="NumberZnakiInfo">Calcular es el juego en el que tienes que encontrar la solución a la operación matemática y pulsar sobre el botón correcto.</string>
     <string name="EquationInfo">Ecuación-establecer el orden de las operaciones aritméticas de la lista para que coincida con la respuesta. Usted necesita decidir lo más rápidamente posible con el fin de lograr un gran resultado.</string>
+
+    <string name="Easy">Fácil</string>
+    <string name="Medium">Medio</string>
+    <string name="Hard">Difícil</string>
+
+    <string name="Task">Tareas</string>
+    <string name="RatingFriends">Calificación de amigos</string>
+    <string name="Rules">Reglas</string>
+    <string name="RemWordsInfo">Recordar Palabras - es un juego para tu memoria. Debe recordar las palabras que se muestran en la pantalla y hacer clic lo más rápido posible.</string>
+    <string name="NextLetter">Siguiente Letra: </string>
+    <string name="Profile">Perfil</string>
 </resources>
