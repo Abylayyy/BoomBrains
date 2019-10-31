@@ -5,6 +5,7 @@
     <string name="AppLanguageText">Қазақша</string>
     <string name="ChangeLanguage">Тіл</string>
 
+    <!-- Playing strings -->
     <string name="PlayBtn">Ойнау</string>
     <string name="Pause">Кідіру</string>
     <string name="YourRecord">Сіздің жетістігіңіз</string>
@@ -15,21 +16,19 @@
     <string name="Mute">Дыбыссыз</string>
     <string name="Cancel">Бас тарту</string>
     <string name="Vibration">Діріл</string>
-
     <string name="YourScore">Сіздің балыңыз: </string>
     <string name="Record">Рекорд: </string>
     <string name="Score">Балл: </string>
     <string name="Level">Деңгей: </string>
     <string name="Mistakes">Қателер: </string>
     <string name="Settings">Баптаулар</string>
-
-
     <string name="Again">Қайтадан</string>
     <string name="Exit">Шығу</string>
-
     <string name="CongratulationNewRecord">Құттықтаймыз! \n Сіз рекорд орнаттыңыз!</string>
     <string name="SchulteNextNumber">Келесі сан: </string>
+    <string name="YesNoTimeOutAnswer">Уақыт бітті</string>
 
+    <!-- Game names -->
     <string name="AttentionSchulteTable">Шульте кестесі</string>
     <string name="AttentionFigure">Санды тап</string>
     <string name="MemoryRemNum">Санды жатта</string>
@@ -38,8 +37,7 @@
     <string name="RememberWords">Сөздерді Жатта</string>
     <string name="ShulteLetters">Шульте Әріптер</string>
 
-    <string name="YesNoTimeOutAnswer">Уақыт бітті</string>
-
+    <!-- Game Informations -->
     <string name="SchulteInfo">Шульте кестесі - назарыңызды кестінің ортасына қоя отырып, барлық сандарды өсу ретімен табуыңыз керек.</string>
     <string name="SchulteLetterInfo">Шульте әріптер кестесі - назарыңызды кестінің ортасына қоя отырып, барлық әріптерді әліппе бойынша табуыңыз керек.</string>
     <string name="RemNumInfo">Санды жатта - сандарды қайталау арқылы есте сақтау қабілетін жаттықтыратын ойын.</string>
@@ -47,6 +45,7 @@
     <string name="NumberZnakiInfo">Есепте - жоғарыда берілген есептің жауабын төменде көрсетілген тізімнің ішінен барынша жылдамырақ тап.</string>
     <string name="EquationInfo">Теңестір - жоғарыда көрсетілген сұрақ белгісінің орнына тізімдегі берілген амалдарды жауабымен сәйкес келетіндей етіп, ретімен, барынша жылдам қой.</string>
 
+    <!-- Ratings -->
     <string name="RatingMessage">Сіздің пікіріңіз біз үшін өте маңызды!</string>
     <string name="RateApp">Баға беру</string>
     <string name="Easy">Оңай</string>
@@ -57,6 +56,62 @@
     <string name="Rules">Ереже</string>
     <string name="RemWordsInfo">Сөзді жатта - есте сақтау қабілетті, берілген сөздерді есте сақтау арқылы, жаттықтыратын ойын.</string>
     <string name="NextLetter">Келесі әріп: </string>
+
+    <!-- Profile, backend -->
     <string name="Profile">Профиль</string>
+    <string name="Authorization">Кіру</string>
+    <string name="VhodVAccount">Кіру</string>
+    <string name="Hint">Email</string>
+    <string name="PassHint">Пароль</string>
+    <string name="Voiti">Кіру</string>
+    <string name="Register">Тіркелу</string>
+    <string name="ForgetPass">Парольді ұмыттыңыз ба?</string>
+    <string name="confirm_password">Парольді растау</string>
+    <string name="Agreement">Мен пайдаланушы келісімін қабылдаймын.</string>
+    <string name="name">Аты</string>
+    <string name="MainProfInfo">Барлық мүмкіндіктерге қол жеткізу үшін тіркеліңіз немесе кіріңіз.</string>
+    <string name="YourRating">Рейтингіңіз</string>
+
+    <string name="Vypolni">Тапсырмаларды орындаңыз және марапаттар мен жетістіктерге жетіңіз</string>
+    <string name="Achievement">Жетістіктер</string>
+    <string name="Dokazhi">Достарыңызға өзіңіздің ең мықты екендігіңізді дәлелдеңіз, рекордтарын бұзып, бірінші орынға көтеріліңіз.</string>
+    <string name="Sorevnui">Достарыңызбен жарысыңыз</string>
+    <string name="Zolotoi">Алтын лигаға жолдама алыңыз, үздік ойыншыларды ойынға шақырыңыз.</string>
+    <string name="Znanie">Дәрежелер мен лигалар</string>
+    <string name="achievements">Жетістіктер</string>
+    <string name="league">Лига</string>
+    <string name="ResetPass">Парольді қалпына келтіру</string>
+    <string name="ResetInfo">Аккаунтыңызға қайта кіру үшін, тіркелген уакыттағы email-ды енгізіңіз. Жаңа пароль сол email-ға жіберіледі.</string>
+    <string name="Confirm">Растау</string>
+    <string name="EmailNotCorrect">Email дұрыс емес!</string>
+    <string name="UserNameNotCorrect">Пайдаланушы аты кемінде 3 әріптен тұруы қажет!</string>
+    <string name="PasswordNotCorrect">Пароль кемінде 4 әріптен тұруы қажет!</string>
+    <string name="PassNotMatch">Парольдер сәйкес келмейді!</string>
+    <string name="AcceptAgreement">Пайдаланушы келісімін қабылдаңыз!</string>
+    <string name="CheckConnection">Желілік байланысты тексеріңіз!</string>
+    <string name="EmptyFields">Мәтін өрістері бос болмауы керек!</string>
+    <string name="ChangePass">Парольді өзгерту</string>
+    <string name="CurrentPass">Ағымдағы пароль</string>
+    <string name="NewPass">Жаңа пароль</string>
+    <string name="CurrPassNotCorrect">Ағымдағы пароль дұрыс емес</string>
+    <string name="SuccessChangePass">Пароль сәтті өзгертілді</string>
+
+    <!-- Kazakh names -->
+    <string name="SquareMemory">Жад алаңы</string>
+    <string name="Figures">Түсті фигуралар</string>
+    <string name="Colors">Түсті сөздер</string>
+
+    <string name="SquaresInfo">Жад алаңы - матрицада көрсетілген қызғылт сары квадраттардың орнын есте сақтау және квадраттарды мүмкіндігінше жылдам басу керек.</string>
+    <string name="ColorsInfo">Түсті сөздер - сізге экранның жоғарғы жағында басқа атаумен түс көрсетіледі. Төмендегі тізімнен берілген түстің атын мүмкіндігінше тез тауып, басуыңыз керек.</string>
+    <string name="FiguresInfo">Түсті фигуралар - жиі кездесетін түрлі-түсті фигураларды тауып, мүмкіндігінше жылдам басуыңыз керек.</string>
+    <string name="FindColor">Берілген түстің атауын табыңыз</string>
+    <string name="ColorRed">Қызыл</string>
+    <string name="ColorBlue">Көк</string>
+    <string name="ColorOrange">Сары</string>
+    <string name="ColorBlack">Қара</string>
+    <string name="ColorBrown">Қоңыр</string>
+    <string name="ColorGreen">Жасыл</string>
+    <string name="ColorPink">Қызғылт</string>
+    <string name="ColorViolet">Күлгін</string>
 
 </resources>

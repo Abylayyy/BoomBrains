@@ -40,35 +40,29 @@ public class HowToPlayActivity extends AppCompatActivity {
 
     private void setBackByPosition(int position) {
         switch (position) {
-            case 0: {
-                setShulteInfo();
-                break;
-            }
-            case 1: {
-                setZapomniChislo();
-                break;
-            }
-            case 2: {
-                setFindNumber();
-                break;
-            }
-            case 3: {
-                setNumZnaki();
-                break;
-            }
-            case 4: {
-                setEquation();
-                break;
-            }
-            case 5: {
-                setShulteLetter();
-                break;
-            }
-            case 6: {
-                setRemWords();
-                break;
-            }
+            case 0: { setShulteInfo();break; }
+            case 1: { setZapomniChislo();break; }
+            case 2: { setFindNumber();break; }
+            case 3: { setNumZnaki();break; }
+            case 4: { setEquation();break; }
+            case 5: { setShulteLetter();break; }
+            case 6: { setRemWords();break; }
+            case 7: { setSquares();break; }
+            case 8: { setColors();break; }
+            case 9: { setFigures();break; }
         }
+    }
+
+    private void setSquares() {
+        setInfoByType(R.drawable.kak_igrat_square, R.color.topSquare, R.string.SquaresInfo, R.drawable.square_back);
+    }
+
+    private void setColors() {
+        setInfoByType(R.drawable.kak_igrat_color, R.color.topColor, R.string.ColorsInfo, R.drawable.color_back);
+    }
+
+    private void setFigures() {
+        setInfoByType(R.drawable.kak_igrat_figure, R.color.topShape, R.string.FiguresInfo, R.drawable.shape_back);
     }
 
     private void setShulteLetter() {

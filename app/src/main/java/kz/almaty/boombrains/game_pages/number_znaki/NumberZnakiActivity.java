@@ -259,19 +259,19 @@ public class NumberZnakiActivity extends DialogHelperActivity {
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("znakiScore", score);
-        intent.putExtra("znakiErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getNumZnakiRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setNumZnakiRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("znakiRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setNumZnakiRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("znakiRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

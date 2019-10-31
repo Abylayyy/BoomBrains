@@ -46,6 +46,7 @@ public class SlovoAdapter extends RecyclerView.Adapter<SlovoAdapter.SlovoViewHol
             listener.getTextView(holder.slovo);
             listener.getSlovo(holder.slovo.getText().toString());
             listener.setSlovo(holder.layout);
+            holder.itemView.setEnabled(false);
         });
     }
 

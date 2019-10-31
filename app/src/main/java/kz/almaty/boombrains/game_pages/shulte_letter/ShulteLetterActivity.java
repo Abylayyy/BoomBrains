@@ -207,13 +207,10 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         int new_width = 0, new_height = 0;
 
         switch (i) {
-            case 4: { new_width = width / i - 10; new_height = height / j - 11; break; }
-            case 5: { new_width = width / i - 9; new_height = height / j - 9; break; }
-            case 6: { new_width = width / i - 8;new_height = height / j - 8; break; }
-            case 7: { new_width = width / i - 7; new_height = height / j - 6; break; }
-            case 8: { new_width = width / i - 6; new_height = height / j - 6; break; }
+            case 4: case 5: case 6: { new_width = width / i - 4; new_height = height / j - 5; break;}
+            case 7: case 8: {new_width = width / i - 3; new_height = height / j - 4; break;}
+            case 9: case 10: {new_width = width / i - 2; new_height = height / j - 3; break;}
         }
-
         view.getLayoutParams().width = new_width;
         view.getLayoutParams().height = new_height;
 
@@ -323,20 +320,19 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("letterScore", score);
-        intent.putExtra("letterErrors", errors);
-        intent.putExtra("name", name);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getShulteLetterRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setShulteLetterRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("letterRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setShulteLetterRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("letterRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

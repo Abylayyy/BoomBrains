@@ -16,7 +16,7 @@ import java.util.List;
 
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.main_pages.GamesStartActivity;
-import kz.almaty.boombrains.models.SubGames;
+import kz.almaty.boombrains.models.main_models.SubGames;
 
 public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubGamesViewHolder> {
 
@@ -41,6 +41,7 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
 
         holder.nameTxt.setText(types.getName());
         holder.gameImage.setImageResource(types.getImage());
+
         holder.inLayout.setBackgroundResource(types.getIn());
         holder.outLayout.setBackgroundResource(types.getOut());
         holder.recordTxt.setText(types.getRecord());

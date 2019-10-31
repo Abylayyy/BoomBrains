@@ -57,6 +57,66 @@
     <string name="Rules">Rules</string>
     <string name="RemWordsInfo">Remember Words - is a game for your memory. You need to remember words that shown in the screen and click as fast, as it possible.</string>
     <string name="NextLetter">Next Letter: </string>
+
     <string name="Profile">Profile</string>
+    <string name="Authorization">Login</string>
+    <string name="VhodVAccount">Login</string>
+    <string name="Hint">Email</string>
+    <string name="PassHint">Password</string>
+    <string name="Voiti">Log in</string>
+    <string name="Register">Register</string>
+    <string name="ForgetPass">Forgot password?</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="Agreement">I accept the user agreement.</string>
+    <string name="name">UserName</string>
+    <string name="MainProfInfo">Register or log in to get access to all the features.</string>
+    <string name="YourRating">Your rating</string>
+
+    <string name="Vypolni">Complete tasks and earn rewards and achievements</string>
+    <string name="Achievement">Achievements</string>
+    <string name="Dokazhi">Prove to your friends that you are the best, beat their records and rise to first place.</string>
+    <string name="Sorevnui">Compete with friends</string>
+    <string name="Zolotoi">Get to the golden league, challenge the best players.</string>
+    <string name="Znanie">Ranks and leagues</string>
+    <string name="achievements">Achievements</string>
+    <string name="league">League</string>
+    <string name="ResetPass">Password recovery</string>
+    <string name="ResetInfo">To restore access to your account, please indicate the Email address that was specified during registration. A new password will be sent to it.</string>
+    <string name="Confirm">Confirm</string>
+
+    <string name="EmailNotCorrect">Email is not correct!</string>
+    <string name="UserNameNotCorrect">Username must contain at least 3 letters</string>
+    <string name="PasswordNotCorrect">Password must contain at least 4 letters</string>
+    <string name="PassNotMatch">Passwords didn\'t match</string>
+    <string name="AcceptAgreement">Please accept the user agreement</string>
+    <string name="CheckConnection">Please check your network connection!</string>
+    <string name="EmptyFields">Fields can\'t be empty!</string>
+    <string name="ChangePass">Change Password</string>
+    <string name="CurrentPass">Current password</string>
+    <string name="NewPass">New password</string>
+    <string name="CurrPassNotCorrect">Current password is not correct</string>
+    <string name="SuccessChangePass">Password successfully changed</string>
+
+    <!-- English names -->
+    <string name="SquareMemory">Memory Square</string>
+    <string name="Figures">Colored Figures</string>
+    <string name="Colors">Colored words</string>
+
+    <string name="SquaresInfo">Memory Square - you have to remember position of orange squares that are shown in the matrix and tap the squares as fast as possible.</string>
+    <string name="ColorsInfo">Colored Words - you will be given color with a different name at the top of the screen. From the list below, you have to find and tap the name of given color as fast as possible.</string>
+    <string name="FiguresInfo">Colored Figures - you have to find the most common colored figures and tap as fast as possible.</string>
+    <string name="FindColor">Find the name of given color</string>
+
+    <string name="ColorRed">Red</string>
+    <string name="ColorBlue">Blue</string>
+    <string name="ColorOrange">Yellow</string>
+    <string name="ColorBlack">Black</string>
+    <string name="ColorBrown">Brown</string>
+    <string name="ColorGreen">Green</string>
+    <string name="ColorPink">Pink</string>
+    <string name="ColorViolet">Violet</string>
+
+    <!-- Color names -->
+
 
 </resources>

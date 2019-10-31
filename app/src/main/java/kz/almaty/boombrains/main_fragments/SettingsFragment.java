@@ -3,6 +3,7 @@ package kz.almaty.boombrains.main_fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.helpers.StatefulFragment;
+import kz.almaty.boombrains.sign_pages.MainLoginActivity;
+import kz.almaty.boombrains.sign_pages.MainSignInActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,7 @@ public class SettingsFragment extends StatefulFragment {
     @BindView(R.id.langTxt) TextView language;
     @BindView(R.id.vibrationSwitch) Switch vibSwitch;
     @BindView(R.id.vibrationTxt) TextView vibTxt;
+    @BindView(R.id.exitBtn) TextView exitBtn;
 
     private Dialog dialog;
     private TextView ru, en, es, kaz, cancel, diLang;
@@ -75,7 +79,20 @@ public class SettingsFragment extends StatefulFragment {
             showDialog();
         }
 
+        if (SharedPrefManager.isUserLoggedIn(getActivity())) {
+            exitBtn.setVisibility(View.VISIBLE);
+        } else {
+            exitBtn.setVisibility(View.INVISIBLE);
+        }
+
         back.setOnClickListener(v -> getActivity().onBackPressed());
+
+        exitBtn.setOnClickListener(v -> {
+            SharedPrefManager.clearUserData(getActivity());
+            startActivity(new Intent(getContext(), MainLoginActivity.class));
+            getActivity().overridePendingTransition(0,0);
+            getActivity().finish();
+        });
 
         soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {

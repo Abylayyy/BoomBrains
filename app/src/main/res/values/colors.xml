@@ -23,11 +23,14 @@
     <!-- Pause backgrounds -->
     <color name="pauseShulte">#6D480F</color>
     <color name="pauseZapomni">#433558</color>
-    <color name="pauseFind">#006400</color>
-    <color name="pauseNumZnaki">#1f9393</color>
-    <color name="pauseEquation">#692635</color>
-    <color name="pauseRemWord">#99522C</color>
-    <color name="pauseLetter">#940809</color>
+    <color name="pauseFind">#35663F</color>
+    <color name="pauseNumZnaki">#206263</color>
+    <color name="pauseEquation">#6D1E3B</color>
+    <color name="pauseRemWord">#8F3D0B</color>
+    <color name="pauseLetter">#6B2324</color>
+    <color name="pauseSquare">#723C0B</color>
+    <color name="pauseFigure">#692537</color>
+    <color name="pauseColor">#253879</color>
 
     <!-- Top action bar colors -->
     <color name="topShulte">#F8B818</color>
@@ -37,6 +40,9 @@
     <color name="topEquation">#BE1856</color>
     <color name="topShulteLetter">#E91E22</color>
     <color name="topRemWords">#F36D1E</color>
+    <color name="topSquare">#FF9F49</color>
+    <color name="topShape">#FF507B</color>
+    <color name="topColor">#5077FF</color>
 
     <!-- Under action bar colors -->
     <color name="underShulte">#FCC91B</color>
@@ -45,6 +51,9 @@
     <color name="underSlovo">#774DB3</color>
     <color name="underNumZnaki">#34C0C0</color>
     <color name="underEquation">#CF1C61</color>
+    <color name="underSquare">#FFBE5F</color>
+    <color name="underShape">#FF5C8A</color>
+    <color name="underColor">#5C87FF</color>
 
     <!-- Default colors -->
     <color name="colorWhite">#ffffff</color>
@@ -57,6 +66,9 @@
 
     <color name="shulteErrorColor">#80B90000</color>
     <color name="shulteSuccessColor">#8000C74F</color>
+    <color name="squareSuccess">#4ED85C</color>
+    <color name="squareSelected">#FF9F49</color>
+    <color name="squareError">#FF5449</color>
 
     <color name="successFind">#40BF67</color>
     <color name="recyclerBack">#EEEEEE</color>
@@ -68,5 +80,28 @@
     <color name="pressed">#357EBD</color>
     <color name="disabled">#B7B7B7</color>
     <color name="underFind">#58CF6D</color>
+    <color name="main_btn_color">#5ACC02</color>
+    <color name="main_txt_colors">#292929</color>
+    <color name="edit_color">#FBFBFB</color>
+    <color name="hint_color">#B4B4B4</color>
+    <color name="desc_color_dark">#777777</color>
+    <color name="desc_color">#AAAAAA</color>
+    <color name="squareDim">#33000000</color>
+
+    <!-- Color words colors-->
+    <color name="pinkColor">#FD9DFF</color>
+    <color name="violetColor">#9100B6</color>
+    <color name="orangeColor">#FFB904</color>
+    <color name="brownColor">#7A4D17</color>
+    <color name="greenColor">#17E006</color>
+    <color name="blackColor">#000000</color>
+    <color name="redColor">#F53333</color>
+    <color name="blueColor">#3398F5</color>
+    
+    <!-- Figure colors -->
+    <color name="greenFigure">#55CD2B</color>
+    <color name="redFigure">#FF5656</color>
+    <color name="orangeFigure">#FFAC0B</color>
+    <color name="blueFigure">#54CCFF</color>
 
 </resources>

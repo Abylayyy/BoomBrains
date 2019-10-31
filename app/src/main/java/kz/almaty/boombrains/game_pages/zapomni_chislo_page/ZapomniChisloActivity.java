@@ -65,7 +65,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         numbers = new View[] {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0};
 
         setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position, "");
-        startTimer(90000, timeTxt);
+        startTimer(75000, timeTxt);
         setCount();
         loadGoogleAd();
 
@@ -215,13 +215,15 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     }
 
     private void showAndHide() {
+        pauseTimer();
         slovo.setVisibility(View.VISIBLE);
         slovo.setText(String.valueOf(random));
         hideAllViews();
         showBtn.setEnabled(false);
         pauseImg.setEnabled(false);
-        new Handler().postDelayed(()-> {
 
+        new Handler().postDelayed(()-> {
+            resumeTimer();
             showBtn.setEnabled(true);
             slovo.setVisibility(View.INVISIBLE);
 
@@ -269,19 +271,19 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("chisloScore", score);
-        intent.putExtra("chisloErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getChisloRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setChisoRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("chisloRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setChisoRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("chisloRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

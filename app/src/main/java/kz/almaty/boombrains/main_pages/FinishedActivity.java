@@ -64,6 +64,21 @@ public class FinishedActivity extends AppCompatActivity {
             finishAffinity();
             overridePendingTransition(0,0);
         });
+
+        score = getIntent().getIntExtra("score", 0);
+        error = getIntent().getIntExtra("errors", 0);
+        String message = getIntent().getStringExtra("record");
+        if (message != null) {
+            successMessage.setText(message);
+            setMeasures(successImg, R.drawable.zapomni_new_record);
+            setAudio(R.raw.new_record);
+        } else {
+            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
+            setMeasures(successImg, R.drawable.zapomni_timed_out);
+            setAudio(R.raw.game_over);
+        }
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
     }
 
     private void loadGoogleAd() {
@@ -107,7 +122,7 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void startActivities(int position) {
         switch (position) {
-            case 0: case 1: case 2: case 3: case 4: case 5: case 6: {
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
                 finishAndStart(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
@@ -126,74 +141,27 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void setBackgrounds(int position) {
         switch (position) {
-            case 0: {
-                setShulteBackgrounds();
-                break;
-            }
-            case 1: {
-                setZapomniChisloBackgrounds();
-                break;
-            }
-            case 2: {
-                setFindNumBackgrounds();
-                break;
-            }
-            case 3: {
-                setNumZnakiBackgrounds();
-                break;
-            }
-            case 4: {
-                setEquationBackgrounds();
-                break;
-            }
-            case 5: {
-                setShulteLetterBackgrounds();
-                break;
-            }
-            case 6: {
-                setRemWordsBackgrounds();
-                break;
-            }
+            case 0: { setShulteBackgrounds();break; }
+            case 1: { setZapomniChisloBackgrounds();break; }
+            case 2: { setFindNumBackgrounds();break; }
+            case 3: { setNumZnakiBackgrounds();break; }
+            case 4: { setEquationBackgrounds();break; }
+            case 5: { setShulteLetterBackgrounds();break; }
+            case 6: { setRemWordsBackgrounds();break; }
+            case 7: { setSquareBackgrounds();break; }
+            case 8: { setColorBackgrounds();break; }
+            case 9: { setFigureBackgrounds();break; }
         }
     }
 
-    private void setEquationBackgrounds() {
-        parent.setBackgroundResource(R.drawable.equation_blur);
-        score = getIntent().getIntExtra("equationScore", 0);
-        error = getIntent().getIntExtra("equationErrors", 0);
-        String message = getIntent().getStringExtra("equationRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
-        setRecords(SharedPrefManager.getEquationRecord(getApplication()));
+    private void setFigureBackgrounds() {
+        parent.setBackgroundResource(R.drawable.shape_blur);
+        setRecords(SharedPrefManager.getFigureRecord(getApplication()));
     }
 
-    private void setFindNumBackgrounds() {
-        parent.setBackgroundResource(R.drawable.find_blur);
-        score = getIntent().getIntExtra("findScore", 0);
-        error = getIntent().getIntExtra("findErrors", 0);
-        String message = getIntent().getStringExtra("findRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
-        setRecords(SharedPrefManager.getFindRecord(getApplication()));
+    private void setColorBackgrounds() {
+        parent.setBackgroundResource(R.drawable.color_blur);
+        setRecords(SharedPrefManager.getColorRecord(getApplication()));
     }
 
     private void setAudio(int raw) {
@@ -207,125 +175,58 @@ public class FinishedActivity extends AppCompatActivity {
         }
     }
 
+    private void setEquationBackgrounds() {
+        parent.setBackgroundResource(R.drawable.equation_blur);
+        setRecords(SharedPrefManager.getEquationRecord(getApplication()));
+    }
+
+    private void setSquareBackgrounds() {
+        parent.setBackgroundResource(R.drawable.square_blur);
+        setRecords(SharedPrefManager.getSquareRecord(getApplication()));
+    }
+
+    private void setFindNumBackgrounds() {
+        parent.setBackgroundResource(R.drawable.find_blur);
+        setRecords(SharedPrefManager.getFindRecord(getApplication()));
+    }
+
     private void setZapomniChisloBackgrounds() {
         parent.setBackgroundResource(R.drawable.zapomni_chislo_blur);
-        score = getIntent().getIntExtra("chisloScore", 0);
-        error = getIntent().getIntExtra("chisloErrors", 0);
-        String message = getIntent().getStringExtra("chisloRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
         setRecords(SharedPrefManager.getChisloRecord(getApplication()));
     }
 
     private void setShulteBackgrounds() {
-        score = getIntent().getIntExtra("shulteScore", 0);
-        error = getIntent().getIntExtra("shulteErrors", 0);
-        String message = getIntent().getStringExtra("shulteRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
         setRecords(SharedPrefManager.getShulteRecord(getApplication()));
         parent.setBackgroundResource(R.drawable.shulte_blur);
     }
 
     private void setNumZnakiBackgrounds() {
-        score = getIntent().getIntExtra("znakiScore", 0);
-        error = getIntent().getIntExtra("znakiErrors", 0);
-        String message = getIntent().getStringExtra("znakiRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
         setRecords(SharedPrefManager.getNumZnakiRecord(getApplication()));
         parent.setBackgroundResource(R.drawable.number_znaki_blur);
     }
 
     private void setShulteLetterBackgrounds() {
-        score = getIntent().getIntExtra("letterScore", 0);
-        error = getIntent().getIntExtra("letterErrors", 0);
-        String message = getIntent().getStringExtra("letterRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
         setRecords(SharedPrefManager.getShulteLetterRecord(getApplication()));
         parent.setBackgroundResource(R.drawable.shulte_letter_blur);
     }
 
     private void setRemWordsBackgrounds() {
-        score = getIntent().getIntExtra("slovoScore", 0);
-        error = getIntent().getIntExtra("slovoErrors", 0);
-        String message = getIntent().getStringExtra("slovoRecord");
-        if (message != null) {
-            successMessage.setText(message);
-            setMeasures(successImg, R.drawable.zapomni_new_record);
-            setAudio(R.raw.new_record);
-        } else {
-            successMessage.setText(getString(R.string.YesNoTimeOutAnswer));
-            setMeasures(successImg, R.drawable.zapomni_timed_out);
-            setAudio(R.raw.game_over);
-        }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
         setRecords(SharedPrefManager.getSlovoRecord(getApplication()));
         parent.setBackgroundResource(R.drawable.rem_words_blur);
     }
 
     private void setBtnColor(int position) {
         switch (position) {
-            case 0:
-                setColors(R.color.vnimanieColor);
-                break;
-            case 1:
-                setColors(R.color.pamiatColor);
-                break;
-            case 2:
-                setColors(R.color.findColor);
-                break;
-            case 3:
-                setColors(R.color.numZnakiColor);
-                break;
-            case 4:
-                setColors(R.color.equationColor);
-                break;
-            case 5:
-                setColors(R.color.shulteLetterColor);
-                break;
-            case 6:
-                setColors(R.color.remWordsColor);
-                break;
+            case 0: setColors(R.color.vnimanieColor);break;
+            case 1: setColors(R.color.pamiatColor);break;
+            case 2: setColors(R.color.findColor);break;
+            case 3: setColors(R.color.numZnakiColor);break;
+            case 4: setColors(R.color.equationColor);break;
+            case 5: setColors(R.color.shulteLetterColor);break;
+            case 6: setColors(R.color.remWordsColor);break;
+            case 7: setColors(R.color.topSquare);break;
+            case 8: setColors(R.color.topColor);break;
+            case 9: setColors(R.color.topShape);break;
         }
     }
 

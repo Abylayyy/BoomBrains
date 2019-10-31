@@ -2,11 +2,15 @@ package kz.almaty.boombrains.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import java.lang.ref.WeakReference;
 
 public class SharedPrefManager {
 
-    private static final String TAG = SharedPrefManager.class.getSimpleName();
     private static final String APP_SETTINGS = "APP_SETTINGS";
+
     private static final String SHULTE_RECORD = "SHULTE_RECORD";
     private static final String CHISLO_RECORD = "CHISLO_RECORD";
     private static final String GAME_LANGUAGE = "GAME_LANGUAGE";
@@ -14,15 +18,24 @@ public class SharedPrefManager {
     private static final String FIND_RECORD = "FIND_RECORD";
     private static final String NUM_ZNAKI_RECORD = "NUM_ZNAKI_RECORD";
     private static final String EQUATION_RECORD = "EQUATION_RECORD";
+    private static final String SLOVO_RECORD = "SLOVO_RECORD";
+    private static final String SHULTE_LETTER = "SHULTE_LETTER";
+    private static final String SQUARE_RECORD = "SQUARE_RECORD";
+    private static final String COLOR_RECORD = "COLOR_RECORD";
+    private static final String FIGURE_RECORD = "FIGURE_RECORD";
+
     private static final String PLAY_COUNT = "PLAY_COUNT";
     private static final String SHOW_AGAIN = "SHOW_AGAIN";
     private static final String ADD_COUNT = "ADD_COUNT";
     private static final String FIRST_SHOWN = "FIRST_SHOWN";
-    private static final String DEVICE_ID = "DEVICE_ID";
     private static final String FIRST_USER = "FIRST_USER";
-    private static final String SLOVO_RECORD = "SLOVO_RECORD";
-    private static final String SHULTE_LETTER = "SHULTE_LETTER";
     private static final String VIBRATE = "VIBRATE";
+
+    private static final String IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
+    private static final String USER_AUTH_TOKEN_KEY = "USER_AUTH_TOKEN_KEY";
+    private static final String USER_EMAIL = "USER_EMAIL";
+    private static final String USER_NAME = "USER_NAME";
+    private static final String USER_PASS = "USER_PASS";
 
 
     public static SharedPreferences getSharedPreferences(Context context) {
@@ -49,6 +62,16 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    public static boolean isUserLoggedIn(Context context) {
+        return getSharedPreferences(context).getBoolean(IS_USER_LOGGED_IN, false);
+    }
+
+    public static void setIsUserLoggedIn(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(IS_USER_LOGGED_IN, newValue);
+        editor.apply();
+    }
+
     public static boolean isVibrateEnabled(Context context) {
         return getSharedPreferences(context).getBoolean(VIBRATE, false);
     }
@@ -59,6 +82,46 @@ public class SharedPrefManager {
         editor.apply();
     }
 
+    public static void setUserAuthTokenKey(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(USER_AUTH_TOKEN_KEY, newValue);
+        editor.apply();
+    }
+
+    public static String getUserAuthTokenKey(Context context) {
+        return getSharedPreferences(context).getString(USER_AUTH_TOKEN_KEY, null);
+    }
+
+    public static void setUserName(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(USER_NAME, newValue);
+        editor.apply();
+    }
+
+    public static String getUserName(Context context) {
+        return getSharedPreferences(context).getString(USER_NAME, null);
+    }
+
+    public static void setUserEmail(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(USER_EMAIL, newValue);
+        editor.apply();
+    }
+
+    public static String getUserEmail(Context context) {
+        return getSharedPreferences(context).getString(USER_EMAIL, null);
+    }
+
+    public static void setUserPass(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(USER_PASS, newValue);
+        editor.apply();
+    }
+
+    public static String getUserPass(Context context) {
+        return getSharedPreferences(context).getString(USER_PASS, null);
+    }
+
     public static void setShulteRecord(Context context, String newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putString(SHULTE_RECORD, newValue);
@@ -67,6 +130,16 @@ public class SharedPrefManager {
 
     public static String getShulteRecord(Context context) {
         return getSharedPreferences(context).getString(SHULTE_RECORD, null);
+    }
+
+    public static void setSquareRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(SQUARE_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getSquareRecord(Context context) {
+        return getSharedPreferences(context).getString(SQUARE_RECORD, null);
     }
 
     public static void setShulteLetterRecord(Context context, String newValue) {
@@ -129,6 +202,28 @@ public class SharedPrefManager {
         return getSharedPreferences(context).getString(EQUATION_RECORD, null);
     }
 
+    public static void setColorRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(COLOR_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getColorRecord(Context context) {
+        return getSharedPreferences(context).getString(COLOR_RECORD, null);
+    }
+
+    public static void setFigureRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(FIGURE_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getFigureRecord(Context context) {
+        return getSharedPreferences(context).getString(FIGURE_RECORD, null);
+    }
+
+
+    /* Google ad methods */
     public static void setPlayCount(Context context, int newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putInt(PLAY_COUNT, newValue);
@@ -149,6 +244,7 @@ public class SharedPrefManager {
         return getSharedPreferences(context).getInt(ADD_COUNT, 0);
     }
 
+    /* Clear methods */
     public static void clearSettings(Context context) {
         setLanguage(context, null);
         setPlayCount(context, 0);
@@ -158,16 +254,17 @@ public class SharedPrefManager {
         setVibrateEnabled(context, true);
     }
 
-    public static void clearResults(Context context) {
-        setShulteRecord(context, "0");
-        setChisoRecord(context, "0");
-        setFindRecord(context, "0");
-        setNumZnakiRecord(context, "0");
-        setEquationRecord(context, "0");
-        setSoundEnabled(context, false);
-        setLanguage(context, null);
-        setPlayCount(context, 0);
-        setNeverShowAgain(context, false);
+    public static void clearSquare(Context context) {
+        setSquareRecord(context, "0");
+    }
+
+    public static void clearUserData(Context context) {
+        setUserEmail(context, null);
+        setUserName(context, null);
+        setUserAuthTokenKey(context, null);
+        setIsUserLoggedIn(context, false);
+        setUserPass(context, null);
+        clearSettings(context);
     }
 
     /*public static void setDeviceId(Context context, String newValue) {
@@ -210,5 +307,32 @@ public class SharedPrefManager {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(FIRST_USER, newValue);
         editor.apply();
+    }
+
+    public static boolean isNetworkOnline(Context context) {
+        boolean status=false;
+        WeakReference data = null;
+        try{
+            ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            data = new WeakReference<>(cm);
+            if(cm!=null) {
+                NetworkInfo netInfo = cm.getNetworkInfo(0);
+                if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED) {
+                    status = true;
+                } else {
+                    netInfo = cm.getNetworkInfo(1);
+                    if (netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED)
+                        status = true;
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        finally {
+            if(data!=null)
+                data.clear();
+        }
+        return status;
     }
 }

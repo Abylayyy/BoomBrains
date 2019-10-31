@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.main_fragments.MainFragment;
-import kz.almaty.boombrains.main_fragments.ProfileFragment;
+import kz.almaty.boombrains.main_fragments.profile_pages.ProfileFragment;
 import kz.almaty.boombrains.main_fragments.SettingsFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
         if (!SharedPrefManager.getIsFirstUser(getApplication())) {
             SharedPrefManager.clearSettings(getApplication());
             SharedPrefManager.setIsFirstUser(getApplication(), true);
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
         loadGoogleAd();
         showRateAppDialog();
+
+        replaceFragment(new MainFragment(), "main_fragment", false);
     }
 
     private void loadGoogleAd() {
@@ -125,10 +128,8 @@ public class MainActivity extends AppCompatActivity {
         String lang = SharedPrefManager.getLanguage(getApplication());
         if (lang != null) {
             setLocale(lang);
-            replaceFragment(new MainFragment(), BACK_STACK_ROOT_TAG);
         } else {
             setLocale("en");
-            replaceFragment(new MainFragment(), BACK_STACK_ROOT_TAG);
         }
     }
 
@@ -138,15 +139,12 @@ public class MainActivity extends AppCompatActivity {
         if(withBackStack){
             fragmentManager.popBackStack(BACK_STACK_ROOT_TAG, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             transaction.addToBackStack(BACK_STACK_ROOT_TAG);
+        } else {
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         transaction.replace(R.id.fragment_container, fragment, fragmentTag);
         transaction.commit();
-    }
-
-    private void replaceFragment(Fragment fragment, String fragmentTag){
-        FragmentTransaction transaction  = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment, fragmentTag);
-        transaction.commit();
+        invalidateOptionsMenu();
     }
 
     public void onclick(View view) {
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.mainBtn: {
                 setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
                 currentFragment = new MainFragment();
-                replaceFragment(currentFragment, BACK_STACK_ROOT_TAG);
+                replaceFragment(currentFragment, "main_fragment", false);
                 break;
             }
             case R.id.settings: {
@@ -164,19 +162,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.profile: {
-                shareTextUrl();
-                setTintColor();
-                //setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
-                //currentFragment = new ProfileFragment();
-                //replaceFragment(currentFragment, "profile_fragment", true);
+                setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+                currentFragment = new ProfileFragment();
+                replaceFragment(currentFragment, "profile_fragment", true);
                 break;
             }
         }
-    }
-
-    private void setTintColor() {
-        profImg.setColorFilter(getResources().getColor(R.color.pressed));
-        new Handler().postDelayed(()-> profImg.setColorFilter(getResources().getColor(R.color.disabled)),100);
     }
 
     private void setColorsWhenPressed(int prof, int setting) {
@@ -208,15 +199,6 @@ public class MainActivity extends AppCompatActivity {
             SharedPrefManager.setNeverShowAgain(getApplication(), false);
             dialog.dismiss();
         });
-    }
-
-    private void shareTextUrl() {
-        Intent share = new Intent(android.content.Intent.ACTION_SEND);
-        share.setType("text/plain");
-        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        share.putExtra(Intent.EXTRA_SUBJECT, "Check out Boom Brains");
-        share.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=kdo.one.boombrains");
-        startActivity(Intent.createChooser(share, "Share the game with friends!"));
     }
 
     @Override

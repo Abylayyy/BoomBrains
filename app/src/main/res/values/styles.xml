@@ -67,4 +67,25 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="squareTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/square_blur</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="figureTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/shape_blur</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="colorTheme" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/color_blur</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

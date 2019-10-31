@@ -105,8 +105,8 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     private void setSizes(ConstraintLayout view) {
         int width = findRecycler.getWidth();
         int height = findRecycler.getHeight();
-        view.getLayoutParams().width = width / 4 - 10 ;
-        view.getLayoutParams().height = height / 5 - 13;
+        view.getLayoutParams().width = width / 4 - 4 ;
+        view.getLayoutParams().height = height / 5 - 5;
     }
 
     private void setRecyclerByLevel(int currentLevel) {
@@ -220,19 +220,19 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("findScore", score);
-        intent.putExtra("findErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getFindRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setFindRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("findRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setFindRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("findRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

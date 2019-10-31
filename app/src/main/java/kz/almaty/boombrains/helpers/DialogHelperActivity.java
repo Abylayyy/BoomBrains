@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ankushgrover.hourglass.Hourglass;
 
+import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.main_pages.MainActivity;
@@ -136,7 +137,32 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         dialog.dismiss();
     }
 
+    public void stopTimer() {
+        countDownTimer.stopTimer();
+    }
+
     public void startNewActivity() {
+
+    }
+
+    public void showToast(int type, String s) {
+        switch (type) {
+            case 0: {
+                Toasty.info(this, s, Toasty.LENGTH_SHORT).show();
+                break;
+            }
+            case 1: {
+                Toasty.success(this, s, Toasty.LENGTH_SHORT).show();
+                break;
+            }
+            case 2: {
+                Toasty.error(this, s, Toasty.LENGTH_SHORT).show();
+                break;
+            }
+            case 3: {
+                Toasty.warning(this, s, Toasty.LENGTH_SHORT).show();
+            }
+        }
 
     }
 
@@ -144,11 +170,17 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
         return countDownTimer.isPaused();
     }
 
+    public boolean isRunning() {
+        return countDownTimer.isRunning();
+    }
+
     public void pauseTimer() {
         countDownTimer.pauseTimer();
     }
 
     public void resumeTimer() {
-        countDownTimer.resumeTimer();
+        if (isPaused()) {
+            countDownTimer.resumeTimer();
+        }
     }
 }

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -17,46 +17,100 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".game_pages.rem_words.RememberWordsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".game_pages.shulte_letter.ShulteLetterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".main_pages.HowToPlayActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".game_pages.color_words.ColorWordsActivity"></activity>
+        <activity android:name=".game_pages.color_figures.FiguresActivity" />
+        <activity android:name=".game_pages.square_memory.SquareMemory" />
+        <activity android:name=".sign_pages.ChangePasswordActivity" />
+        <activity
+            android:name=".sign_pages.ResetActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".sign_pages.MainSignInActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".sign_pages.MainRegister"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".sign_pages.MainLoginActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".game_pages.rem_words.RememberWordsActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".game_pages.shulte_letter.ShulteLetterActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
+        <activity
+            android:name=".main_pages.HowToPlayActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.shulte_page.ShulteLevel"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.start_page.AreYouReadyActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.equation.EquationActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.number_znaki.NumberZnakiActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.find_number.FindNumberActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".main_pages.FinishedActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.zapomni_chislo_page.ZapomniChisloActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".game_pages.shulte_page.ShulteActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".main_pages.GamesStartActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".main_pages.MainActivity"
-            android:screenOrientation="portrait" />
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
         <activity
             android:name=".main_pages.SplashScreen"
-            android:screenOrientation="portrait">
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

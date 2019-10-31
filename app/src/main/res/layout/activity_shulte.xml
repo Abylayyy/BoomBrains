@@ -8,6 +8,28 @@
     android:background="@drawable/shulte_back"
     tools:context=".game_pages.shulte_page.ShulteActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/recyclerBack"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nextNumShulte">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shulteRecycler"
+            android:layout_width="0dp"
+            android:nestedScrollingEnabled="false"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="lollipop" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/nextNumShulte"
         android:layout_width="0dp"
@@ -119,14 +141,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/shulteRecycler"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/recyclerBack"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nextNumShulte" />
 </androidx.constraintlayout.widget.ConstraintLayout>

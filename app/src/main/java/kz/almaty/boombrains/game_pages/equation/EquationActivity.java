@@ -271,19 +271,19 @@ public class EquationActivity extends DialogHelperActivity {
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("equationScore", score);
-        intent.putExtra("equationErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getEquationRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setEquationRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("equationRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setEquationRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("equationRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

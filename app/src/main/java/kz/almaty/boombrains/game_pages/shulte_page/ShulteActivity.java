@@ -180,13 +180,11 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         int width = shulteRecycler.getWidth();
         int height = shulteRecycler.getHeight();
         int new_width = 0, new_height = 0;
+
         switch (i) {
-            case 4: { new_width = width / i - 10; new_height = height / i - 11; break; }
-            case 5: { new_width = width / i - 9; new_height = height / i - 9; break; }
-            case 6: { new_width = width / i - 8;new_height = height / i - 8; break; }
-            case 7: { new_width = width / i - 7; new_height = height / i - 7; break; }
-            case 8: { new_width = width / i - 6; new_height = height / i - 7; break; }
-            case 9: case 10: { new_width = width / i - 5; new_height = height / i - 6; break; }
+            case 4: case 5: case 6: { new_width = width / i - 4; new_height = height / i - 5; break;}
+            case 7: case 8:{new_width = width / i - 3; new_height = height / i - 4; break;}
+            case 9: case 10: {new_width = width / i - 2; new_height = height / i - 3; break;}
         }
         view.getLayoutParams().width = new_width;
         view.getLayoutParams().height = new_height;
@@ -287,9 +285,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     }
 
     private void setListWithHandler(int i, int i1) {
-        new Handler().postDelayed(()-> {
-            setupList(i, i1);
-        }, 100);
+        new Handler().postDelayed(()-> setupList(i, i1), 100);
     }
 
     @Override
@@ -314,20 +310,20 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("shulteScore", score);
-        intent.putExtra("shulteErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
         intent.putExtra("name", name);
 
         String oldScore = SharedPrefManager.getShulteRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setShulteRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("shulteRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setShulteRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("shulteRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);

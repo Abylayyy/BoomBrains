@@ -56,5 +56,64 @@
     <string name="Rules">Reglas</string>
     <string name="RemWordsInfo">Recordar Palabras - es un juego para tu memoria. Debe recordar las palabras que se muestran en la pantalla y hacer clic lo más rápido posible.</string>
     <string name="NextLetter">Siguiente Letra: </string>
+
     <string name="Profile">Perfil</string>
+
+    <string name="Authorization">Iniciar sesión</string>
+    <string name="VhodVAccount">Iniciar sesión</string>
+
+    <string name="Hint">Email</string>
+    <string name="PassHint">Contraseña</string>
+    <string name="Voiti">Iniciar sesión</string>
+    <string name="Register">Registro</string>
+    <string name="ForgetPass">¿Olvidaste tu contraseña?</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="Agreement">Acepto el acuerdo de usuario.</string>
+    <string name="name">Nombre</string>
+    <string name="MainProfInfo">Regístrese o inicie sesión para obtener acceso a todas las funciones.</string>
+    <string name="YourRating">Tu clasificación</string>
+
+    <string name="Vypolni">Completa tareas y gana recompensas y logros</string>
+    <string name="Achievement">Logros</string>
+    <string name="Dokazhi">Demuestra a tus amigos que eres el mejor, bate sus récords y asciende al primer lugar.</string>
+    <string name="Sorevnui">Compite con amigos</string>
+    <string name="Zolotoi">Llega a la liga de oro, desafía a los mejores jugadores.</string>
+    <string name="Znanie">Rangos y ligas</string>
+    <string name="achievements">Logros</string>
+    <string name="league">Liga</string>
+    <string name="ResetPass">Recuperación de contraseña</string>
+    <string name="ResetInfo">Para restaurar el acceso a su cuenta, indique la dirección de correo electrónico que se especificó durante el registro. Se le enviará una nueva contraseña.</string>
+    <string name="Confirm">Confirmar</string>
+    <string name="EmailNotCorrect">¡El correo electrónico no es correcto!</string>
+    <string name="UserNameNotCorrect">El nombre de usuario debe contener al menos 3 letras</string>
+    <string name="PasswordNotCorrect">La contraseña debe contener al menos 4 letras</string>
+    <string name="PassNotMatch">Las contraseñas no coinciden</string>
+    <string name="AcceptAgreement">Por favor, acepte el acuerdo de usuario</string>
+    <string name="CheckConnection">¡Por favor, verifique su conexión de red!</string>
+    <string name="EmptyFields">¡Los campos no pueden estar vacíos!</string>
+    <string name="ChangePass">Cambiar contraseña</string>
+    <string name="CurrentPass">Contraseña actual</string>
+    <string name="NewPass">Nueva contraseña</string>
+    <string name="CurrPassNotCorrect">La contraseña actual no es correcta</string>
+    <string name="SuccessChangePass">Contraseña cambiada correctamente</string>
+
+    <!-- Espanol names -->
+    <string name="SquareMemory">Plaza de la memoria</string>
+    <string name="Figures">Figuras de colores</string>
+    <string name="Colors">Palabras de colores</string>
+
+    <string name="SquaresInfo">Plaza de la memoria - debe recordar la posición de los cuadrados naranjas que se muestran en la matriz y tocar los cuadrados lo más rápido posible.</string>
+    <string name="ColorsInfo">Palabras de colores - se le mostrará un color con un nombre diferente en la parte superior de la pantalla. De la lista a continuación, debe buscar y tocar el nombre del color dado lo más rápido posible.</string>
+    <string name="FiguresInfo">Figuras de colores - debe encontrar las figuras de colores más comunes y tocar lo más rápido posible.</string>
+    <string name="FindColor">Encuentra el nombre del color dado</string>
+
+    <string name="ColorRed">Rojo</string>
+    <string name="ColorBlue">Azul</string>
+    <string name="ColorOrange">Amarillo</string>
+    <string name="ColorBlack">Negro</string>
+    <string name="ColorBrown">Marrón</string>
+    <string name="ColorGreen">Verde</string>
+    <string name="ColorPink">Rosa</string>
+    <string name="ColorViolet">Violeta</string>
+
 </resources>

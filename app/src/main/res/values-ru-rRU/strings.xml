@@ -55,6 +55,65 @@
     <string name="Rules">Правила</string>
     <string name="RemWordsInfo">Запомни слова - показываются слова и через 2 секунды исчезают. Нужно запомнить и повторить слова набрав его на клавиатуре.</string>
     <string name="NextLetter">Следующая буква: </string>
+
+
     <string name="Profile">Профиль</string>
+
+    <string name="Authorization">Авторизация</string>
+    <string name="VhodVAccount">Вход</string>
+    <string name="Hint">Email</string>
+    <string name="PassHint">Пароль</string>
+    <string name="Voiti">Войти</string>
+
+    <string name="Register">Регистрация</string>
+    <string name="ForgetPass">Забыли пароль?</string>
+    <string name="confirm_password">Подтвердить пароль</string>
+    <string name="Agreement">Я принимаю пользовательское соглашение.</string>
+    <string name="name">Имя пользователя</string>
+
+    <string name="MainProfInfo">Зарегистрируйтесь или войдите в аккаутн чтобы получить доступ ко всем функциям.</string>
+    <string name="YourRating">Ваш рейтинг</string>
+
+    <string name="Vypolni">Выполняй задания и зарабатывай награды и достижения</string>
+    <string name="Achievement">Достижения</string>
+    <string name="Dokazhi">Докажи друзьям что ты лучший, побей их рекорды и поднимись на первое место.</string>
+    <string name="Sorevnui">Соревнуйтесь с друзьями</string>
+    <string name="Zolotoi">Доберись до золотой лиги, брось вызов лучшим игрокам.</string>
+    <string name="Znanie">Звания и лиги</string>
+    <string name="achievements">Достижения</string>
+    <string name="league">Лига</string>
+    <string name="ResetPass">Восстановление пароля</string>
+    <string name="ResetInfo">Для восстановления доступа к аккаунту, пожалуйста укажите Email который был указан при регистрации. На него будет отправлен новый пароль.</string>
+    <string name="Confirm">Подтвердить</string>
+    <string name="EmailNotCorrect">Email не правильный!</string>
+    <string name="UserNameNotCorrect">Имя пользователя должно содержать как минимум 3 буквы</string>
+    <string name="PasswordNotCorrect">Пароль должен содержать не менее 4 букв</string>
+    <string name="PassNotMatch">Пароли не совпадают</string>
+    <string name="AcceptAgreement">Пожалуйста, примите пользовательское соглашение</string>
+    <string name="CheckConnection">Пожалуйста, проверьте подключение к сети!</string>
+    <string name="EmptyFields">Поля не могут быть пустыми!</string>
+    <string name="ChangePass">Изменить пароль</string>
+    <string name="CurrentPass">Текущий пароль</string>
+    <string name="NewPass">Новый пароль</string>
+    <string name="CurrPassNotCorrect">Текущий пароль неверный</string>
+    <string name="SuccessChangePass">Пароль успешно изменен</string>
+
+    <!-- Russian names -->
+    <string name="SquareMemory">Площадь памяти</string>
+    <string name="Figures">Цветные фигуры</string>
+    <string name="Colors">Цветные слова</string>
+
+    <string name="SquaresInfo">Площадь памяти - вы должны помнить положение оранжевых квадратов, показанных в матрице, и нажимать на квадраты как можно быстрее.</string>
+    <string name="ColorsInfo">Цветные слова - в верхней части экрана вам будет показан цвет с другим именем. Из списка ниже, вы должны найти и нажать название данного цвета как можно быстрее.</string>
+    <string name="FiguresInfo">Цветные фигуры - вы должны найти наиболее распространенные цветные фигуры и постараться нажать как можно быстрее.</string>
+    <string name="FindColor">Найти название данного цвета</string>
+    <string name="ColorRed">Красный</string>
+    <string name="ColorBlue">Синий</string>
+    <string name="ColorOrange">Желтый</string>
+    <string name="ColorBlack">Черный</string>
+    <string name="ColorBrown">Коричневый</string>
+    <string name="ColorGreen">Зеленый</string>
+    <string name="ColorPink">Розовый</string>
+    <string name="ColorViolet">Фиолетовый</string>
 
 </resources>

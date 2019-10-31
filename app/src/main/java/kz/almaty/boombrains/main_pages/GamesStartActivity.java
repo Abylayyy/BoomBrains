@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class GamesStartActivity extends AppCompatActivity {
     @BindView(R.id.bottomLayerConst) ConstraintLayout bottomLayer;
     @BindView(R.id.back_to_main) RelativeLayout backToMain;
     @BindView(R.id.kakIgratConst) ConstraintLayout kakIgratBtn;
+    @BindView(R.id.scrollStart) ScrollView scroll;
 
     String gameName;
     int position;
@@ -41,9 +43,7 @@ public class GamesStartActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         gameName = getIntent().getStringExtra("gameName");
-
         nameOfGame.setText(gameName);
-
         setBackgrounds(position);
 
         backToMain.setOnClickListener(v -> onBackPressed());
@@ -60,34 +60,16 @@ public class GamesStartActivity extends AppCompatActivity {
 
     private void setBackgrounds(int position) {
         switch (position) {
-            case 0: {
-                setShulteBackgrounds();
-                break;
-            }
-            case 1: {
-                setZapomniChisloBackgrounds();
-                break;
-            }
-            case 2: {
-                setFindBackgrounds();
-                break;
-            }
-            case 3: {
-                setNumZnakiBackgrounds();
-                break;
-            }
-            case 4: {
-                setEquationBackgrounds();
-                break;
-            }
-            case 5: {
-                setShulteLetterBackgrounds();
-                break;
-            }
-            case 6: {
-                setRemWordsBackgrounds();
-                break;
-            }
+            case 0: { setShulteBackgrounds();break; }
+            case 1: { setZapomniChisloBackgrounds();break; }
+            case 2: { setFindBackgrounds();break; }
+            case 3: { setNumZnakiBackgrounds();break; }
+            case 4: { setEquationBackgrounds();break; }
+            case 5: { setShulteLetterBackgrounds();break; }
+            case 6: { setRemWordsBackgrounds();break; }
+            case 7: { setSquareBackgrounds();break; }
+            case 8: { setColorBackgrounds();break; }
+            case 9: { setFigureBackgrounds();break; }
         }
     }
 
@@ -97,7 +79,7 @@ public class GamesStartActivity extends AppCompatActivity {
                 startIntent(new Intent(this, ShulteLevel.class), position);
                 break;
             }
-            case 1: case 2: case 3: case 4: case 5: case 6: {
+            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
                 startIntent(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
@@ -116,6 +98,19 @@ public class GamesStartActivity extends AppCompatActivity {
         recordLayout.setBackgroundResource(kubok);
         bottomLayer.setBackgroundResource(bottom);
         backConst.setBackgroundResource(back);
+        scroll.setBackgroundResource(bottom);
+    }
+
+    private void setFigureBackgrounds() {
+        setBackgroundsByType(R.drawable.shape_top_icon, R.color.topShape, R.drawable.figure_kubok_grad, R.color.underShape,
+                R.drawable.shape_back);
+        setRecords(SharedPrefManager.getFigureRecord(getApplication()));
+    }
+
+    private void setColorBackgrounds() {
+        setBackgroundsByType(R.drawable.color_top_icon, R.color.topColor, R.drawable.color_kubok_grad, R.color.underColor,
+                R.drawable.color_back);
+        setRecords(SharedPrefManager.getColorRecord(getApplication()));
     }
 
     private void setEquationBackgrounds() {
@@ -158,6 +153,12 @@ public class GamesStartActivity extends AppCompatActivity {
         setBackgroundsByType(R.drawable.rem_words_top_icon, R.color.remWordsColor, R.drawable.rem_words_kubok_grad, R.color.underRemWords,
                 R.drawable.rem_words_back);
         setRecords(SharedPrefManager.getSlovoRecord(getApplication()));
+    }
+
+    private void setSquareBackgrounds() {
+        setBackgroundsByType(R.drawable.square_top_icon, R.color.topSquare, R.drawable.square_kubok_grad, R.color.underSquare,
+                R.drawable.square_back);
+        setRecords(SharedPrefManager.getSquareRecord(getApplication()));
     }
 
     @SuppressLint("SetTextI18n")

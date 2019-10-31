@@ -16,12 +16,15 @@ import com.ankushgrover.hourglass.Hourglass;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.game_pages.color_figures.FiguresActivity;
+import kz.almaty.boombrains.game_pages.color_words.ColorWordsActivity;
 import kz.almaty.boombrains.game_pages.equation.EquationActivity;
 import kz.almaty.boombrains.game_pages.find_number.FindNumberActivity;
 import kz.almaty.boombrains.game_pages.number_znaki.NumberZnakiActivity;
 import kz.almaty.boombrains.game_pages.rem_words.RememberWordsActivity;
 import kz.almaty.boombrains.game_pages.shulte_letter.ShulteLetterActivity;
 import kz.almaty.boombrains.game_pages.shulte_page.ShulteActivity;
+import kz.almaty.boombrains.game_pages.square_memory.SquareMemory;
 import kz.almaty.boombrains.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
 
 import static android.view.animation.Animation.INFINITE;
@@ -85,67 +88,31 @@ public class AreYouReadyActivity extends AppCompatActivity {
 
     private void setBackgrounds(int position) {
         switch (position) {
-            case 0: {
-                setShulteBackgrounds();
-                break;
-            }
-            case 1: {
-                setZapomniChisloBackgrounds();
-                break;
-            }
-            case 2: {
-                setFindBackgrounds();
-                break;
-            }
-            case 3: {
-                setNumZnakiBackgrounds();
-                break;
-            }
-            case 4: {
-                setEquationBackgrounds();
-                break;
-            }
-            case 5: {
-                setShulteLetterBackgrounds();
-                break;
-            }
-            case 6: {
-                setRemWordBackgrounds();
-                break;
-            }
+            case 0: { setShulteBackgrounds();break; }
+            case 1: { setZapomniChisloBackgrounds();break; }
+            case 2: { setFindBackgrounds();break; }
+            case 3: { setNumZnakiBackgrounds();break; }
+            case 4: { setEquationBackgrounds();break; }
+            case 5: { setShulteLetterBackgrounds();break; }
+            case 6: { setRemWordBackgrounds();break; }
+            case 7: { setSquareBackgrounds();break; }
+            case 8: { setColorBackgrounds();break; }
+            case 9: { setFigureBackgrounds();break; }
         }
     }
 
     private void setGames(int position) {
         switch (position) {
-            case 0: {
-                startShulteIntent(new Intent(this, ShulteActivity.class), position);
-                break;
-            }
-            case 1: {
-                startIntent(new Intent(this, ZapomniChisloActivity.class), position);
-                break;
-            }
-            case 2: {
-                startIntent(new Intent(this, FindNumberActivity.class), position);
-                break;
-            }
-            case 3: {
-                startIntent(new Intent(this, NumberZnakiActivity.class), position);
-                break;
-            }
-            case 4: {
-                startIntent(new Intent(this, EquationActivity.class), position);
-                break;
-            }
-            case 5: {
-                startIntent(new Intent(this, ShulteLetterActivity.class), position);
-                break;
-            }
-            case 6: {
-                startIntent(new Intent(this, RememberWordsActivity.class), position);
-                break;
-            }
+            case 0: { startShulteIntent(new Intent(this, ShulteActivity.class), position);break; }
+            case 1: { startIntent(new Intent(this, ZapomniChisloActivity.class), position);break; }
+            case 2: { startIntent(new Intent(this, FindNumberActivity.class), position);break; }
+            case 3: { startIntent(new Intent(this, NumberZnakiActivity.class), position);break; }
+            case 4: { startIntent(new Intent(this, EquationActivity.class), position);break; }
+            case 5: { startIntent(new Intent(this, ShulteLetterActivity.class), position);break; }
+            case 6: { startIntent(new Intent(this, RememberWordsActivity.class), position);break; }
+            case 7: { startIntent(new Intent(this, SquareMemory.class), position);break; }
+            case 8: { startIntent(new Intent(this, ColorWordsActivity.class), position);break; }
+            case 9: { startIntent(new Intent(this, FiguresActivity.class), position);break; }
         }
     }
 
@@ -169,6 +136,18 @@ public class AreYouReadyActivity extends AppCompatActivity {
 
     private void setEquationBackgrounds() {
         setBackgroundsByType(R.drawable.equation_back, R.color.underEquation);
+    }
+
+    private void setColorBackgrounds() {
+        setBackgroundsByType(R.drawable.color_back, R.color.underColor);
+    }
+
+    private void setFigureBackgrounds() {
+        setBackgroundsByType(R.drawable.shape_back, R.color.underShape);
+    }
+
+    private void setSquareBackgrounds() {
+        setBackgroundsByType(R.drawable.square_back, R.color.underSquare);
     }
 
     private void setShulteBackgrounds() {

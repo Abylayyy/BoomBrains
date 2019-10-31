@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.sign_pages.MainLoginActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -14,8 +16,16 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        if (SharedPrefManager.isUserLoggedIn(this)) {
+            setActivity(new Intent(getApplication(), MainActivity.class));
+        } else {
+            setActivity(new Intent(getApplication(), MainLoginActivity.class));
+        }
+    }
+
+    private void setActivity(Intent intent) {
         new Handler().postDelayed(()-> {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(intent);
             finish();
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }, 1700);

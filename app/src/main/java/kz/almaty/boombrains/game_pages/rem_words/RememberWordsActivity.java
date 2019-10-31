@@ -47,8 +47,10 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     @BindView(R.id.nextNumShulte) TextView nextNum;
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.shulteRecycler) RecyclerView shulteRecycler;
+    @BindView(R.id.remConst) ConstraintLayout background;
     @BindView(R.id.slovo_teksts) TextView slovo;
     @BindView(R.id.wordConst) ConstraintLayout wordLayout;
+
     private int currentLevel = 1;
     private String random;
     private String correctAnswer;
@@ -64,7 +66,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         position = getIntent().getIntExtra("position", 0);
 
         setupDialog(this, R.style.slovoTheme, R.drawable.pause_rem_word, position, "");
-        startTimer(120000, timeTxt);
+        startTimer(75000, timeTxt);
         setCount();
         loadGoogleAd();
 
@@ -164,22 +166,21 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     public void startNewActivity() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
-        intent.putExtra("slovoScore", score);
-        intent.putExtra("slovoErrors", errors);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
 
         String oldScore = SharedPrefManager.getSlovoRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("slovoRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
-                intent.putExtra("slovoRecord", getString(R.string.CongratulationNewRecord));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-
         startActivity(intent);
         overridePendingTransition(0,0);
     }
@@ -255,7 +256,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
                     vibrate(100);
                     setRecyclerSizes(currentLevel);
                     nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-                    view.setBackgroundResource(R.drawable.card_background);
                     recordTxt.setText(score + "");
                 }, 200);
             }
@@ -271,7 +271,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
                 setAudio(R.raw.level_complete);
                 setRecyclerSizes(currentLevel);
                 nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-                view.setBackgroundResource(R.drawable.card_background);
                 recordTxt.setText(score + "");
             }
         }, 200);
@@ -343,19 +342,21 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     }
 
     private void showWord() {
+        pauseTimer();
         slovo.setVisibility(View.VISIBLE);
-        shulteRecycler.setVisibility(View.INVISIBLE);
+        background.setVisibility(View.INVISIBLE);
         slovo.setText(random);
         new Handler().postDelayed(()-> {
+            resumeTimer();
             slovo.setVisibility(View.INVISIBLE);
-            shulteRecycler.setVisibility(View.VISIBLE);
+            background.setVisibility(View.VISIBLE);
         }, 2000);
     }
 
     private void setSizes(View view, int x) {
         int width = shulteRecycler.getWidth();
         int height = shulteRecycler.getHeight();
-        view.getLayoutParams().width = width / 2 - 23;
-        view.getLayoutParams().height = height / x - 15;
+        view.getLayoutParams().width = width / 2 - 12;
+        view.getLayoutParams().height = height / x - 10;
     }
 }
