@@ -45,10 +45,9 @@ public class FigureAdapter extends RecyclerView.Adapter<FigureAdapter.FigureView
         listener.setSize(holder.itemView);
 
         if (number.isSelected()) {
-            holder.shape.setVisibility(View.INVISIBLE);
+            holder.itemView.setVisibility(View.INVISIBLE);
         }
 
-        countNumbers(number.getTint());
         holder.itemView.setOnClickListener(v -> {
             listener.updateNumbers(holder.itemView, number.getTint());
         });
@@ -56,31 +55,6 @@ public class FigureAdapter extends RecyclerView.Adapter<FigureAdapter.FigureView
 
     public List<FigureModel> getList() {
         return numberList;
-    }
-
-    private void countNumbers(int type) {
-        switch (type) {
-            case R.color.redFigure: countRed += 1; break;
-            case R.color.blueFigure: countBlue += 1; break;
-            case R.color.greenFigure: countGreen += 1; break;
-            case R.color.orangeFigure: countOrange += 1; break;
-        }
-    }
-
-    public int getCountOrange() {
-        return countOrange;
-    }
-
-    public int getCountGreen() {
-        return countGreen;
-    }
-
-    public int getCountBlue() {
-        return countBlue;
-    }
-
-    public int getCountRed() {
-        return countRed;
     }
 
     @Override

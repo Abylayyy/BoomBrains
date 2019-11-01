@@ -29,4 +29,6 @@ public interface APIService {
     @POST("/auth/change-password")
     Call<ChangePassModel> changePassword(@Header("Authorization") String token,
                                          @Field("previousPassword") String currentPass, @Field("password") String newPass);
+
+
 }

@@ -54,7 +54,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
         setupDialog(this, R.style.squareTheme, R.drawable.pause_square, position, "");
-        startTimer(90000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
@@ -100,12 +100,12 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
                         nextNum.setText(getString(R.string.Level) + " " + currentLevel);
                         count = 0; setGameLevels();
                     }
-                },550);
+                },600);
             } else {
                 setErrorColor(view);
                 new Handler().postDelayed(()-> {
                     count = 0; setErrors(); setGameLevels();
-                }, 550);
+                }, 600);
             }
         }
     }
@@ -163,7 +163,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
     }
 
     private void showAndHide(View view) {
-        pauseTimer();
+
         flipView(view);
         new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_selected),400);
         new Handler().postDelayed(()-> flipReverse(view),2500);

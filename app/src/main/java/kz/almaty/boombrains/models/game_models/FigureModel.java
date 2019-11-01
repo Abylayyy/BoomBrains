@@ -9,6 +9,10 @@ public class FigureModel {
         this.resource = resource;
     }
 
+    public FigureModel() {
+
+    }
+
     public boolean isSelected() {
         return selected;
     }

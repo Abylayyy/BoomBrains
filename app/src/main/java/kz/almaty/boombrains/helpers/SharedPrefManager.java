@@ -254,7 +254,7 @@ public class SharedPrefManager {
         setVibrateEnabled(context, true);
     }
 
-    public static void clearSquare(Context context) {
+    public static void clear(Context context) {
         setSquareRecord(context, "0");
     }
 

@@ -12,6 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,12 +48,17 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     private int errors = 0;
     private int count = 0;
     boolean isEnabled = false;
+    int[][] levelArray;
+    List<Integer> thisLevelFigures = new ArrayList<>();
+    List<Integer> thisLevelColors = new ArrayList<>();
+    int maxColorIndex = 0;
 
     FigureAdapter adapter;
     List<FigureModel> numbersList;
-    int currentLevel = 1;
+    int currentLevel = 0;
     List<Integer> randomcolors;
     List<Integer> randomFigures;
+    int transparent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,28 +68,46 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
 
         position = getIntent().getIntExtra("position", 0);
         setupDialog(this, R.style.figureTheme, R.drawable.pause_figure, position, "");
-        startTimer(20000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
-        randomcolors = new ArrayList<>(Arrays.asList(R.color.orangeFigure, R.color.blueFigure, R.color.greenFigure, R.color.redFigure));
-        randomFigures = new ArrayList<>(Arrays.asList(R.drawable.rectangle, R.drawable.circle_shape, R.drawable.triangle, R.drawable.romb_shape));
+        transparent = android.R.color.transparent;
         numbersList = new ArrayList<>();
 
+        levelArray = new int[][]{
+                // Easy levels
+                {45, 21}, {42, 24}, {39, 27}, {36, 30}, {34, 32},
+                // Medium levels
+                {34, 22, 10}, {31, 22, 13}, {28, 22, 16}, {25, 22, 19}, {23, 22, 21},
+                // Hard levels
+                {28, 22, 11, 5}, {25, 21, 12, 8}, {22, 19, 14, 11}, {19, 18, 15, 14}, {18, 17, 16, 15}
+        };
+
+        randomcolors = new ArrayList<>(Arrays.asList(R.color.orangeFigure, R.color.blueFigure, R.color.greenFigure, R.color.redFigure));
+        randomFigures = new ArrayList<>(Arrays.asList(R.drawable.rectangle, R.drawable.circle_shape, R.drawable.triangle, R.drawable.romb_shape));
+
         pauseImg.setOnClickListener(v -> showPauseDialog());
-        nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+        nextNum.setText(getString(R.string.Level) + " " + (currentLevel + 1));
 
         setRecycler();
     }
 
     private void setRecycler() {
-        for (int i = 0; i < 60; i++) {
-            numbersList.add(new FigureModel(
-                    randomcolors.get(new Random().nextInt(randomcolors.size())),
-                    randomFigures.get(new Random().nextInt(randomFigures.size()))
-            ));
-        }
+        clearElements();
+        calcLevelFigures();
+        startNewLevel();
+    }
 
+    private void clearElements() {
+        maxColorIndex = 0;
+        thisLevelColors.clear();
+        thisLevelFigures.clear();
+        numbersList.clear();
+    }
+
+    private void startNewLevel() {
+        nextNum.setText(getString(R.string.Level) + " " + (currentLevel + 1));
         adapter = new FigureAdapter(numbersList, this, this);
         shulteRecycler.setAdapter(adapter);
         shulteRecycler.setLayoutManager(new GridLayoutManager(this, 6));
@@ -90,12 +116,61 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         adapter.notifyDataSetChanged();
     }
 
+    private void makeInvisible(int color) {
+        for (FigureModel model : numbersList) {
+            if (model.getTint() == color) {
+                model.setSelected(true);
+            }
+        }
+        if (maxColorIndex == thisLevelColors.size()) {
+            currentLevel += 1;
+            setRecycler();
+        } else {
+            startNewLevel();
+        }
+    }
+
+    private void calcLevelFigures(){
+
+        int level = currentLevel;
+
+        if (level > levelArray.length - 1) {
+            level = levelArray.length - 1;
+        }
+
+        for (int i = 0; i < levelArray[level].length; i++) {
+            thisLevelColors.add(randomcolors.get(i));
+            thisLevelFigures.add(randomFigures.get(i));
+        }
+
+        Collections.shuffle(thisLevelColors);
+        Collections.shuffle(thisLevelFigures);
+
+        for (int i = 0; i < levelArray[level].length; i++) {
+            for (int j = 0; j < levelArray[level][i]; j++) {
+                FigureModel model = new FigureModel();
+                model.setResource(thisLevelFigures.get(new Random().nextInt(thisLevelFigures.size())));
+                model.setTint(thisLevelColors.get(i));
+                numbersList.add(model);
+            }
+        }
+
+        Collections.shuffle(numbersList);
+    }
+
     @Override
     public void updateNumbers(View view, int tint) {
-        Log.d("REDS::", String.valueOf(adapter.getCountRed()));
-        Log.d("BLUE::", String.valueOf(adapter.getCountBlue()));
-        Log.d("GREEN::", String.valueOf(adapter.getCountGreen()));
-        Log.d("ORANGE::", String.valueOf(adapter.getCountOrange()));
+        if (tint == thisLevelColors.get(maxColorIndex)) {
+            maxColorIndex += 1;
+            score += 100;
+            recordTxt.setText(""+score);
+            makeInvisible(tint);
+        } else {
+            if (score > 0) {
+                score -= 50;
+            }
+            recordTxt.setText(""+score);
+        }
     }
 
     @Override
@@ -107,7 +182,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         int width = shulteRecycler.getWidth();
         int height = shulteRecycler.getHeight();
         view.getLayoutParams().width = width / 6;
-        view.getLayoutParams().height = height / 10;
+        view.getLayoutParams().height = height / 11;
     }
 
     @Override
@@ -133,15 +208,15 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
-        String oldScore = SharedPrefManager.getColorRecord(getApplication());
+        String oldScore = SharedPrefManager.getFigureRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
-                SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
+                SharedPrefManager.setFigureRecord(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
-                SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
+                SharedPrefManager.setFigureRecord(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
