@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -24,9 +26,14 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordView;
+import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordViewModel;
+import kz.almaty.boombrains.viewmodel.records.send_minutes.SendSecondView;
+import kz.almaty.boombrains.viewmodel.records.send_minutes.SendSecondViewModel;
 
 @SuppressLint("SetTextI18n")
-public class FinishedActivity extends AppCompatActivity {
+public class FinishedActivity extends AppCompatActivity implements NewRecordView, SendSecondView {
 
     @BindView(R.id.successImg) ImageView successImg;
     @BindView(R.id.successMessTxt) TextView successMessage;
@@ -39,9 +46,13 @@ public class FinishedActivity extends AppCompatActivity {
     @BindView(R.id.view3) View view1;
     @BindView(R.id.view4) View view2;
 
+    String lang;
     int position, score, error;
     private InterstitialAd mInterstitialAd;
     private String name;
+    NewRecordViewModel newRecordViewModel;
+    SendSecondViewModel sendSecondViewModel;
+    String second;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +62,12 @@ public class FinishedActivity extends AppCompatActivity {
 
         loadGoogleAd();
 
+        newRecordViewModel = ViewModelProviders.of(this).get(NewRecordViewModel.class);
+        sendSecondViewModel = ViewModelProviders.of(this).get(SendSecondViewModel.class);
+
         position = getIntent().getIntExtra("position", 0);
         name = getIntent().getStringExtra("name");
+        lang = SharedUpdate.getLanguage(getApplication());
 
         setBtnColor(position);
         setBackgrounds(position);
@@ -68,6 +83,15 @@ public class FinishedActivity extends AppCompatActivity {
         score = getIntent().getIntExtra("score", 0);
         error = getIntent().getIntExtra("errors", 0);
         String message = getIntent().getStringExtra("record");
+
+        if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
+            newRecordViewModel.setNewRecord(getGameName(position), score, this, this);
+        }
+
+        if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
+            sendSecondViewModel.sendStatistics(second, this, this);
+        }
+
         if (message != null) {
             successMessage.setText(message);
             setMeasures(successImg, R.drawable.zapomni_new_record);
@@ -79,6 +103,23 @@ public class FinishedActivity extends AppCompatActivity {
         }
         scoreTxt.setText(getString(R.string.YourScore) + " " + score);
         errors.setText(getString(R.string.Mistakes) + " " + error);
+    }
+
+    private String getGameName(int position) {
+        String name = "";
+        switch (position) {
+            case 0: name = "shulteTable"; break;
+            case 1: name = "rememberNumber"; break;
+            case 2: name = "findNumber"; break;
+            case 3: name = "calculation"; break;
+            case 4: name = "equation"; break;
+            case 5: name = "shulteLetters"; break;
+            case 6: name = "rememberWords"; break;
+            case 7: name = "memorySquare"; break;
+            case 8: name = "coloredWords"; break;
+            case 9: name = "coloredFigures"; break;
+        }
+        return name;
     }
 
     private void loadGoogleAd() {
@@ -217,16 +258,27 @@ public class FinishedActivity extends AppCompatActivity {
 
     private void setBtnColor(int position) {
         switch (position) {
-            case 0: setColors(R.color.vnimanieColor);break;
-            case 1: setColors(R.color.pamiatColor);break;
-            case 2: setColors(R.color.findColor);break;
-            case 3: setColors(R.color.numZnakiColor);break;
-            case 4: setColors(R.color.equationColor);break;
-            case 5: setColors(R.color.shulteLetterColor);break;
-            case 6: setColors(R.color.remWordsColor);break;
-            case 7: setColors(R.color.topSquare);break;
-            case 8: setColors(R.color.topColor);break;
-            case 9: setColors(R.color.topShape);break;
+            case 0: setColors(R.color.vnimanieColor);second = "120";break;
+            case 1: setColors(R.color.pamiatColor);second = "60";break;
+            case 2: setColors(R.color.findColor);second = "60";break;
+            case 3: setColors(R.color.numZnakiColor);second = "60";break;
+            case 4: setColors(R.color.equationColor);second = "60";break;
+            case 5: setColors(R.color.shulteLetterColor);setByLang();break;
+            case 6: setColors(R.color.remWordsColor);second = "60";break;
+            case 7: setColors(R.color.topSquare);second = "60";break;
+            case 8: setColors(R.color.topColor);second = "60";break;
+            case 9: setColors(R.color.topShape);second = "60";break;
+        }
+    }
+
+    private void setByLang() {
+        if (lang != null) {
+            switch (lang) {
+                case "en": case "es": second = "100"; break;
+                case "kk": case "ru": second = "120"; break;
+            }
+        } else {
+            second = "90";
         }
     }
 
@@ -258,5 +310,25 @@ public class FinishedActivity extends AppCompatActivity {
         finishAffinity();
         startActivity(new Intent(getApplication(), MainActivity.class));
         overridePendingTransition(0,0);
+    }
+
+    @Override
+    public void success() {
+        Log.d("Success::", "YEEEES!");
+    }
+
+    @Override
+    public void error(String message) {
+        Log.d("ERROR::", message);
+    }
+
+    @Override
+    public void successSecond() {
+        Log.d("Success::", "YEEEES!");
+    }
+
+    @Override
+    public void errorSecond() {
+        Log.d("ERROR::", "NOOOO!");
     }
 }

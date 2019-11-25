@@ -83,6 +83,7 @@
     <color name="main_btn_color">#5ACC02</color>
     <color name="main_txt_colors">#292929</color>
     <color name="edit_color">#FBFBFB</color>
+    <color name="prof_back">#F9F9F9</color>
     <color name="hint_color">#B4B4B4</color>
     <color name="desc_color_dark">#777777</color>
     <color name="desc_color">#AAAAAA</color>
@@ -91,8 +92,8 @@
     <!-- Color words colors-->
     <color name="pinkColor">#FD9DFF</color>
     <color name="violetColor">#9100B6</color>
-    <color name="orangeColor">#FFB904</color>
-    <color name="brownColor">#7A4D17</color>
+    <color name="orangeColor">#FFE604</color>
+    <color name="brownColor">#C47C29</color>
     <color name="greenColor">#17E006</color>
     <color name="blackColor">#000000</color>
     <color name="redColor">#F53333</color>
@@ -103,5 +104,15 @@
     <color name="redFigure">#FF5656</color>
     <color name="orangeFigure">#FFAC0B</color>
     <color name="blueFigure">#54CCFF</color>
+
+    <color name="profBoldColors">#4A4A4A</color>
+    <color name="requestColor">#357EBD</color>
+    <color name="requestCount">#FFAE12</color>
+    <color name="friendRatings">#AAAAAA</color>
+    <color name="addFriendColor">#11CFAD</color>
+    <color name="requestedFriends">#4F4F4F</color>
+    <color name="requestedEmails">#838383</color>
+    <color name="profEditColors">#AAAAAA</color>
+    <color name="profInfoColor">#3D3D3D</color>
 
 </resources>

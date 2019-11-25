@@ -3,7 +3,6 @@ package kz.almaty.boombrains.main_fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,27 +13,31 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.helpers.StatefulFragment;
-import kz.almaty.boombrains.sign_pages.MainLoginActivity;
-import kz.almaty.boombrains.sign_pages.MainSignInActivity;
+import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutView;
+import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class SettingsFragment extends StatefulFragment {
+public class SettingsFragment extends StatefulFragment implements LogoutView {
 
     @BindView(R.id.languageTxt) TextView languageTxt;
     @BindView(R.id.soundSwitch) Switch soundSwitch;
@@ -48,6 +51,9 @@ public class SettingsFragment extends StatefulFragment {
 
     private Dialog dialog;
     private TextView ru, en, es, kaz, cancel, diLang;
+    LogoutViewModel logoutViewModel;
+
+
 
     public SettingsFragment() { }
 
@@ -72,12 +78,10 @@ public class SettingsFragment extends StatefulFragment {
         cancel = dialog.findViewById(R.id.cancelTxt);
         diLang = dialog.findViewById(R.id.diLang);
 
+        logoutViewModel = ViewModelProviders.of(this).get(LogoutViewModel.class);
+
         languageTxt.setOnClickListener(v -> showDialog());
         language.setOnClickListener(v -> showDialog());
-
-        if (!SharedPrefManager.getIsFirstShown(getActivity())) {
-            showDialog();
-        }
 
         if (SharedPrefManager.isUserLoggedIn(getActivity())) {
             exitBtn.setVisibility(View.VISIBLE);
@@ -88,10 +92,11 @@ public class SettingsFragment extends StatefulFragment {
         back.setOnClickListener(v -> getActivity().onBackPressed());
 
         exitBtn.setOnClickListener(v -> {
-            SharedPrefManager.clearUserData(getActivity());
-            startActivity(new Intent(getContext(), MainLoginActivity.class));
-            getActivity().overridePendingTransition(0,0);
-            getActivity().finish();
+            if (SharedPrefManager.isNetworkOnline(getActivity())) {
+                logoutViewModel.logoutFromAccount(getContext(), this);
+            } else {
+                SharedPrefManager.clearAndExit(getActivity());
+            }
         });
 
         soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -114,21 +119,23 @@ public class SettingsFragment extends StatefulFragment {
         soundSwitch.setChecked(SharedPrefManager.isSoundEnabled(getActivity()));
     }
 
-    private void setLocale(String lang) {
-        Locale locale = new Locale(lang);
+    private void setLocale(String lang, String country) {
+        Locale locale = new Locale(lang, country);
         Locale.setDefault(locale);
         Configuration conf = new Configuration();
         conf.setLocale(locale);
         getResources().updateConfiguration(conf, getResources().getDisplayMetrics());
-        SharedPrefManager.setLanguage(getActivity(), lang);
+        SharedUpdate.setLanguage(getActivity(), lang);
+        SharedUpdate.setCountry(getActivity(), country);
     }
 
     private void loadLocale() {
-        String lang = SharedPrefManager.getLanguage(getActivity());
-        if (lang != null) {
-            setLocale(lang);
+        String country = SharedUpdate.getCountry(getActivity());
+        String lang = SharedUpdate.getLanguage(getActivity());
+        if (lang != null && country != null) {
+            setLocale(lang, country);
         } else {
-            setLocale("en");
+            setLocale("en", "EN");
         }
     }
 
@@ -140,38 +147,37 @@ public class SettingsFragment extends StatefulFragment {
         cancel.setText(getString(R.string.Cancel));
         diLang.setText(getString(R.string.ChangeLanguage));
         vibTxt.setText(getString(R.string.Vibration));
+        exitBtn.setText(getString(R.string.Exit));
     }
 
     @SuppressLint("SetTextI18n")
     private void showDialog() {
         SharedPrefManager.setIsFirstShown(getActivity(), true);
         ru.setOnClickListener(v -> {
-            setLocale("ru");
+            setLocale("ru", "RU");
             loadLocale();
             setAllTexts();
             dialog.dismiss();
         });
         kaz.setOnClickListener(v -> {
-            setLocale("kk");
+            setLocale("kk", "KZ");
             loadLocale();
             setAllTexts();
             dialog.dismiss();
         });
         en.setOnClickListener(v -> {
-            setLocale("en");
+            setLocale("en", "EN");
             loadLocale();
             setAllTexts();
             dialog.dismiss();
         });
         es.setOnClickListener(v -> {
-            setLocale("es");
+            setLocale("es", "ES");
             loadLocale();
             setAllTexts();
             dialog.dismiss();
         });
-        cancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        cancel.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
     }
 
@@ -183,5 +189,15 @@ public class SettingsFragment extends StatefulFragment {
     @Override
     protected Bundle getStateToSave() {
         return null;
+    }
+
+    @Override
+    public void success() {
+        SharedPrefManager.clearAndExit(getActivity());
+    }
+
+    @Override
+    public void error() {
+        Toasty.info(getActivity(), getString(R.string.LogoutError), Toasty.LENGTH_SHORT).show();
     }
 }

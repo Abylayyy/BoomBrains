@@ -33,6 +33,7 @@ import kz.almaty.boombrains.files.RememberWordsRu;
 import kz.almaty.boombrains.game_pages.rem_words.SlovoAdapter;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 import kz.almaty.boombrains.models.game_models.ColorModel;
 
@@ -69,7 +70,7 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         position = getIntent().getIntExtra("position", 0);
 
         setupDialog(this, R.style.colorTheme, R.drawable.pause_color, position, "");
-        startTimer(90000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
@@ -178,6 +179,7 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
             if (score > 0) {
                 score -= 50;
             }
+            errors += 1;
             recordTxt.setText(""+score);
             setRecyclerItem();
         },200);
@@ -211,11 +213,13 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setColorUpdate(getApplicationContext(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setColorUpdate(getApplicationContext(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

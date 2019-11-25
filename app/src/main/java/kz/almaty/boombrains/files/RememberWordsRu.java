@@ -2,6 +2,9 @@ package kz.almaty.boombrains.files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import kz.almaty.boombrains.R;
 
 public class RememberWordsRu {
     public static ArrayList<String> wordsRuList = new ArrayList<>(Arrays.asList(
@@ -40,5 +43,19 @@ public class RememberWordsRu {
             "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л",
             "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш",
             "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"
+    ));
+
+    public static List<Integer> list_on = new ArrayList<>(Arrays.asList(
+            R.drawable.achieve_1_on, R.drawable.achieve_2_on, R.drawable.achieve_3_on,
+            R.drawable.achieve_4_on, R.drawable.achieve_5_on, R.drawable.achieve_6_on,
+            R.drawable.achieve_7_on, R.drawable.achieve_8_on, R.drawable.achieve_9_on,
+            R.drawable.achieve_10_on, R.drawable.achieve_11_on, R.drawable.achieve_12_on
+    ));
+
+    public static List<Integer> list_off = new ArrayList<>(Arrays.asList(
+            R.drawable.achieve_1_of, R.drawable.achieve_2_of, R.drawable.achieve_3_of,
+            R.drawable.achieve_4_of, R.drawable.achieve_5_of, R.drawable.achieve_6_of,
+            R.drawable.achieve_7_of, R.drawable.achieve_8_of, R.drawable.achieve_9_of,
+            R.drawable.achieve_10_of, R.drawable.achieve_11_of, R.drawable.achieve_12_of
     ));
 }

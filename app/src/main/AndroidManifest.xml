@@ -17,27 +17,28 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".game_pages.color_words.ColorWordsActivity"></activity>
+        <activity android:name=".sign_pages.change_user.ChangeUserActivity"></activity>
+        <activity android:name=".game_pages.color_words.ColorWordsActivity" />
         <activity android:name=".game_pages.color_figures.FiguresActivity" />
         <activity android:name=".game_pages.square_memory.SquareMemory" />
-        <activity android:name=".sign_pages.ChangePasswordActivity" />
+        <activity android:name=".sign_pages.change_user.ChangePasswordActivity" />
         <activity
-            android:name=".sign_pages.ResetActivity"
+            android:name=".sign_pages.change_user.ResetActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
         <activity
-            android:name=".sign_pages.MainSignInActivity"
+            android:name=".sign_pages.login_pages.MainSignInActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
         <activity
-            android:name=".sign_pages.MainRegister"
+            android:name=".sign_pages.login_pages.MainRegister"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />
         <activity
-            android:name=".sign_pages.MainLoginActivity"
+            android:name=".sign_pages.login_pages.MainLoginActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
             tools:targetApi="n" />

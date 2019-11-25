@@ -69,7 +69,7 @@
     <string name="ForgetPass">Забыли пароль?</string>
     <string name="confirm_password">Подтвердить пароль</string>
     <string name="Agreement">Я принимаю пользовательское соглашение.</string>
-    <string name="name">Имя пользователя</string>
+    <string name="name">Логин</string>
 
     <string name="MainProfInfo">Зарегистрируйтесь или войдите в аккаутн чтобы получить доступ ко всем функциям.</string>
     <string name="YourRating">Ваш рейтинг</string>
@@ -86,7 +86,7 @@
     <string name="ResetInfo">Для восстановления доступа к аккаунту, пожалуйста укажите Email который был указан при регистрации. На него будет отправлен новый пароль.</string>
     <string name="Confirm">Подтвердить</string>
     <string name="EmailNotCorrect">Email не правильный!</string>
-    <string name="UserNameNotCorrect">Имя пользователя должно содержать как минимум 3 буквы</string>
+    <string name="UserNameNotCorrect">Логин должно содержать как минимум 3 буквы</string>
     <string name="PasswordNotCorrect">Пароль должен содержать не менее 4 букв</string>
     <string name="PassNotMatch">Пароли не совпадают</string>
     <string name="AcceptAgreement">Пожалуйста, примите пользовательское соглашение</string>
@@ -115,5 +115,39 @@
     <string name="ColorGreen">Зеленый</string>
     <string name="ColorPink">Розовый</string>
     <string name="ColorViolet">Фиолетовый</string>
+
+    <string name="LogoutError">Ошибка при выходе!</string>
+    <string name="world_records">Мировые рекорды</string>
+    <string name="Requests">Запросы</string>
+    <string name="AddFriend">Добавить</string>
+    <string name="WorldRating">Мировой рейтинг</string>
+
+    <string name="Statictics">Больше статистики</string>
+    <string name="MoreText">На вашей личной странице вы можете увидеть подробную статистику ваших тренировок на сайте</string>
+    <string name="AddNewFriend">Добавить в друзья</string>
+    <string name="reject">Отклонить</string>
+    <string name="account">Редактировать профиль</string>
+    <string name="Social">Социальное</string>
+    <string name="UserId">ID пользователя</string>
+    <string name="email">Email</string>
+    <string name="share">Поделиться</string>
+    <string name="change_username">Изменить логин</string>
+    <string name="change">Изменить</string>
+    <string name="NotChanged">Логин не изменено</string>
+    <string name="UseOnlyEnglish">Вы должны использовать только английские буквы</string>
+    <string name="AreYouSureDelete">Вы уверены, что хотите удалить этого пользователя из друзей?</string>
+    <string name="Delete">Удалить</string>
+    <string name="EmptyList">Список пуст</string>
+    <string name="Rating">Рейтинг</string>
+    <string name="ErrorAdFriends">Ошибка с добавлением друзей!</string>
+    <string name="TokenDeleted">Другой пользователь вошел в систему!</string>
+    <string name="ServerNotFound">Сервер не найден!</string>
+    <string name="RequestAccepted">Запрос принят!</string>
+    <string name="ErrAccepting">Ошибка с принятием друга!</string>
+    <string name="RequestDeclined">Запрос отклонен!</string>
+    <string name="ErrRejecting">Ошибка с отклонением!</string>
+    <string name="ErrDeleteUser">Ошибка при удалении пользователя!</string>
+    <string name="DeleteSuccess">Друг успешно удален!</string>
+    <string name="RequestSend">Запрос в друзья отправлен!</string>
 
 </resources>

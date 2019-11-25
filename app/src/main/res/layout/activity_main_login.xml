@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kz.almaty.boombrains.sign_pages.MainLoginActivity">
+    tools:context="kz.almaty.boombrains.sign_pages.login_pages.MainLoginActivity">
 
     <ImageView
         android:id="@+id/imageView"

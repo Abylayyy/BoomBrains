@@ -29,8 +29,10 @@ import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.files.RememberWordsEn;
 import kz.almaty.boombrains.files.RememberWordsKz;
 import kz.almaty.boombrains.files.RememberWordsRu;
+import kz.almaty.boombrains.files.RememberWordsSpain;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.helpers.SpaceItemDecoration;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 
@@ -40,6 +42,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     SlovoAdapter adapter;
     List<String> numbersList;
     List<String> subList;
+    List<String> correctsResults = new ArrayList<>();
     int position;
 
     @BindView(R.id.shulteRecord) TextView recordTxt;
@@ -53,7 +56,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
 
     private int currentLevel = 1;
     private String random;
-    private String correctAnswer;
     private int score = 0, errors = 0;
     private String lang;
     private TextView text;
@@ -66,11 +68,11 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         position = getIntent().getIntExtra("position", 0);
 
         setupDialog(this, R.style.slovoTheme, R.drawable.pause_rem_word, position, "");
-        startTimer(75000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
-        lang = SharedPrefManager.getLanguage(this);
+        lang = SharedUpdate.getLanguage(this);
         numbersList = new ArrayList<>();
         subList = new ArrayList<>();
         setupList(lang);
@@ -91,8 +93,12 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
 
     private void setupList(String lang) {
         switch (lang) {
-            case "en": case "es": {
+            case "en": {
                 numbersList = RememberWordsEn.wordsEnList;
+                break;
+            }
+            case "es": {
+                numbersList = RememberWordsSpain.wordsESList;
                 break;
             }
             case "ru": {
@@ -173,26 +179,18 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
         startActivity(intent);
         overridePendingTransition(0,0);
-    }
-
-    @Override
-    public void getSlovo(String slovo) {
-        this.correctAnswer = slovo;
-    }
-
-    @Override
-    public void getTextView(TextView textView) {
-        this.text = textView;
     }
 
     @Override
@@ -202,7 +200,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     }
 
     @Override
-    public void setSlovo(LinearLayout view) {
+    public void setSlovo(LinearLayout view, TextView text) {
         setBackgroundTypes(view, text);
     }
 
@@ -234,50 +232,52 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
 
     public void setBackgroundTypes(View view, TextView text) {
 
-        String[] results = getCorrect().split(" ");
-        String soz = slovo.getText().toString().trim();
-        String[] correctsResults = soz.split(" ");
+        String[] array = slovo.getText().toString().trim().split(" ");
+        List<String> results = Arrays.asList(array);
+        String soz = text.getText().toString().trim();
 
-        for (String result : results) {
-            if (soz.contains(result)) {
-                view.setBackgroundResource(R.drawable.card_background_success);
-                text.setTextColor(Color.WHITE);
-            } else {
-                view.setBackgroundResource(R.drawable.card_background_error);
-                text.setTextColor(Color.WHITE);
-                new Handler().postDelayed(()-> {
-                    if (currentLevel > 1) {
-                        currentLevel -= 1;
-                        errors += 1;
-                        if (score > 0) {
-                            score -= 50;
-                        }
-                    }
-                    vibrate(100);
-                    setRecyclerSizes(currentLevel);
-                    nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-                    recordTxt.setText(score + "");
-                }, 200);
+        if (results.contains(soz)) {
+            view.setBackgroundResource(R.drawable.card_background_success);
+            text.setTextColor(Color.WHITE);
+            correctsResults.add(soz);
+            if (results.size() == correctsResults.size()) {
+                correctResult();
             }
+            score += 100;
+            recordTxt.setText(score + "");
+        } else {
+            view.setBackgroundResource(R.drawable.card_background_error);
+            text.setTextColor(Color.WHITE);
+            errorResult();
         }
+        Log.d("CORRECT::", results.toString());
+        Log.d("SELECTED::", correctsResults.toString());
+    }
 
-        Arrays.sort(correctsResults);
-        Arrays.sort(results);
-
+    private void correctResult() {
         new Handler().postDelayed(() -> {
-            if (Arrays.equals(results, correctsResults)) {
-                currentLevel += 1;
-                score += 100;
-                setAudio(R.raw.level_complete);
-                setRecyclerSizes(currentLevel);
-                nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-                recordTxt.setText(score + "");
-            }
+            correctsResults.clear();
+            currentLevel += 1;
+            setAudio(R.raw.level_complete);
+            setRecyclerSizes(currentLevel);
+            nextNum.setText(getString(R.string.Level) + " " + currentLevel);
         }, 200);
     }
 
-    private String getCorrect() {
-        return adapter.getCorrectResult().trim();
+    private void errorResult() {
+        new Handler().postDelayed(()-> {
+            if (currentLevel > 1) {
+                currentLevel -= 1;
+                errors += 1;
+                if (score > 0) {
+                    score -= 50;
+                }
+            }
+            vibrate(100);
+            setRecyclerSizes(currentLevel);
+            nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+            recordTxt.setText(score + "");
+        }, 200);
     }
 
     @Override
@@ -342,12 +342,14 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     }
 
     private void showWord() {
+        pauseImg.setEnabled(false);
         pauseTimer();
         slovo.setVisibility(View.VISIBLE);
         background.setVisibility(View.INVISIBLE);
         slovo.setText(random);
         new Handler().postDelayed(()-> {
             resumeTimer();
+            pauseImg.setEnabled(true);
             slovo.setVisibility(View.INVISIBLE);
             background.setVisibility(View.VISIBLE);
         }, 2000);

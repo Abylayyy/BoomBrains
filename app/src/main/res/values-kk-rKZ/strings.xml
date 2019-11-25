@@ -67,8 +67,8 @@
     <string name="Register">Тіркелу</string>
     <string name="ForgetPass">Парольді ұмыттыңыз ба?</string>
     <string name="confirm_password">Парольді растау</string>
-    <string name="Agreement">Мен пайдаланушы келісімін қабылдаймын.</string>
-    <string name="name">Аты</string>
+    <string name="Agreement">Мен қолданушы келісімін қабылдаймын.</string>
+    <string name="name">Логин</string>
     <string name="MainProfInfo">Барлық мүмкіндіктерге қол жеткізу үшін тіркеліңіз немесе кіріңіз.</string>
     <string name="YourRating">Рейтингіңіз</string>
 
@@ -84,10 +84,10 @@
     <string name="ResetInfo">Аккаунтыңызға қайта кіру үшін, тіркелген уакыттағы email-ды енгізіңіз. Жаңа пароль сол email-ға жіберіледі.</string>
     <string name="Confirm">Растау</string>
     <string name="EmailNotCorrect">Email дұрыс емес!</string>
-    <string name="UserNameNotCorrect">Пайдаланушы аты кемінде 3 әріптен тұруы қажет!</string>
+    <string name="UserNameNotCorrect">Логин кемінде 3 әріптен тұруы қажет!</string>
     <string name="PasswordNotCorrect">Пароль кемінде 4 әріптен тұруы қажет!</string>
     <string name="PassNotMatch">Парольдер сәйкес келмейді!</string>
-    <string name="AcceptAgreement">Пайдаланушы келісімін қабылдаңыз!</string>
+    <string name="AcceptAgreement">Қолданушы келісімін қабылдаңыз!</string>
     <string name="CheckConnection">Желілік байланысты тексеріңіз!</string>
     <string name="EmptyFields">Мәтін өрістері бос болмауы керек!</string>
     <string name="ChangePass">Парольді өзгерту</string>
@@ -113,5 +113,39 @@
     <string name="ColorGreen">Жасыл</string>
     <string name="ColorPink">Қызғылт</string>
     <string name="ColorViolet">Күлгін</string>
+
+    <string name="LogoutError">Шығу кезіндегі қателік орын алды!</string>
+    <string name="world_records">Әлемдік рекордтар</string>
+    <string name="Requests">Сұраныстар</string>
+    <string name="AddFriend">Қосу</string>
+    <string name="WorldRating">Әлемдік рейтинг</string>
+
+    <string name="Statictics">Қосымша статистика</string>
+    <string name="MoreText">Жеке парақшаңызда сіз жаттығулардың толық статистикасын веб-сайттан көре аласыз</string>
+    <string name="AddNewFriend">Достарды қосу</string>
+    <string name="reject">Қоспау</string>
+    <string name="account">Профильді өзгерту</string>
+    <string name="Social">Қоғамдық</string>
+    <string name="UserId">Қолданушы ID</string>
+    <string name="email">Email</string>
+    <string name="share">Бөлісу</string>
+    <string name="change_username">Атты өзгерту</string>
+    <string name="change">Өзгерту</string>
+    <string name="NotChanged">Логин өзгертілген жоқ</string>
+    <string name="UseOnlyEnglish">Тек ағылшын әріптерін қолдану керек</string>
+    <string name="AreYouSureDelete">Сіз бұл қолданушыны өшіргіңіз келе ме?</string>
+    <string name="Delete">Өшіру</string>
+    <string name="EmptyList">Тізімде сұраныстар жоқ</string>
+    <string name="Rating">Рейтинг</string>
+    <string name="ErrorAdFriends">Достарды қосу кезіндегі қателік!</string>
+    <string name="TokenDeleted">Тағы бір қолданушы кірді!</string>
+    <string name="ServerNotFound">Сервер табылмады!</string>
+    <string name="RequestAccepted">Сұраныс қабылданды!</string>
+    <string name="ErrAccepting">Досыңызды қабылдаудағы қателік!</string>
+    <string name="RequestDeclined">Сұраныс қабылданбады!</string>
+    <string name="ErrRejecting">Қабылдамау кезіндегі қателік!</string>
+    <string name="ErrDeleteUser">Қолданушыны өшіру кезіндегі қателік!</string>
+    <string name="DeleteSuccess">Дос сәтті өшірілді!</string>
+    <string name="RequestSend">Достық сұраныс жіберілді!</string>
 
 </resources>

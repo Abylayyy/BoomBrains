@@ -28,10 +28,9 @@
 
 
     <string name="CongratulationNewRecord">Congratulations! \n You set a new record!</string>
-
-    <string name="AttentionSchulteTable">Schulte Table</string>
     <string name="SchulteNextNumber">Next number: </string>
 
+    <string name="AttentionSchulteTable">Schulte Table</string>
     <string name="AttentionFigure">Find Number</string>
     <string name="MemoryRemNum">Remember Number</string>
     <string name="NumberZnaki">Calculation</string>
@@ -64,7 +63,7 @@
     <string name="Hint">Email</string>
     <string name="PassHint">Password</string>
     <string name="Voiti">Log in</string>
-    <string name="Register">Register</string>
+    <string name="Register">Registration</string>
     <string name="ForgetPass">Forgot password?</string>
     <string name="confirm_password">Confirm password</string>
     <string name="Agreement">I accept the user agreement.</string>
@@ -85,7 +84,7 @@
     <string name="Confirm">Confirm</string>
 
     <string name="EmailNotCorrect">Email is not correct!</string>
-    <string name="UserNameNotCorrect">Username must contain at least 3 letters</string>
+    <string name="UserNameNotCorrect">Username must contain at least 4 letters</string>
     <string name="PasswordNotCorrect">Password must contain at least 4 letters</string>
     <string name="PassNotMatch">Passwords didn\'t match</string>
     <string name="AcceptAgreement">Please accept the user agreement</string>
@@ -115,8 +114,40 @@
     <string name="ColorGreen">Green</string>
     <string name="ColorPink">Pink</string>
     <string name="ColorViolet">Violet</string>
+    <string name="LogoutError">Error with logging out!</string>
+    <string name="world_records">World Records</string>
+    <string name="Requests">Requests</string>
+    <string name="AddFriend">Add</string>
+    <string name="WorldRating">World Rating</string>
 
+    <string name="Statictics">More Statistics</string>
+    <string name="MoreText">In your personal account you can see detailed statistics of your workouts on website</string>
+    <string name="AddNewFriend">Add friend</string>
+    <string name="reject">Reject</string>
+    <string name="account">Edit Profile</string>
+    <string name="Social">Social</string>
+    <string name="UserId">User ID</string>
+    <string name="email">Email</string>
+    <string name="share">Share</string>
+    <string name="change_username">Change username</string>
+    <string name="change">Change</string>
+    <string name="NotChanged">Username is not changed</string>
+    <string name="UseOnlyEnglish">You should use only English letters</string>
+    <string name="AreYouSureDelete">Are you sure to delete this user from friends?</string>
+    <string name="Delete">Delete</string>
+    <string name="EmptyList">The list is empty</string>
+    <string name="Rating">Rating</string>
+
+    <string name="ErrorAdFriends">Error with adding friends!</string>
+    <string name="TokenDeleted">Another user logged in!</string>
+    <string name="ServerNotFound">Server not found!</string>
+    <string name="RequestAccepted">Request accepted!</string>
+    <string name="ErrAccepting">Error with accepting friend!</string>
+    <string name="RequestDeclined">Request declined!</string>
+    <string name="ErrRejecting">Error with rejecting!</string>
+    <string name="ErrDeleteUser">Error with deleting the user!</string>
+    <string name="DeleteSuccess">Friend deleted successfully!</string>
+    <string name="RequestSend">Friend request sent!</string>
     <!-- Color names -->
-
 
 </resources>

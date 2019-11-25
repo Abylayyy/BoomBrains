@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import java.util.concurrent.TimeUnit;
 
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -39,5 +40,9 @@ public class RetrofitClass {
 
     public static String getUserToken(Context context) {
         return "Bearer " + SharedPrefManager.getUserAuthTokenKey(context);
+    }
+
+    public static String getLang(Context context) {
+        return SharedUpdate.getLanguage(context);
     }
 }

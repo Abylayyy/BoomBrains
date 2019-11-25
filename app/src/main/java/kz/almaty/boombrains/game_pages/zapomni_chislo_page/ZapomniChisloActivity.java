@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
@@ -65,7 +66,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         numbers = new View[] {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0};
 
         setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position, "");
-        startTimer(75000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
@@ -278,11 +279,13 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setChisoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setChisloUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setChisoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setChisloUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

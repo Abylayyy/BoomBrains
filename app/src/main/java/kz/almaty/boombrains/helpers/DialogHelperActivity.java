@@ -10,9 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.ankushgrover.hourglass.Hourglass;
-
 import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
@@ -24,7 +21,7 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
     LinearLayout pauseBack;
     Dialog dialog;
     private static final String format = "%02d:%02d";
-    Hourglass countDownTimer;
+    CountDownTimerWithPause countDownTimer;
 
     public void setupDialog(Context context, int style, int drawable, int position, String name) {
         dialog = new Dialog(context, style);
@@ -114,31 +111,27 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
     }
 
     public void startTimer(int millSec, TextView timeTxt) {
-        countDownTimer = new Hourglass(millSec, 1000) {
+        countDownTimer = new CountDownTimerWithPause(millSec, 1000, true) {
 
             @SuppressLint("DefaultLocale")
             @Override
-            public void onTimerTick(long timeRemaining) {
-                int seconds = (int) (timeRemaining / 1000);
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
                 int minutes = seconds / 60;
                 seconds = seconds % 60;
                 timeTxt.setText(String.format(format, minutes, seconds));
             }
 
             @Override
-            public void onTimerFinish() {
+            public void onFinish() {
                 startNewActivity();
             }
         };
-        countDownTimer.startTimer();
+        countDownTimer.create();
     }
 
     public void dismissDialog() {
         dialog.dismiss();
-    }
-
-    public void stopTimer() {
-        countDownTimer.stopTimer();
     }
 
     public void startNewActivity() {
@@ -161,9 +154,13 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
             }
             case 3: {
                 Toasty.warning(this, s, Toasty.LENGTH_SHORT).show();
+                break;
+            }
+            default: {
+                Toasty.normal(this, s, Toasty.LENGTH_SHORT).show();
+                break;
             }
         }
-
     }
 
     public boolean isPaused() {
@@ -175,12 +172,10 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
     }
 
     public void pauseTimer() {
-        countDownTimer.pauseTimer();
+        countDownTimer.pause();
     }
 
     public void resumeTimer() {
-        if (isPaused()) {
-            countDownTimer.resumeTimer();
-        }
+        countDownTimer.resume();
     }
 }

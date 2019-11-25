@@ -274,7 +274,7 @@
             android:id="@+id/shulteTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01:15"
+            android:text="01:00"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
             app:fontFamily="@font/roboto"

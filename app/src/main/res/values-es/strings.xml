@@ -115,5 +115,39 @@
     <string name="ColorGreen">Verde</string>
     <string name="ColorPink">Rosa</string>
     <string name="ColorViolet">Violeta</string>
+    <string name="LogoutError">¡Error al cerrar sesión!</string>
+    <string name="world_records">Récords mundiales</string>
+    <string name="Requests">Peticiones</string>
+    <string name="AddFriend">Agregar</string>
+    <string name="WorldRating">Clasificación mundial</string>
+
+    <string name="Statictics">Más estadísticas</string>
+    <string name="MoreText">En su cuenta personal puede ver estadísticas detalladas de sus entrenamientos en el sitio web</string>
+    <string name="AddNewFriend">Añadir amigo</string>
+    <string name="reject">Rechazar</string>
+    <string name="account">Editar perfil</string>
+    <string name="Social">Social</string>
+    <string name="UserId">ID de usuario</string>
+    <string name="email">Email</string>
+    <string name="share">Сompartir</string>
+    <string name="change_username">Cambiar nombre de usuario</string>
+    <string name="change">Cambiar</string>
+    <string name="NotChanged">Nombre de usuario no ha cambiado</string>
+    <string name="UseOnlyEnglish">Debes usar solo letras en inglés</string>
+    <string name="AreYouSureDelete">¿Estás seguro de eliminar este usuario de amigos?</string>
+    <string name="Delete">Eliminar</string>
+    <string name="EmptyList">La lista está vacía</string>
+    <string name="Rating">Calificación</string>
+
+    <string name="ErrorAdFriends">¡Error al agregar amigos!</string>
+    <string name="TokenDeleted">¡Otro usuario ha iniciado sesión!</string>
+    <string name="ServerNotFound">¡Servidor no encontrado!</string>
+    <string name="RequestAccepted">¡Petición aceptada!</string>
+    <string name="ErrAccepting">¡Error al aceptar amigo!</string>
+    <string name="RequestDeclined">Solicitud rechazada!</string>
+    <string name="ErrRejecting">¡Error al rechazar!</string>
+    <string name="ErrDeleteUser">¡Error al eliminar el usuario!</string>
+    <string name="DeleteSuccess">Amigo eliminado con éxito!</string>
+    <string name="RequestSend">¡Solicitud de amistad enviada!</string>
 
 </resources>

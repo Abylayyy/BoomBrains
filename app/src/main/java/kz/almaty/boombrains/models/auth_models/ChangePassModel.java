@@ -19,6 +19,10 @@ public class ChangePassModel {
     @Expose
     private String email;
 
+    @SerializedName("token")
+    @Expose
+    private String token;
+
     @SerializedName("errors")
     @Expose
     private List<ErrorModel> errors;
@@ -53,5 +57,13 @@ public class ChangePassModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

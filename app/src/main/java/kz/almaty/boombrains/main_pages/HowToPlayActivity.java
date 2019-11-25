@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 
 public class HowToPlayActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class HowToPlayActivity extends AppCompatActivity {
 
         back.setOnClickListener(v -> onBackPressed());
 
-        lang = SharedPrefManager.getLanguage(this);
+        lang = SharedUpdate.getLanguage(this);
 
         int position = getIntent().getIntExtra("position", 0);
 

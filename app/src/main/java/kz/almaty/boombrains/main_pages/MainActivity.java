@@ -13,27 +13,35 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+
+import java.util.Arrays;
 import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_fragments.MainFragment;
+import kz.almaty.boombrains.main_fragments.profile_pages.FriendDetailsFragment;
+import kz.almaty.boombrains.main_fragments.profile_pages.ProfileEditFragment;
 import kz.almaty.boombrains.main_fragments.profile_pages.ProfileFragment;
 import kz.almaty.boombrains.main_fragments.SettingsFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainFragment.MainCallBack,
+        ProfileFragment.ProfileCallBack, ProfileEditFragment.ProfEditCallback, FriendDetailsFragment.FriendDetailsCallback {
 
     @BindView(R.id.mainBtn) ImageView main;
     @BindView(R.id.profile) RelativeLayout profile;
@@ -54,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
 
         if (!SharedPrefManager.getIsFirstUser(getApplication())) {
             SharedPrefManager.clearSettings(getApplication());
@@ -115,21 +122,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setLocale(String lang) {
-        Locale locale = new Locale(lang);
+    private void setLocale(String lang, String country) {
+        Locale locale = new Locale(lang, country);
         Locale.setDefault(locale);
         Configuration conf = new Configuration();
         conf.setLocale(locale);
         getResources().updateConfiguration(conf, getResources().getDisplayMetrics());
-        SharedPrefManager.setLanguage(getApplication(), lang);
+        SharedUpdate.setLanguage(getApplication(), lang);
+        SharedUpdate.setCountry(getApplication(), country);
     }
 
     private void loadLocale() {
-        String lang = SharedPrefManager.getLanguage(getApplication());
-        if (lang != null) {
-            setLocale(lang);
+        String lang = SharedUpdate.getLanguage(getApplication());
+        String country = SharedUpdate.getCountry(getApplication());
+        if (lang != null && country != null) {
+            setLocale(lang, country);
         } else {
-            setLocale("en");
+            setLocale("en", "EN");
         }
     }
 
@@ -178,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     private void showRateAppDialog() {
         if (SharedPrefManager.getPlayCount(getApplication()) >= 5) {
             if (!SharedPrefManager.getNeverShowAgain(getApplication())) {
-                new Handler().postDelayed(()-> dialog.show(), 1000);
+                dialog.show();
             }
         }
 
@@ -205,5 +214,45 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
         super.onBackPressed();
+    }
+
+    @Override
+    public void loaded() {
+
+    }
+
+    @Override
+    public void failed() {
+
+    }
+
+    @Override
+    public void recordLoaded() {
+        setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+    }
+
+    @Override
+    public void loadingFailed() {
+
+    }
+
+    @Override
+    public void onEditSuccess() {
+
+    }
+
+    @Override
+    public void onEditError() {
+
+    }
+
+    @Override
+    public void onFriendSuccess() {
+        setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+    }
+
+    @Override
+    public void onFriendError() {
+
     }
 }

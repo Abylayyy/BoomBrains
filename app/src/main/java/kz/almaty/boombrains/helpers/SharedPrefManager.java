@@ -1,11 +1,15 @@
 package kz.almaty.boombrains.helpers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.lang.ref.WeakReference;
+
+import kz.almaty.boombrains.sign_pages.login_pages.MainLoginActivity;
 
 public class SharedPrefManager {
 
@@ -36,20 +40,35 @@ public class SharedPrefManager {
     private static final String USER_EMAIL = "USER_EMAIL";
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_PASS = "USER_PASS";
+    private static final String RECORD_LOADED = "RECORD_LOADED";
+    private static final String LEAGUE_NAME = "LEAGUE_NAME";
+    private static final String LEAGUE_COUNT = "LEAGUE_COUNT";
+    private static final String WHOLE_RECORD = "WHOLE_RECORD";
+    private static final String USER_ID = "USER_ID";
 
 
-    public static SharedPreferences getSharedPreferences(Context context) {
+    private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(APP_SETTINGS, Context.MODE_PRIVATE);
     }
 
-    public static void setLanguage(Context context, String newValue) {
+    public static void setLeagueName(Context context, String newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(GAME_LANGUAGE, newValue);
+        editor.putString(LEAGUE_NAME, newValue);
         editor.apply();
     }
 
-    public static String getLanguage(Context context) {
-        return getSharedPreferences(context).getString(GAME_LANGUAGE, null);
+    public static String getLeagueName(Context context) {
+        return getSharedPreferences(context).getString(LEAGUE_NAME, null);
+    }
+
+    public static void setWholeRecord(Context context, String newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(WHOLE_RECORD, newValue);
+        editor.apply();
+    }
+
+    public static String getWholeRecord(Context context) {
+        return getSharedPreferences(context).getString(WHOLE_RECORD, null);
     }
 
     public static boolean isSoundEnabled(Context context) {
@@ -69,6 +88,16 @@ public class SharedPrefManager {
     public static void setIsUserLoggedIn(Context context, boolean newValue) {
         final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
         editor.putBoolean(IS_USER_LOGGED_IN, newValue);
+        editor.apply();
+    }
+
+    public static boolean isRecordsLoaded(Context context) {
+        return getSharedPreferences(context).getBoolean(RECORD_LOADED, false);
+    }
+
+    public static void setRecordsLoaded(Context context, boolean newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putBoolean(RECORD_LOADED, newValue);
         editor.apply();
     }
 
@@ -244,9 +273,18 @@ public class SharedPrefManager {
         return getSharedPreferences(context).getInt(ADD_COUNT, 0);
     }
 
+    public static void setLeagueCount(Context context, int newValue) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt(LEAGUE_COUNT, newValue);
+        editor.apply();
+    }
+
+    public static int getLeagueCount(Context context) {
+        return getSharedPreferences(context).getInt(LEAGUE_COUNT, 0);
+    }
+
     /* Clear methods */
     public static void clearSettings(Context context) {
-        setLanguage(context, null);
         setPlayCount(context, 0);
         setAddCount(context, 0);
         setNeverShowAgain(context, false);
@@ -255,7 +293,7 @@ public class SharedPrefManager {
     }
 
     public static void clear(Context context) {
-        setSquareRecord(context, "0");
+        getSharedPreferences(context).edit().clear().apply();
     }
 
     public static void clearUserData(Context context) {
@@ -264,20 +302,9 @@ public class SharedPrefManager {
         setUserAuthTokenKey(context, null);
         setIsUserLoggedIn(context, false);
         setUserPass(context, null);
+        setRecordsLoaded(context, false);
         clearSettings(context);
     }
-
-    /*public static void setDeviceId(Context context, String newValue) {
-        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString(DEVICE_ID, newValue);
-        editor.apply();
-    }
-
-    public static String getDeviceId(Context context) {
-        String uniqueId = UUID.randomUUID().toString();
-        setDeviceId(context, uniqueId);
-        return getSharedPreferences(context).getString(DEVICE_ID, null);
-    }*/
 
     public static boolean getNeverShowAgain(Context context) {
         return getSharedPreferences(context).getBoolean(SHOW_AGAIN, false);
@@ -334,5 +361,41 @@ public class SharedPrefManager {
                 data.clear();
         }
         return status;
+    }
+
+    public static int record(int position, Context context) {
+        int record = 0;
+        switch (position) {
+            case 1: { if (getShulteRecord(context) != null) {record = Integer.parseInt(getShulteRecord(context));}break; }
+            case 2: { if (getChisloRecord(context) != null) {record = Integer.parseInt(getChisloRecord(context));}break; }
+            case 3: { if (getFindRecord(context) != null) {record = Integer.parseInt(getFindRecord(context));}break; }
+            case 4: { if (getNumZnakiRecord(context) != null) {record = Integer.parseInt(getNumZnakiRecord(context));}break; }
+            case 5: { if (getEquationRecord(context) != null) {record = Integer.parseInt(getEquationRecord(context));}break; }
+            case 6: { if (getSlovoRecord(context) != null) {record = Integer.parseInt(getSlovoRecord(context));}break; }
+            case 7: { if (getShulteLetterRecord(context) != null) {record = Integer.parseInt(getShulteLetterRecord(context));}break; }
+            case 8: { if (getSquareRecord(context) != null) {record = Integer.parseInt(getSquareRecord(context));}break; }
+            case 9: { if (getColorRecord(context) != null) {record = Integer.parseInt(getColorRecord(context));}break; }
+            case 10: {if (getFigureRecord(context) != null) {record = Integer.parseInt(getFigureRecord(context));}break; }
+        }
+        return record;
+    }
+
+    public static void clearAndExit(Activity context) {
+        SharedUpdate.clear(context);
+        clear(context);
+        SharedPrefManager.clearUserData(context);
+        context.startActivity(new Intent(context, MainLoginActivity.class));
+        context.overridePendingTransition(0, 0);
+        context.finishAffinity();
+    }
+
+    public static String getUserId(Context context) {
+        return getSharedPreferences(context).getString(USER_ID, null);
+    }
+
+    public static void setUserId(Context context, String value) {
+        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString(USER_ID, value);
+        editor.apply();
     }
 }

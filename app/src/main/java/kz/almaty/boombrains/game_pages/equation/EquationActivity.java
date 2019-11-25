@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
@@ -278,11 +279,13 @@ public class EquationActivity extends DialogHelperActivity {
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setEquationRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setEquationUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setEquationRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setEquationUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

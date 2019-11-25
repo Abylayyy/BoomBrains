@@ -42,16 +42,9 @@ public class SlovoAdapter extends RecyclerView.Adapter<SlovoAdapter.SlovoViewHol
         listener.setSize(holder.itemView);
 
         holder.itemView.setOnClickListener(v -> {
-            correctResult += " " + holder.slovo.getText().toString();
-            listener.getTextView(holder.slovo);
-            listener.getSlovo(holder.slovo.getText().toString());
-            listener.setSlovo(holder.layout);
+            listener.setSlovo(holder.layout, holder.slovo);
             holder.itemView.setEnabled(false);
         });
-    }
-
-    public String getCorrectResult() {
-        return correctResult;
     }
 
     @Override
@@ -71,9 +64,7 @@ public class SlovoAdapter extends RecyclerView.Adapter<SlovoAdapter.SlovoViewHol
     }
 
     public interface SlovoListener {
-        void setSlovo(LinearLayout view);
+        void setSlovo(LinearLayout view, TextView text);
         void setSize(View view);
-        void getSlovo(String slovo);
-        void getTextView(TextView textView);
     }
 }

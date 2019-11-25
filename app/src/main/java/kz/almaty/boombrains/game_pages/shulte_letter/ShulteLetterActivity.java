@@ -26,6 +26,7 @@ import kz.almaty.boombrains.files.RememberWordsRu;
 import kz.almaty.boombrains.game_pages.shulte_page.ShulteAdapter;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.helpers.SpaceItemDecoration;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 
@@ -68,12 +69,12 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         setContentView(R.layout.activity_shulte_letter);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        lang = SharedPrefManager.getLanguage(getApplication());
+        lang = SharedUpdate.getLanguage(getApplication());
 
         if (lang.equals("kk") || lang.equals("ru")) {
             startTimer(120000, timeTxt);
         } else {
-            startTimer(80000, timeTxt);
+            startTimer(100000, timeTxt);
         }
 
         setCount();
@@ -327,11 +328,13 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setShulteLetterRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setLetterUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setShulteLetterRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setLetterUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

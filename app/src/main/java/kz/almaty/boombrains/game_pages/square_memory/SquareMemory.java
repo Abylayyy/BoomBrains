@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 import kz.almaty.boombrains.models.game_models.SquareModel;
 
@@ -163,12 +164,16 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
     }
 
     private void showAndHide(View view) {
-
+        pauseImg.setEnabled(false);
+        pauseTimer();
         flipView(view);
         new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_selected),400);
         new Handler().postDelayed(()-> flipReverse(view),2500);
         new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.back_shulte_item), 2900);
-        new Handler().postDelayed(this::resumeTimer, 3000);
+        new Handler().postDelayed(()-> {
+            pauseImg.setEnabled(true);
+            resumeTimer();
+        },3000);
     }
 
     private void flipView(View view) {
@@ -224,11 +229,13 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setSquareRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSquareUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setSquareRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSquareUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

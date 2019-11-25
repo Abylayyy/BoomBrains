@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 import static android.view.animation.Animation.INFINITE;
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
@@ -227,11 +228,13 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setFindRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setFindUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setFindRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setFindUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }

@@ -28,6 +28,7 @@ import kz.almaty.boombrains.game_pages.shulte_page.ShulteAdapter;
 import kz.almaty.boombrains.game_pages.square_memory.SquareAdapter;
 import kz.almaty.boombrains.helpers.DialogHelperActivity;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.helpers.SharedUpdate;
 import kz.almaty.boombrains.helpers.SpaceItemDecoration;
 import kz.almaty.boombrains.main_pages.FinishedActivity;
 import kz.almaty.boombrains.models.game_models.FigureModel;
@@ -161,11 +162,14 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @Override
     public void updateNumbers(View view, int tint) {
         if (tint == thisLevelColors.get(maxColorIndex)) {
+            setAudio(R.raw.click);
             maxColorIndex += 1;
             score += 100;
             recordTxt.setText(""+score);
             makeInvisible(tint);
         } else {
+            vibrate(100);
+            setAudio(R.raw.wrong_clicked);
             if (score > 0) {
                 score -= 50;
             }
@@ -212,11 +216,13 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setFigureRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setFigureUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setFigureRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setFigureUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
