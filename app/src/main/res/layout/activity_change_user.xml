@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kz.almaty.boombrains.sign_pages.change_user.ChangeUserActivity">
+    tools:context="kz.almaty.boombrains.ui.sign_pages.change_user.ChangeUserActivity">
 
         <RelativeLayout
             android:id="@+id/back_to_main"

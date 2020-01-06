@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.main_pages.GamesStartActivity;
+import kz.almaty.boombrains.ui.main_pages.GamesStartActivity;
 import kz.almaty.boombrains.models.main_models.SubGames;
 
 public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubGamesViewHolder> {

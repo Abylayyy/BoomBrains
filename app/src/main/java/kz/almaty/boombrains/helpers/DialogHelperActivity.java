@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.game_pages.start_page.AreYouReadyActivity;
-import kz.almaty.boombrains.main_pages.MainActivity;
+import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
+import kz.almaty.boombrains.ui.main_pages.MainActivity;
 
 public abstract class DialogHelperActivity extends AppCompatActivity {
 

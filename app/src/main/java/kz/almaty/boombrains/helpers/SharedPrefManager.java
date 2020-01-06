@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 
 import java.lang.ref.WeakReference;
 
-import kz.almaty.boombrains.sign_pages.login_pages.MainLoginActivity;
+import kz.almaty.boombrains.ui.sign_pages.login_pages.MainLoginActivity;
 
 public class SharedPrefManager {
 

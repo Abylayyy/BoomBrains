@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shulte_letter_back"
-    tools:context=".game_pages.shulte_letter.ShulteLetterActivity">
+    tools:context=".ui.game_pages.shulte_letter.ShulteLetterActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,7 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop"
+            android:overScrollMode="never"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

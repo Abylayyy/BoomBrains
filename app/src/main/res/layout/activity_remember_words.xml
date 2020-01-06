@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rem_words_back"
-    tools:context=".game_pages.rem_words.RememberWordsActivity">
+    tools:context=".ui.game_pages.rem_words.RememberWordsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/remConst"
@@ -23,6 +23,7 @@
             android:id="@+id/shulteRecycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:overScrollMode="never"
             android:nestedScrollingEnabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

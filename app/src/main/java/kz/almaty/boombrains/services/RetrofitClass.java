@@ -5,7 +5,6 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.concurrent.TimeUnit;
-
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.helpers.SharedUpdate;
 import okhttp3.OkHttpClient;

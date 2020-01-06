@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/prof_back"
-    tools:context="kz.almaty.boombrains.main_fragments.SettingsFragment">
+    tools:context="kz.almaty.boombrains.ui.main_fragments.SettingsFragment">
 
 
     <TextView

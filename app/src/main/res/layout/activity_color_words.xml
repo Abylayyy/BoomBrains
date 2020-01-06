@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".game_pages.color_words.ColorWordsActivity">
+    tools:context=".ui.game_pages.color_words.ColorWordsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/remConst"
@@ -28,6 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:overScrollMode="never"
             tools:targetApi="lollipop" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

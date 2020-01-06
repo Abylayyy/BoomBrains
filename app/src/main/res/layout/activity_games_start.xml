@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main_pages.GamesStartActivity">
+    tools:context=".ui.main_pages.GamesStartActivity">
 
     <ScrollView
         android:id="@+id/scrollStart"
@@ -106,6 +106,18 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/kakIgratConst">
+
+                    <com.github.ybq.android.spinkit.SpinKitView
+                        android:id="@+id/progressFriend"
+                        style="@style/SpinKitView.Large.FadingCircle"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:visibility="gone"
+                        app:SpinKit_Color="#FF415C"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/addFriendLayout"

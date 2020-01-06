@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_back"
-    tools:context=".game_pages.color_figures.FiguresActivity">
+    tools:context=".ui.game_pages.color_figures.FiguresActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -26,6 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:overScrollMode="never"
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="lollipop" />
     </androidx.constraintlayout.widget.ConstraintLayout>

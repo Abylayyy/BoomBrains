@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shulte_back"
-    tools:context="kz.almaty.boombrains.game_pages.shulte_page.ShulteLevel">
+    tools:context="kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

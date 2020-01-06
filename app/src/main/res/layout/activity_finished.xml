@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shulte_blur"
-    tools:context=".main_pages.FinishedActivity">
+    tools:context=".ui.main_pages.FinishedActivity">
 
     <ImageView
         android:id="@+id/successImg"

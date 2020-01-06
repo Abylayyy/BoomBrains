@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/prof_back"
-    tools:context="kz.almaty.boombrains.main_fragments.profile_pages.FriendDetailsFragment">
+    tools:context="kz.almaty.boombrains.ui.main_fragments.profile_pages.FriendDetailsFragment">
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/mainLoading2"
@@ -96,6 +96,7 @@
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            android:overScrollMode="never"
                             tools:targetApi="lollipop" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
