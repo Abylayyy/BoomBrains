@@ -123,9 +123,10 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     private void showBackgrounds() {
         String correct = slovo.getText().toString();
         String word = slovo_new.getText().toString();
+        int len = word.length();
         if (word.equals(correct)) {
             currentLevel += 1;
-            score += 100;
+            score += len * 50;
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
             recordTxt.setText("" + score);
             showSuccess(word);
