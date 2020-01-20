@@ -147,5 +147,6 @@
     <string name="ErrDeleteUser">Қолданушыны өшіру кезіндегі қателік!</string>
     <string name="DeleteSuccess">Дос сәтті өшірілді!</string>
     <string name="RequestSend">Достық сұраныс жіберілді!</string>
+    <string name="potion">Түгендеу</string>
 
 </resources>

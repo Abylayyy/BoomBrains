@@ -149,5 +149,6 @@
     <string name="ErrDeleteUser">¡Error al eliminar el usuario!</string>
     <string name="DeleteSuccess">Amigo eliminado con éxito!</string>
     <string name="RequestSend">¡Solicitud de amistad enviada!</string>
+    <string name="potion">Inventario</string>
 
 </resources>

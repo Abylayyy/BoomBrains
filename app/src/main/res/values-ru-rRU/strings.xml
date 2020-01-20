@@ -149,5 +149,6 @@
     <string name="ErrDeleteUser">Ошибка при удалении пользователя!</string>
     <string name="DeleteSuccess">Друг успешно удален!</string>
     <string name="RequestSend">Запрос в друзья отправлен!</string>
+    <string name="potion">Инвентарь</string>
 
 </resources>

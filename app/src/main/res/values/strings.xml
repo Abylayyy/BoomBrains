@@ -148,6 +148,7 @@
     <string name="ErrDeleteUser">Error with deleting the user!</string>
     <string name="DeleteSuccess">Friend deleted successfully!</string>
     <string name="RequestSend">Friend request sent!</string>
+    <string name="potion">Inventory</string>
     <!-- Color names -->
 
 </resources>

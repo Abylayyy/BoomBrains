@@ -35,6 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.github.ybq.android.spinkit.SpinKitView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,10 +45,13 @@ import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.adapters.profile_adapters.profile_start.AchieveAdapter;
 import kz.almaty.boombrains.adapters.profile_adapters.profile_start.FriendRequestsAdapter;
 import kz.almaty.boombrains.adapters.profile_adapters.profile_start.FriendsAdapter;
+import kz.almaty.boombrains.adapters.profile_adapters.profile_start.PotionAdapter;
 import kz.almaty.boombrains.adapters.profile_adapters.profile_start.WorldAdapter;
 import kz.almaty.boombrains.files.RememberWordsRu;
 import kz.almaty.boombrains.helpers.SharedPrefManager;
 import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.helpers.SpaceItemDecoration;
+import kz.almaty.boombrains.models.profile_model.PotionModel;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
 import kz.almaty.boombrains.models.add_friend_models.RequestListModel;
 import kz.almaty.boombrains.models.profile_model.Achievement;
@@ -74,7 +78,7 @@ import kz.almaty.boombrains.viewmodel.profile_view_model.profile_ratings.Profile
 public class ProfileFragment extends Fragment implements ProfileRatingView,
         AchieveAdapter.AchieveListener, WorldAdapter.WorldListener,
         FriendsAdapter.FriendsListener, FriendRequestsAdapter.RequestsListener,
-        AddFriendView, RequestListView, AcceptView, RejectView, SwipeRefreshLayout.OnRefreshListener {
+        AddFriendView, RequestListView, AcceptView, RejectView, PotionAdapter.PotionListener, SwipeRefreshLayout.OnRefreshListener {
 
     // profMainInfo
     @BindView(R.id.swipe) SwipeRefreshLayout swipeLayout;
@@ -93,6 +97,8 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
     @BindView(R.id.checkF) TextView checkF;
     @BindView(R.id.checkF2) TextView checkF2;
     @BindView(R.id.checkF3) TextView checkF3;
+    @BindView(R.id.checkP) TextView checkP;
+    @BindView(R.id.potionRecycler) RecyclerView potionRecycler;
     // ratingInfo
     @BindView(R.id.friendsRecycler) RecyclerView friendRecycler;
     @BindView(R.id.requestBtn) ConstraintLayout requestBtn;
@@ -340,7 +346,17 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
             }
             setWorldRecords(new_records);
             setMyRecords(records, myWorldLayout, worldNameTxt, worldRecordTxt);
+            setPotions(getPotionList());
         }
+    }
+
+    private List<PotionModel> getPotionList() {
+        return new ArrayList<>(Arrays.asList(
+                new PotionModel("0 PC", R.drawable.potion_10sec, false),
+                new PotionModel("0 PC", R.drawable.potion_life, true),
+                new PotionModel("0 PC", R.drawable.potion_x2, false),
+                new PotionModel("0 PC", R.drawable.potion_x5, true)
+        ));
     }
 
     @Override
@@ -409,6 +425,12 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
 
     @Override
     public void setViewClicked(Achievement model) { }
+
+    /* Potion listeners */
+    @Override
+    public void setPotionSize(View view) {
+        potionSize(view);
+    }
 
     /* Friend and world adapter listeners */
     @Override
@@ -591,6 +613,16 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
         achieveAdapter.notifyDataSetChanged();
     }
 
+    private void setPotions(List<PotionModel> list) {
+        // adapters
+        PotionAdapter achieveAdapter = new PotionAdapter(list, this);
+        potionRecycler.setAdapter(achieveAdapter);
+        potionRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        potionRecycler.setItemAnimator(new DefaultItemAnimator());
+        potionRecycler.addItemDecoration(new SpaceItemDecoration(10));
+        achieveAdapter.notifyDataSetChanged();
+    }
+
     private void setLeagues(String league, Integer star) {
         switch (league) {
             case "bronze": {
@@ -632,6 +664,12 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
         view.getLayoutParams().height = width / 3 + 20;
     }
 
+    private void potionSize(View view) {
+        int width = potionRecycler.getWidth();
+        view.getLayoutParams().width = width / 4 - 40;
+        view.getLayoutParams().height = width / 4 + 30;
+    }
+
     private void setWorldItems(View view, RecyclerView rv) {
         int height = rv.getHeight();
         view.getLayoutParams().height = height / 5;
@@ -660,10 +698,12 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
             checkF.setVisibility(View.GONE);
             checkF2.setVisibility(View.GONE);
             checkF3.setVisibility(View.GONE);
+            checkP.setVisibility(View.GONE);
         } else {
             checkF.setVisibility(View.VISIBLE);
             checkF2.setVisibility(View.VISIBLE);
             checkF3.setVisibility(View.VISIBLE);
+            checkP.setVisibility(View.GONE);
             myRecordLayout.setVisibility(View.INVISIBLE);
             myWorldLayout.setVisibility(View.INVISIBLE);
         }

@@ -19,7 +19,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/achieve_1_on" />
+        app:srcCompat="@drawable/achieve_1_on"
+        app:tintMode="multiply" />
 
     <TextView
         android:id="@+id/achieveTxt"
