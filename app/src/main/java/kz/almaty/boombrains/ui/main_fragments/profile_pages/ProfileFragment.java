@@ -346,7 +346,6 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
             }
             setWorldRecords(new_records);
             setMyRecords(records, myWorldLayout, worldNameTxt, worldRecordTxt);
-            setPotions(getPotionList());
         }
     }
 
