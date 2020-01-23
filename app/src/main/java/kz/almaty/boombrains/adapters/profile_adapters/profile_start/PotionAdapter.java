@@ -1,7 +1,6 @@
 package kz.almaty.boombrains.adapters.profile_adapters.profile_start;
 
 import android.graphics.Color;
-import android.net.sip.SipSession;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class PotionAdapter extends RecyclerView.Adapter<PotionAdapter.PotionView
     @NonNull
     @Override
     public PotionAdapter.PotionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.achieve_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.potion_item, parent, false);
         return new PotionViewHolder(view);
     }
 

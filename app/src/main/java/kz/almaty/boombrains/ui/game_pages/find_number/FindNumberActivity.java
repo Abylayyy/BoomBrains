@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -41,6 +42,10 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.findRecycler) RecyclerView findRecycler;
     @BindView(R.id.findNumContainer) ConstraintLayout container;
+
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
 
     int position;
     List<Integer> numbersList = new ArrayList<>();

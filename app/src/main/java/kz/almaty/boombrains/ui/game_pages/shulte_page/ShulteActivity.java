@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,6 +50,10 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.shulteRecycler) RecyclerView shulteRecycler;
     @BindView(R.id.mainShulteConst) ConstraintLayout layout;
+
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
 
     private View view;
     public int index = 1;

@@ -45,13 +45,11 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
     @BindView(R.id.view3) View view1;
     @BindView(R.id.view4) View view2;
 
-    String lang;
-    int position, score, error;
+    private String lang;
+    private int position, score, error;
     private InterstitialAd mInterstitialAd;
     private String name;
-    NewRecordViewModel newRecordViewModel;
-    SendSecondViewModel sendSecondViewModel;
-    String second;
+    private String second;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +59,8 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
 
         loadGoogleAd();
 
-        newRecordViewModel = ViewModelProviders.of(this).get(NewRecordViewModel.class);
-        sendSecondViewModel = ViewModelProviders.of(this).get(SendSecondViewModel.class);
+        NewRecordViewModel newRecordViewModel = ViewModelProviders.of(this).get(NewRecordViewModel.class);
+        SendSecondViewModel sendSecondViewModel = ViewModelProviders.of(this).get(SendSecondViewModel.class);
 
         position = getIntent().getIntExtra("position", 0);
         name = getIntent().getStringExtra("name");

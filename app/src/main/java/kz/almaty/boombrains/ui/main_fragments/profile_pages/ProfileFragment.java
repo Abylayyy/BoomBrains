@@ -344,6 +344,7 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
                     record.setMe(true);
                 }
             }
+            setPotions(getPotionList());
             setWorldRecords(new_records);
             setMyRecords(records, myWorldLayout, worldNameTxt, worldRecordTxt);
         }
@@ -618,7 +619,6 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
         potionRecycler.setAdapter(achieveAdapter);
         potionRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         potionRecycler.setItemAnimator(new DefaultItemAnimator());
-        potionRecycler.addItemDecoration(new SpaceItemDecoration(10));
         achieveAdapter.notifyDataSetChanged();
     }
 
@@ -665,8 +665,7 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
 
     private void potionSize(View view) {
         int width = potionRecycler.getWidth();
-        view.getLayoutParams().width = width / 4 - 40;
-        view.getLayoutParams().height = width / 4 + 30;
+        view.getLayoutParams().width = width / 4 - 20;
     }
 
     private void setWorldItems(View view, RecyclerView rv) {

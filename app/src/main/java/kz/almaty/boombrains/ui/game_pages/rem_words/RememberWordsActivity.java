@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,10 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     @BindView(R.id.remConst) ConstraintLayout background;
     @BindView(R.id.slovo_teksts) TextView slovo;
     @BindView(R.id.wordConst) ConstraintLayout wordLayout;
+
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
 
     private int currentLevel = 1;
     private String random;

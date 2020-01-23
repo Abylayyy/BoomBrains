@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.view.Display;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
@@ -37,6 +38,10 @@ public class EquationActivity extends DialogHelperActivity {
     @BindView(R.id.minusBtn) TextView minusBtn;
     @BindView(R.id.multBtn) TextView multBtn;
     @BindView(R.id.divBtn) TextView divBtn;
+
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
 
     private int position;
     private int score = 0, errors = 0, currentLevel = 1;

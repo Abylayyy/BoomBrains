@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -36,15 +37,21 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @BindView(R.id.shulteRecycler) RecyclerView shulteRecycler;
     @BindView(R.id.mainShulteConst) ConstraintLayout layout;
 
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
+
+    private int lifes = 3;
+
     private int position;
     private int score = 0;
     private int errors = 0;
     private int count = 0;
     boolean isEnabled = false;
-    int[][] levelArray;
-    List<Integer> thisLevelFigures = new ArrayList<>();
-    List<Integer> thisLevelColors = new ArrayList<>();
-    int maxColorIndex = 0;
+    private int[][] levelArray;
+    private List<Integer> thisLevelFigures = new ArrayList<>();
+    private List<Integer> thisLevelColors = new ArrayList<>();
+    private int maxColorIndex = 0;
 
     FigureAdapter adapter;
     List<FigureModel> numbersList;
@@ -165,7 +172,21 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             if (score > 0) {
                 score -= 50;
             }
+            if (lifes > 0) {
+                lifes -= 1;
+            }
+            lifeRemained(lifes);
+            if (lifes == 0) {
+                gameFinished();
+            }
             recordTxt.setText(""+score);
+        }
+    }
+
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
         }
     }
 
@@ -198,8 +219,19 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
     }
 
-    @Override
-    public void startNewActivity() {
+    private Intent intentErrorInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", true);
+        return intent;
+    }
+
+    private Intent intentFinishInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", false);
+        return intent;
+    }
+
+    private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
@@ -218,7 +250,19 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-        startActivity(intent);
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(intentFinishInfo());
+        overridePendingTransition(0,0);
+    }
+
+    @Override
+    public void gameFinished() {
+        pauseTimer();
+        startActivity(intentErrorInfo());
         overridePendingTransition(0,0);
     }
 

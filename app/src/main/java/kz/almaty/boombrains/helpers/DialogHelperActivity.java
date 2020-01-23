@@ -138,6 +138,10 @@ public abstract class DialogHelperActivity extends AppCompatActivity {
 
     }
 
+    public void gameFinished() {
+
+    }
+
     public void showToast(int type, String s) {
         switch (type) {
             case 0: {

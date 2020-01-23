@@ -50,6 +50,10 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     @BindView(R.id.imageView2) ImageView showImg;
     @BindView(R.id.zapomniContainer) ConstraintLayout container;
 
+    @BindView(R.id.life1) ImageView life1;
+    @BindView(R.id.life2) ImageView life2;
+    @BindView(R.id.life3) ImageView life3;
+
     View[] numbers;
     private boolean visible = true;
     int currentLevel = 1, score = 0, errors = 0;
