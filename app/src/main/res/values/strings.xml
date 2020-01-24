@@ -149,6 +149,8 @@
     <string name="DeleteSuccess">Friend deleted successfully!</string>
     <string name="RequestSend">Friend request sent!</string>
     <string name="potion">Inventory</string>
+    <string name="Finish">Finish</string>
+    <string name="LifeEnded">You made a mistake 3 times, you can restore one life by watching ads.</string>
     <!-- Color names -->
 
 </resources>

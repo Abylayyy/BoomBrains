@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.game_pages.shulte_page;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,12 +56,15 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    private int lifes = 3;
+
     private View view;
-    public int index = 1;
-    public int score = 0;
+    private int index = 1;
+    private int score = 0;
     int currentLevel = LEVEL1;
-    private int errors;
     private String name;
+    private int errors = 0;
+    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +138,12 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
 
     private void setError() {
         errors += 1;
-        if (score > 0) {
-            score -= 50;
+        if (lifes > 0) {
+            lifes -= 1;
+        }
+        lifeRemained(lifes);
+        if (lifes == 0) {
+            gameFinished();
         }
         recordTxt.setText(score + "");
         setBackgroundError(view);
@@ -158,7 +166,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     private void success() {
         setAudio(R.raw.click);
         setBackgroundSuccess(view);
-        score += 100;
+        score += 1;
         index += 1;
         recordTxt.setText(score + "");
         nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
@@ -312,14 +320,25 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.back_shulte_item), 100);
     }
 
-    @Override
-    public void startNewActivity() {
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
+    }
+
+    private Intent intentFinishInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", false);
+        return intent;
+    }
+
+    private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         intent.putExtra("name", name);
-
         String oldScore = SharedPrefManager.getShulteRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
@@ -334,8 +353,40 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-        startActivity(intent);
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(intentFinishInfo());
         overridePendingTransition(0,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                lifes = data.getIntExtra("result", 0);
+                watched = data.getBooleanExtra("watched", false);
+                life1.setImageResource(R.drawable.life_full);
+                showPauseDialog();
+            }
+        }
+    }
+
+    @Override
+    public void gameFinished() {
+        pauseTimer();
+        startActivityForResult(intentErrorInfo(), 1);
+        overridePendingTransition(0,0);
+    }
+
+    private Intent intentErrorInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", watched);
+        return intent;
     }
 
     @Override

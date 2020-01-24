@@ -136,7 +136,13 @@ public class GamesStartActivity extends AppCompatActivity implements WorldRating
     }
 
     private void setClickListeners() {
-        addFriend.setOnClickListener(v -> dialogAdd.show());
+        addFriend.setOnClickListener(v -> {
+            if (SharedPrefManager.isUserLoggedIn(getApplication())) {
+                dialogAdd.show();
+            } else {
+                SharedUpdate.showToast(4, getString(R.string.MainProfInfo), getApplication());
+            }
+        });
 
         addDialogBtn.setOnClickListener(v -> {
             if (SharedPrefManager.isUserLoggedIn(getApplication()) && SharedPrefManager.isNetworkOnline(getApplication())) {

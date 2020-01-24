@@ -150,5 +150,7 @@
     <string name="DeleteSuccess">Amigo eliminado con éxito!</string>
     <string name="RequestSend">¡Solicitud de amistad enviada!</string>
     <string name="potion">Inventario</string>
+    <string name="Finish">Terminar</string>
+    <string name="LifeEnded">Cometiste un error 3 veces, puedes restaurar una vida viendo anuncios.</string>
 
 </resources>

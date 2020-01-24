@@ -150,5 +150,7 @@
     <string name="DeleteSuccess">Друг успешно удален!</string>
     <string name="RequestSend">Запрос в друзья отправлен!</string>
     <string name="potion">Инвентарь</string>
+    <string name="Finish">Завершить</string>
+    <string name="LifeEnded">Вы ошиблись 3 раза, вы можете восстановить одну жизнь посмотрев рекламу.</string>
 
 </resources>

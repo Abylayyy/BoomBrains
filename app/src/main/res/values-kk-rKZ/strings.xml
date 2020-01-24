@@ -148,5 +148,7 @@
     <string name="DeleteSuccess">Дос сәтті өшірілді!</string>
     <string name="RequestSend">Достық сұраныс жіберілді!</string>
     <string name="potion">Түгендеу</string>
+    <string name="Finish">Аяқтау</string>
+    <string name="LifeEnded">Сіз 3 рет қателестіңіз, жарнама қарау арқылы бір өмірді қалпына келтіре аласыз.</string>
 
 </resources>

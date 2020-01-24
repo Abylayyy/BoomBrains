@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -55,10 +56,16 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    private int lifes = 3;
+
     private int currentLevel = 1;
-    private String random, correctAnswer;
-    private int score = 0, errors = 0;
+    private int score = 0;
     private int selectedColor;
+    private int errors = 0;
+    private boolean watched = true;
+
+    public ColorWordsActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,19 +181,30 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
 
     private void setErrorClicked() {
         new Handler().postDelayed(()-> {
-            if (score > 0) {
-                score -= 50;
-            }
             errors += 1;
+            if (lifes > 0) {
+                lifes -= 1;
+            }
+            lifeRemained(lifes);
+            if (lifes == 0) {
+                gameFinished();
+            }
             recordTxt.setText(""+score);
             setRecyclerItem();
         },200);
     }
 
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
+    }
+
     private void setSuccess() {
         new Handler().postDelayed(()-> {
             currentLevel += 1;
-            score += 100;
+            score += 1;
             recordTxt.setText(""+score);
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
             setRecyclerItem();
@@ -201,27 +219,63 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
     }
 
     @Override
-    public void startNewActivity() {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                lifes = data.getIntExtra("result", 0);
+                watched = data.getBooleanExtra("watched", false);
+                life1.setImageResource(R.drawable.life_full);
+                showPauseDialog();
+            }
+        }
+    }
+
+    @Override
+    public void gameFinished() {
+        pauseTimer();
+        startActivityForResult(intentErrorInfo(), 1);
+        overridePendingTransition(0,0);
+    }
+
+    private Intent intentErrorInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", watched);
+        return intent;
+    }
+
+    private Intent intentFinishInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", false);
+        return intent;
+    }
+
+    private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
-
         String oldScore = SharedPrefManager.getColorRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
-                SharedUpdate.setColorUpdate(getApplicationContext(), String.valueOf(score));
+                SharedUpdate.setColorUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         } else {
             if (score > 0) {
                 SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
-                SharedUpdate.setColorUpdate(getApplicationContext(), String.valueOf(score));
+                SharedUpdate.setColorUpdate(getApplication(), String.valueOf(score));
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-        startActivity(intent);
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(intentFinishInfo());
         overridePendingTransition(0,0);
     }
 

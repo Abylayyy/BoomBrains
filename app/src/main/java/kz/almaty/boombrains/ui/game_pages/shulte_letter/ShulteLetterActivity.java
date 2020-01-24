@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.game_pages.shulte_letter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,9 +33,6 @@ import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 @SuppressLint("SetTextI18n")
 public class ShulteLetterActivity extends DialogHelperActivity implements LetterAdapter.LetterListener {
 
-    private static final int LEVEL6 = 66;
-    private static final int LEVEL7 = 77;
-    private static final int LEVEL8 = 88;
     public static final int LEVEL1 = 11;
     public static final int LEVEL2 = 22;
     public static final int LEVEL3 = 33;
@@ -57,14 +55,16 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    private int lifes = 3;
+
     private View view;
-    public int index = 0;
-    public int score = 0;
-    int currentLevel = LEVEL1;
-    private int errors;
-    private String name;
+    private int index = 0;
+    private int score = 0;
+    private int currentLevel = LEVEL1;
     private List<String> letters;
     String lang;
+    private int errors = 0;
+    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +153,7 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         if (number.equals(String.valueOf(letters.get(index)))) {
             setAudio(R.raw.click);
             setBackgroundSuccess(view);
-            score += 100;
+            score += 1;
             index += 1;
             recordTxt.setText(score + "");
             nextNum.setText(getString(R.string.NextLetter) + " " + letters.get(index));
@@ -165,8 +165,12 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         }
         else {
             errors += 1;
-            if (score > 0) {
-                score -= 50;
+            if (lifes > 0) {
+                lifes -= 1;
+            }
+            lifeRemained(lifes);
+            if (lifes == 0) {
+                gameFinished();
             }
             recordTxt.setText(score + "");
             setBackgroundError(view);
@@ -269,9 +273,13 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
     public void setGameLevels(int level) {
         switch (lang) {
             case "en": case "es": {
-                switch (level) {
-                    case LEVEL1: { setRecycler(); currentLevel = LEVEL1; break; }
-                    default: { currentLevel = LEVEL2; setupList(25, 5); setAudio(R.raw.level_complete); break; }
+                if (level == LEVEL1) {
+                    setRecycler();
+                    currentLevel = LEVEL1;
+                } else {
+                    currentLevel = LEVEL2;
+                    setupList(25, 5);
+                    setAudio(R.raw.level_complete);
                 }
                 break;
             }
@@ -320,13 +328,51 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         }
     }
 
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
+    }
+
     @Override
-    public void startNewActivity() {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                lifes = data.getIntExtra("result", 0);
+                watched = data.getBooleanExtra("watched", false);
+                life1.setImageResource(R.drawable.life_full);
+                showPauseDialog();
+            }
+        }
+    }
+
+    @Override
+    public void gameFinished() {
+        pauseTimer();
+        startActivityForResult(intentErrorInfo(), 1);
+        overridePendingTransition(0,0);
+    }
+
+    private Intent intentErrorInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", watched);
+        return intent;
+    }
+
+    private Intent intentFinishInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", false);
+        return intent;
+    }
+
+    private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
-
         String oldScore = SharedPrefManager.getShulteLetterRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
@@ -341,7 +387,12 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-        startActivity(intent);
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(intentFinishInfo());
         overridePendingTransition(0,0);
     }
 

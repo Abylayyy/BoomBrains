@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.main_pages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -10,9 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.ads.AdListener;
@@ -39,25 +42,28 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
     @BindView(R.id.errorsTxt) TextView errors;
     @BindView(R.id.yourScoreTxt) TextView scoreTxt;
     @BindView(R.id.recordTxt) TextView recordTxt;
-    @BindView(R.id.zanovoBtn) TextView zanovoBtn;
+    @BindView(R.id.zanovoBtn) ConstraintLayout zanovoBtn;
     @BindView(R.id.quitBtn) TextView quitBtn;
     @BindView(R.id.parentConst) ConstraintLayout parent;
     @BindView(R.id.view3) View view1;
     @BindView(R.id.view4) View view2;
+    @BindView(R.id.finishTxt) TextView finishTxt;
+    @BindView(R.id.addImg) ImageView addImg;
+    @BindView(R.id.lifeEndTxt) TextView lifeEndTxt;
+    @BindView(R.id.group) Group group;
 
     private String lang;
-    private int position, score, error;
+    private int position;
     private InterstitialAd mInterstitialAd;
     private String name;
     private String second;
+    private boolean lifeEnd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finished);
         ButterKnife.bind(this);
-
-        loadGoogleAd();
 
         NewRecordViewModel newRecordViewModel = ViewModelProviders.of(this).get(NewRecordViewModel.class);
         SendSecondViewModel sendSecondViewModel = ViewModelProviders.of(this).get(SendSecondViewModel.class);
@@ -69,26 +75,65 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
         setBtnColor(position);
         setBackgrounds(position);
 
-        zanovoBtn.setOnClickListener(v -> startActivities(position));
+        int score = getIntent().getIntExtra("score", 0);
+        int error = getIntent().getIntExtra("errors", 0);
+        String message = getIntent().getStringExtra("record");
+        lifeEnd = getIntent().getBooleanExtra("lifeEnd", false);
+
+        if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
+            newRecordViewModel.setNewRecord(getGameName(position), score, this, this);
+            sendSecondViewModel.sendStatistics(second, this, this);
+        }
+
+        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
+        errors.setText(getString(R.string.Mistakes) + " " + error);
+
+        if (lifeEnd) {
+            lifeEndInfo();
+            zanovoBtn.setOnClickListener(v -> {
+                if (!lifeEnd) {
+                    startActivities(position);
+                } else {
+                    loadGoogleAd();
+                }
+            });
+            quitBtn.setOnClickListener(v -> gameFinishedInfo(message));
+
+        } else {
+            gameFinishedInfo(message);
+            zanovoBtn.setOnClickListener(v -> startActivities(position));
+        }
+    }
+
+    private void gameFinishedInfo(String message) {
+        lifeEnd = false;
+        addImg.setVisibility(View.GONE);
+        quitBtn.setText(getString(R.string.Exit));
+        group.setVisibility(View.VISIBLE);
+        setFinishedInfo(message);
+        lifeEndTxt.setVisibility(View.GONE);
+
+        finishTxt.setText(getString(R.string.Again));
 
         quitBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
             finishAffinity();
             overridePendingTransition(0,0);
         });
+    }
 
-        score = getIntent().getIntExtra("score", 0);
-        error = getIntent().getIntExtra("errors", 0);
-        String message = getIntent().getStringExtra("record");
+    private void lifeEndInfo() {
+        quitBtn.setText(getString(R.string.Finish));
+        finishTxt.setText(getString(R.string.Continue));
 
-        if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
-            newRecordViewModel.setNewRecord(getGameName(position), score, this, this);
-        }
+        setMeasures(successImg, R.drawable.life_finished);
 
-        if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
-            sendSecondViewModel.sendStatistics(second, this, this);
-        }
+        lifeEndTxt.setVisibility(View.VISIBLE);
+        group.setVisibility(View.INVISIBLE);
+        addImg.setVisibility(View.VISIBLE);
+    }
 
+    private void setFinishedInfo(String message) {
         if (message != null) {
             successMessage.setText(message);
             setMeasures(successImg, R.drawable.zapomni_new_record);
@@ -98,8 +143,6 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
             setMeasures(successImg, R.drawable.zapomni_timed_out);
             setAudio(R.raw.game_over);
         }
-        scoreTxt.setText(getString(R.string.YourScore) + " " + score);
-        errors.setText(getString(R.string.Mistakes) + " " + error);
     }
 
     private String getGameName(int position) {
@@ -145,17 +188,17 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
             @Override
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("life", 1);
+                returnIntent.putExtra("watched", false);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
     }
 
     private void showGoogleAdd() {
-        if (SharedPrefManager.getAddCount(getApplication()) >= 3) {
-            new Handler().postDelayed(() -> {
-                mInterstitialAd.show();
-                SharedPrefManager.setAddCount(getApplication(), 0);
-            }, 30);
-        }
+        mInterstitialAd.show();
     }
 
     private void startActivities(int position) {
@@ -289,8 +332,9 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
     }
 
     private void setColors(int color) {
-        zanovoBtn.setTextColor(getResources().getColor(color));
+        finishTxt.setTextColor(getResources().getColor(color));
         quitBtn.setTextColor(getResources().getColor(color));
+        addImg.setColorFilter(getResources().getColor(color));
     }
 
     private void setMeasures(ImageView image, int resource) {
@@ -304,9 +348,11 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
 
     @Override
     public void onBackPressed() {
-        finishAffinity();
-        startActivity(new Intent(getApplication(), MainActivity.class));
-        overridePendingTransition(0,0);
+        if (!lifeEnd) {
+            finishAffinity();
+            startActivity(new Intent(getApplication(), MainActivity.class));
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override

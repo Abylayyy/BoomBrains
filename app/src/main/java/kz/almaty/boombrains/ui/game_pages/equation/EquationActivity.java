@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.game_pages.equation;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -43,10 +44,14 @@ public class EquationActivity extends DialogHelperActivity {
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    private int lifes = 3;
+
     private int position;
-    private int score = 0, errors = 0, currentLevel = 1;
+    private int score = 0, currentLevel = 1;
     private ArrayList<String> symbols;
     private TextView[] variants;
+    private int errors = 0;
+    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +174,7 @@ public class EquationActivity extends DialogHelperActivity {
     private void countSuccess(TextView view) {
         setAudio(R.raw.click);
         currentLevel += 1;
-        score += 100;
+        score += 1;
         view.setBackgroundResource(R.drawable.find_item_back);
         view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
@@ -187,13 +192,24 @@ public class EquationActivity extends DialogHelperActivity {
         setAudio(R.raw.wrong_clicked);
         vibrate(100);
         errors += 1;
-        if (score > 0) {
-            score -= 50;
+        if (lifes > 0) {
+            lifes -= 1;
+        }
+        lifeRemained(lifes);
+        if (lifes == 0) {
+            gameFinished();
         }
         view.setBackgroundResource(R.drawable.find_item_back);
         view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
         getLevels(currentLevel);
+    }
+
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
     }
 
     private void getLevels(int level) {
@@ -274,12 +290,43 @@ public class EquationActivity extends DialogHelperActivity {
     }
 
     @Override
-    public void startNewActivity() {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                lifes = data.getIntExtra("result", 0);
+                watched = data.getBooleanExtra("watched", false);
+                life1.setImageResource(R.drawable.life_full);
+                showPauseDialog();
+            }
+        }
+    }
+
+    @Override
+    public void gameFinished() {
+        pauseTimer();
+        startActivityForResult(intentErrorInfo(), 1);
+        overridePendingTransition(0,0);
+    }
+
+    private Intent intentErrorInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", watched);
+        return intent;
+    }
+
+    private Intent intentFinishInfo() {
+        Intent intent = myIntent();
+        intent.putExtra("lifeEnd", false);
+        return intent;
+    }
+
+    private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
-
         String oldScore = SharedPrefManager.getEquationRecord(getApplication());
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
@@ -294,7 +341,12 @@ public class EquationActivity extends DialogHelperActivity {
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
-        startActivity(intent);
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(intentFinishInfo());
         overridePendingTransition(0,0);
     }
 

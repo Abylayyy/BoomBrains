@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.game_pages.color_figures;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +46,6 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
 
     private int position;
     private int score = 0;
-    private int errors = 0;
     private int count = 0;
     boolean isEnabled = false;
     private int[][] levelArray;
@@ -59,6 +59,8 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     List<Integer> randomcolors;
     List<Integer> randomFigures;
     int transparent;
+    private int errors = 0;
+    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,19 +161,31 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                lifes = data.getIntExtra("result", 0);
+                watched = data.getBooleanExtra("watched", false);
+                life1.setImageResource(R.drawable.life_full);
+                showPauseDialog();
+            }
+        }
+    }
+
+    @Override
     public void updateNumbers(View view, int tint) {
         if (tint == thisLevelColors.get(maxColorIndex)) {
             setAudio(R.raw.click);
             maxColorIndex += 1;
-            score += 100;
+            score += 1;
             recordTxt.setText(""+score);
             makeInvisible(tint);
         } else {
             vibrate(100);
             setAudio(R.raw.wrong_clicked);
-            if (score > 0) {
-                score -= 50;
-            }
+            errors += 1;
             if (lifes > 0) {
                 lifes -= 1;
             }
@@ -179,14 +193,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             if (lifes == 0) {
                 gameFinished();
             }
-            recordTxt.setText(""+score);
-        }
-    }
-
-    private void lifeRemained(int i) {
-        ImageView[] lifes = {life1, life2, life3};
-        if (i >= 0) {
-            lifes[i].setImageResource(R.drawable.life_border);
+            recordTxt.setText("" + score);
         }
     }
 
@@ -209,8 +216,6 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
     }
 
-
-
     @Override
     public void onStop() {
         super.onStop();
@@ -219,9 +224,16 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
     }
 
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
+    }
+
     private Intent intentErrorInfo() {
         Intent intent = myIntent();
-        intent.putExtra("lifeEnd", true);
+        intent.putExtra("lifeEnd", watched);
         return intent;
     }
 
@@ -262,7 +274,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @Override
     public void gameFinished() {
         pauseTimer();
-        startActivity(intentErrorInfo());
+        startActivityForResult(intentErrorInfo(), 1);
         overridePendingTransition(0,0);
     }
 
