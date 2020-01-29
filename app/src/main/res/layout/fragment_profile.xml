@@ -755,13 +755,13 @@
                                 android:layout_marginRight="8dp"
                                 android:src="@drawable/coin_icon"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@+id/textView26"
+                                app:layout_constraintEnd_toStartOf="@+id/coinTxt"
                                 app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/textView26"
+                                android:id="@+id/coinTxt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"

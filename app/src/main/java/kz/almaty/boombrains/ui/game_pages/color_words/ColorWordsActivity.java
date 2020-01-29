@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -26,11 +25,11 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
-import kz.almaty.boombrains.models.game_models.ColorModel;
+import kz.almaty.boombrains.data.models.game_models.ColorModel;
 
 @SuppressLint("SetTextI18n")
 public class ColorWordsActivity extends DialogHelperActivity implements ColorsAdapter.ColorsListener {
@@ -57,12 +56,12 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
     @BindView(R.id.life3) ImageView life3;
 
     private int lifes = 3;
+    private boolean lifeUsed = false;
 
     private int currentLevel = 1;
     private int score = 0;
     private int selectedColor;
     private int errors = 0;
-    private boolean watched = true;
 
     public ColorWordsActivity() {
     }
@@ -78,6 +77,9 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        setupLifeDialog(this, R.color.topColor);
+        loadAddForLife();
 
         initMap();
 
@@ -187,7 +189,11 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
             }
             lifeRemained(lifes);
             if (lifes == 0) {
-                gameFinished();
+                if (!lifeUsed) {
+                    showLifeDialog(this);
+                } else {
+                    startNewActivity();
+                }
             }
             recordTxt.setText(""+score);
             setRecyclerItem();
@@ -201,10 +207,18 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         }
     }
 
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        resumeTimer();
+    }
+
     private void setSuccess() {
         new Handler().postDelayed(()-> {
             currentLevel += 1;
-            score += 1;
+            score += 100;
             recordTxt.setText(""+score);
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
             setRecyclerItem();
@@ -218,45 +232,14 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getColorRecord(getApplication());
+
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setColorRecord(getApplication(), String.valueOf(score));
@@ -275,7 +258,7 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
+        startActivity(myIntent());
         overridePendingTransition(0,0);
     }
 

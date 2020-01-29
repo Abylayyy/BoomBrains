@@ -7,10 +7,9 @@ import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import kz.almaty.boombrains.models.records_model.RecordResponse;
-import kz.almaty.boombrains.services.APIService;
-import kz.almaty.boombrains.services.RetrofitClass;
-import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.accept_view_model.AcceptView;
+import kz.almaty.boombrains.data.models.records_model.RecordResponse;
+import kz.almaty.boombrains.data.services.APIService;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

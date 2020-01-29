@@ -1,13 +1,11 @@
 package kz.almaty.boombrains.ui.game_pages.rem_words;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,13 +26,13 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.files.RememberWordsEn;
-import kz.almaty.boombrains.files.RememberWordsKz;
-import kz.almaty.boombrains.files.RememberWordsRu;
-import kz.almaty.boombrains.files.RememberWordsSpain;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.files.RememberWordsEn;
+import kz.almaty.boombrains.util.files.RememberWordsKz;
+import kz.almaty.boombrains.util.files.RememberWordsRu;
+import kz.almaty.boombrains.util.files.RememberWordsSpain;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
@@ -64,9 +62,9 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     private int currentLevel = 1;
     private String random;
     private int score = 0;
-    private TextView text;
     private int errors = 0;
-    private boolean watched = true;
+
+    private boolean lifeUsed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +74,12 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         position = getIntent().getIntExtra("position", 0);
 
         setupDialog(this, R.style.slovoTheme, R.drawable.pause_rem_word, position, "");
-        startTimer(60000, timeTxt);
+        startTimer(15000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        setupLifeDialog(this, R.color.topRemWords);
+        loadAddForLife();
 
         String lang = SharedUpdate.getLanguage(this);
         numbersList = new ArrayList<>();
@@ -188,29 +189,13 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     }
 
     private void getRandomByLevel(int level) {
-        switch (level) {
-            case 1: case 2: case 3:
-                random = getRandom(1);
-                break;
-            case 4: case 5: case 6:
-                random = getRandom(2);
-                break;
-            case 7: case 8: case 9:
-                random = getRandom(3);
-                break;
-            case 10: case 11: case 12: case 13: case 14: case 15:
-                random = getRandom(4);
-                break;
-            case 16: case 17: case 18: case 19: case 20: case 21:
-                random = getRandom(5);
-                break;
-            case 22: case 23: case 24: case 25: case 26: case 27:
-                random = getRandom(6);
-                break;
-            default:
-                random = getRandom(7);
-                break;
-        }
+        if (level <= 3) { random = getRandom(1); }
+        else if (level <= 6) { random = getRandom(2); }
+        else if (level <= 9) { random = getRandom(3); }
+        else if (level <= 15) { random = getRandom(4); }
+        else if (level <= 21) { random = getRandom(5); }
+        else if (level <= 27) { random = getRandom(6); }
+        else { random = getRandom(7); }
     }
 
     public void setBackgroundTypes(View view, TextView text) {
@@ -227,7 +212,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
                 correctResult();
                 correctsResults.clear();
             }
-            score += 1;
+            score += 100;
             recordTxt.setText(score + "");
         } else {
             view.setBackgroundResource(R.drawable.card_background_error);
@@ -235,8 +220,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             errorResult();
             correctsResults.clear();
         }
-        Log.d("CORRECT::", results.toString());
-        Log.d("SELECTED::", correctsResults.toString());
     }
 
     private void correctResult() {
@@ -244,7 +227,10 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             correctsResults.clear();
             currentLevel += 1;
             setAudio(R.raw.level_complete);
-            setRecyclerSizes(currentLevel);
+            if (lifes > 0) {
+                startNewQuestion();
+                setRecyclerSizes(currentLevel);
+            }
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
         }, 200);
     }
@@ -257,141 +243,64 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             }
             lifeRemained(lifes);
             if (lifes == 0) {
-                gameFinished();
+                if (!lifeUsed) {
+                    showLifeDialog(this);
+                } else {
+                    startNewActivity();
+                }
             }
-            vibrate(100);
-            setRecyclerSizes(currentLevel);
-            nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-            recordTxt.setText(score + "");
+            errorClicked();
         }, 200);
+    }
+
+    private void errorClicked() {
+        setAudio(R.raw.wrong_clicked);
+        vibrate(100);
+        if (lifes > 0) {
+            startNewQuestion();
+            setRecyclerSizes(currentLevel);
+        }
+        nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+        recordTxt.setText(score + "");
+    }
+
+    private void startNewQuestion() {
+        cancel();
+        startTimer(15000, timeTxt);
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        startNewQuestion();
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        setRecyclerSizes(currentLevel);
     }
 
     @Override
     public void setSize(View view) {
-        switch (currentLevel) {
-            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
-                showWord();
-                setSizes(view, 4);
-                break;
-            }
-            case 10: case 11: case 12: case 13: case 14: case 15: {
-                showWord();
-                setSizes(view, 5);
-                break;
-            }
-            case 16: case 17: case 18: case 19: case 20: case 21: {
-                showWord();
-                setSizes(view, 6);
-                break;
-            }
-            case 22: case 23: case 24: case 25: case 26: case 27: {
-                showWord();
-                setSizes(view, 7);
-                break;
-            }
-            default: {
-                showWord();
-                setSizes(view, 8);
-                break;
-            }
-        }
+        if (currentLevel <= 9) { setSizes(view, 4); }
+        else if (currentLevel <= 15) { setSizes(view, 5); }
+        else if (currentLevel <= 21) { setSizes(view, 6); }
+        else if (currentLevel <= 27) { setSizes(view, 7); }
+        else { setSizes(view, 8); }
+        showWord();
         getRandomByLevel(currentLevel);
     }
 
     public void setRecyclerSizes(int level) {
-        switch (level) {
-            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
-                setRecyclerItemFirst();
-                break;
-            }
-            case 10: case 11: case 12: case 13: case 14: case 15: {
-                setRecyclerItem(10);
-                break;
-            }
-            case 16: case 17: case 18: case 19: case 20: case 21: {
-                setRecyclerItem(12);
-                break;
-            }
-            case 22: case 23: case 24: case 25: case 26: case 27: {
-                setRecyclerItem(14);
-                break;
-            }
-        }
+        if (level <= 9) {setRecyclerItemFirst();}
+        else if (level <= 15) {setRecyclerItem(10);}
+        else if (level <= 21) {setRecyclerItem(11);}
+        else if (level <= 27) {setRecyclerItem(12);}
+        else {setRecyclerItem(13);}
     }
 
     private void lifeRemained(int i) {
         ImageView[] lifes = {life1, life2, life3};
         if (i >= 0) {
             lifes[i].setImageResource(R.drawable.life_border);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
-    private Intent myIntent() {
-        Intent intent = new Intent(getApplication(), FinishedActivity.class);
-        intent.putExtra("position", position);
-        intent.putExtra("score", score);
-        intent.putExtra("errors", errors);
-        String oldScore = SharedPrefManager.getSlovoRecord(getApplication());
-        if (oldScore != null) {
-            if (score > Integer.parseInt(oldScore)) {
-                SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
-                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
-                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
-            }
-        } else {
-            if (score > 0) {
-                SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
-                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
-                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
-            }
-        }
-        return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(intentFinishInfo());
-        overridePendingTransition(0,0);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (!isPaused()) {
-            showPauseDialog();
         }
     }
 
@@ -414,5 +323,42 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         int height = shulteRecycler.getHeight();
         view.getLayoutParams().width = width / 2 - 12;
         view.getLayoutParams().height = height / x - 10;
+    }
+
+    private Intent myIntent() {
+        Intent intent = new Intent(getApplication(), FinishedActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("score", score);
+        intent.putExtra("errors", errors);
+        String oldScore = SharedPrefManager.getSlovoRecord(getApplication());
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
+        if (oldScore != null) {
+            if (score > Integer.parseInt(oldScore)) {
+                SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
+            }
+        } else {
+            if (score > 0) {
+                SharedPrefManager.setSlovoRecord(getApplication(), String.valueOf(score));
+                SharedUpdate.setSlovoUpdate(getApplication(), String.valueOf(score));
+                intent.putExtra("record", getString(R.string.CongratulationNewRecord));
+            }
+        }
+        return intent;
+    }
+
+    @Override
+    public void startNewActivity() {
+        startActivity(myIntent());
+        overridePendingTransition(0,0);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (!isPaused()) {
+            showPauseDialog();
+        }
     }
 }

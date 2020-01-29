@@ -1,7 +1,6 @@
 package kz.almaty.boombrains.ui.game_pages.shulte_page;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,23 +20,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.helpers.SpaceItemDecoration;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.SpaceItemDecoration;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
 public class ShulteActivity extends DialogHelperActivity implements ShulteAdapter.ShulteListener {
-
-    private static final int LEVEL6 = 66;
-    private static final int LEVEL7 = 77;
-    private static final int LEVEL8 = 88;
-    public static final int LEVEL1 = 11;
-    public static final int LEVEL2 = 22;
-    public static final int LEVEL3 = 33;
-    public static final int LEVEL4 = 44;
-    public static final int LEVEL5 = 55;
 
     ShulteAdapter adapter;
     List<String> numbersList;
@@ -61,10 +51,10 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     private View view;
     private int index = 1;
     private int score = 0;
-    int currentLevel = LEVEL1;
+    int currentLevel = 1;
     private String name;
     private int errors = 0;
-    private boolean watched = true;
+    private boolean lifeUsed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +62,16 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         setContentView(R.layout.activity_shulte);
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
-        startTimer(120000, timeTxt);
+        startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
         name = getIntent().getStringExtra("name");
         numbersList = new ArrayList<>();
         setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position, name);
+
+        setupLifeDialog(this, R.color.topShulte);
+        loadAddForLife();
 
         setRecycler();
 
@@ -90,27 +83,18 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         for (int i = 1; i <= 16; i++) {
             numbersList.add(String.valueOf(i));
         }
-        Collections.shuffle(numbersList);
-        adapter = new ShulteAdapter(numbersList, this, this);
-        shulteRecycler.setAdapter(adapter);
-        shulteRecycler.setLayoutManager(new GridLayoutManager(this, 4));
-        shulteRecycler.addItemDecoration(new SpaceItemDecoration(0));
-        shulteRecycler.setItemAnimator(new DefaultItemAnimator());
-        adapter.notifyDataSetChanged();
+        setRecyclerDefaults(4);
     }
 
-    private void setupList(int size, int span) {
+    private void setupList(int size) {
         numbersList.clear();
-        for (int i = 1; i <= size; i++) {
+
+        int res = size * size;
+
+        for (int i = 1; i <= res; i++) {
             numbersList.add(String.valueOf(i));
         }
-        Collections.shuffle(numbersList);
-        adapter = new ShulteAdapter(numbersList, this, this);
-        GridLayoutManager manager = new GridLayoutManager(this, span);
-        shulteRecycler.setLayoutManager(manager);
-        shulteRecycler.addItemDecoration(new SpaceItemDecoration(0));
-        shulteRecycler.setItemAnimator(new DefaultItemAnimator());
-        shulteRecycler.setAdapter(adapter);
+        setRecyclerDefaults(size);
     }
 
     @Override
@@ -118,6 +102,16 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         if (!isPaused()) {
             showPauseDialog();
         }
+    }
+
+    private void setRecyclerDefaults(int size) {
+        Collections.shuffle(numbersList);
+        adapter = new ShulteAdapter(numbersList, this, this);
+        shulteRecycler.setAdapter(adapter);
+        shulteRecycler.setLayoutManager(new GridLayoutManager(this, size));
+        shulteRecycler.addItemDecoration(new SpaceItemDecoration(0));
+        shulteRecycler.setItemAnimator(new DefaultItemAnimator());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -143,7 +137,11 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         }
         lifeRemained(lifes);
         if (lifes == 0) {
-            gameFinished();
+            if (!lifeUsed) {
+                showLifeDialog(this);
+            } else {
+                startNewActivity();
+            }
         }
         recordTxt.setText(score + "");
         setBackgroundError(view);
@@ -154,7 +152,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     private void setSuccess(TextView text, String name) {
         if (name.equals(getString(R.string.Easy))) { setEasyLevel(text); }
         else if (name.equals(getString(R.string.Medium))) { success(); }
-        else if (name.equals(getString(R.string.Hard))) { success();setHardLevels(currentLevel);  }
+        else if (name.equals(getString(R.string.Hard))) { success();setHardLevels(currentLevel); }
     }
 
 
@@ -166,28 +164,29 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     private void success() {
         setAudio(R.raw.click);
         setBackgroundSuccess(view);
-        score += 1;
+        score += 100;
         index += 1;
         recordTxt.setText(score + "");
         nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
         if (number.equals(String.valueOf(numbersList.size()))) {
+            currentLevel += 1;
             index = 1;
             nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
-            setGameLevels(getLevel(numbersList.size()));
+            setGameLevels(currentLevel);
         }
     }
 
     @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        resumeTimer();
+    }
+
+    @Override
     public void setSize(View view, TextView text) {
-        switch (currentLevel) {
-            case LEVEL1: { setSizes(view, text,4);break; }
-            case LEVEL2: { setSizes(view, text,5);break; }
-            case LEVEL3: { setSizes(view, text,6);break; }
-            case LEVEL4: { setSizes(view, text,7);break; }
-            case LEVEL5: { setSizes(view, text,8);break; }
-            case LEVEL6: { setSizes(view, text,9);break; }
-            default: { setSizes(view, text, 10);break; }
-        }
+        setSizes(view, text,3 + currentLevel);
     }
 
     private void setSizes(View view, TextView textView, int i) {
@@ -219,87 +218,21 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         textView.setTextSize(size);
     }
 
-    public int getLevel(int size) {
-        int level = 0;
-        switch (size) {
-            case 16: level = LEVEL2;break;
-            case 25: level = LEVEL3;break;
-            case 36: level = LEVEL4;break;
-            case 49: level = LEVEL5;break;
-            case 64: level = LEVEL6;break;
-            case 81: level = LEVEL7;break;
-            case 100: level = LEVEL8;break;
-        }
-        return level;
-    }
-
     public void setGameLevels(int level) {
-        switch (level) {
-            case LEVEL1: {
-                currentLevel = LEVEL1;
-                setRecycler();
-                break;
-            }
-            case LEVEL2: {
-                currentLevel = LEVEL2;
-                setupList(25, 5);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL3: {
-                currentLevel = LEVEL3;
-                setupList(36, 6);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL4: {
-                currentLevel = LEVEL4;
-                setupList(49, 7);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL5: {
-                currentLevel = LEVEL5;
-                setupList(64, 8);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL6: {
-                currentLevel = LEVEL6;
-                setupList(81, 9);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL7: {
-                currentLevel = LEVEL7;
-                setupList(100, 10);
-                setAudio(R.raw.level_complete);
-                break;
-            }
-            case LEVEL8: {
-                currentLevel = LEVEL8;
-                setupList(121, 11);
-                setAudio(R.raw.level_complete);
-                break;
-            }
+        if (level == 1) {
+            setRecycler();
+        } else {
+            setupList(level + 3);
+            setAudio(R.raw.level_complete);
         }
     }
 
     public void setHardLevels(int level) {
-        switch (level) {
-            case LEVEL1: { setListWithHandler(16, 4);break; }
-            case LEVEL2: { setListWithHandler(25, 5);break; }
-            case LEVEL3: { setListWithHandler(36, 6);break; }
-            case LEVEL4: { setListWithHandler(49, 7);break; }
-            case LEVEL5: { setListWithHandler(64, 8);break; }
-            case LEVEL6: { setListWithHandler(81, 9);break; }
-            case LEVEL7: { setListWithHandler(100, 10);break; }
-            case LEVEL8: { setListWithHandler(121, 11);break; }
-        }
+        setListWithHandler(level + 3);
     }
 
-    private void setListWithHandler(int i, int i1) {
-        new Handler().postDelayed(()-> setupList(i, i1), 100);
+    private void setListWithHandler(int i) {
+        new Handler().postDelayed(()-> setupList(i), 100);
     }
 
     @Override
@@ -327,12 +260,6 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         }
     }
 
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
@@ -340,6 +267,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         intent.putExtra("errors", errors);
         intent.putExtra("name", name);
         String oldScore = SharedPrefManager.getShulteRecord(getApplication());
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setShulteRecord(getApplication(), String.valueOf(score));
@@ -358,35 +286,8 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
+        startActivity(myIntent());
         overridePendingTransition(0,0);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
     }
 
     @Override

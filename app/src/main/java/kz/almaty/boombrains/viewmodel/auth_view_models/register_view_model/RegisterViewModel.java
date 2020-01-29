@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
-import kz.almaty.boombrains.models.auth_models.MainLoginModel;
-import kz.almaty.boombrains.models.auth_models.register.RegisterModel;
-import kz.almaty.boombrains.services.APIService;
-import kz.almaty.boombrains.services.RetrofitClass;
+import kz.almaty.boombrains.data.models.auth_models.MainLoginModel;
+import kz.almaty.boombrains.data.models.auth_models.register.RegisterModel;
+import kz.almaty.boombrains.data.services.APIService;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

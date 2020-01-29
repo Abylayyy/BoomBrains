@@ -1,7 +1,6 @@
 package kz.almaty.boombrains.ui.game_pages.zapomni_chislo_page;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -12,15 +11,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import com.poovam.pinedittextfield.LinePinField;
 import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
@@ -59,9 +59,10 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
 
     private boolean visible = true;
     private int currentLevel = 1, score = 0;
-    private int random;
+    private String random;
     private int errors = 0;
-    private boolean watched = true;
+
+    private boolean lifeUsed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +75,12 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         View[] numbers = new View[]{btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0};
 
         setupDialog(this, R.style.chisloTheme, R.drawable.pause_zapomni, position, "");
-        startTimer(60000, timeTxt);
+        startTimer(15000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        setupLifeDialog(this, R.color.topSlovo);
+        loadAddForLife();
 
         pauseImg.setOnClickListener(v -> showPauseDialog());
 
@@ -132,30 +136,63 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         String correct = slovo.getText().toString();
         String word = slovo_new.getText().toString();
         int len = word.length();
+
         if (word.equals(correct)) {
             currentLevel += 1;
-            score += len * 50;
-            nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-            recordTxt.setText("" + score);
-            showSuccess(word);
-            setAudio(R.raw.level_complete);
+            score += len * 100;
+            successClicked(word);
         } else {
             errors += 1;
             if (lifes > 0) {
                 lifes -= 1;
             }
             lifeRemained(lifes);
+            errorClicked(word);
+
             if (lifes == 0) {
-                gameFinished();
+                if (!lifeUsed) {
+                    showLifeDialog(this);
+                } else {
+                    startNewActivity();
+                }
             }
-            nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-            recordTxt.setText("" + score);
-            showError(word);
-            setAudio(R.raw.wrong_clicked);
-            vibrate(100);
         }
 
-        new Handler().postDelayed(()-> getLevels(currentLevel), 500);
+        new Handler().postDelayed(()-> {
+            if (lifes > 0) {
+                startNewQuestion();
+                getLevels(currentLevel);
+            }
+        }, 500);
+    }
+
+    private void errorClicked(String word) {
+        nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+        recordTxt.setText("" + score);
+        showError(word);
+        setAudio(R.raw.wrong_clicked);
+        vibrate(100);
+    }
+
+    private void successClicked(String word) {
+        nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+        recordTxt.setText("" + score);
+        showSuccess(word);
+        setAudio(R.raw.level_complete);
+    }
+
+    private void startNewQuestion() {
+        cancel();
+        startTimer(15000, timeTxt);
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        startNewQuestion();
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        getLevels(currentLevel);
     }
 
     private void showSuccess(String slovo) {
@@ -173,50 +210,19 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     }
 
     private void getLevels(int level) {
-        switch(level) {
-            case 1: case 2: case 3: {
-                random = getRandom(100, 1000);
-                setFields(3);
-                showAndHide();
-                break;
-            }
-            case 4: case 5: case 6: {
-                random = getRandom(1000, 10000);
-                setFields(4);
-                showAndHide();
-                break;
-            }
-            case 7: case 8: case 9: {
-                random = getRandom(10000, 100000);
-                setFields(5);
-                showAndHide();
-                break;
-            }
-            case 10: case 11: case 12: {
-                random = getRandom(100000, 1000000);
-                setFields(6);
-                showAndHide();
-                break;
-            }
-            case 13: case 14: case 15: {
-                random = getRandom(1000000, 10000000);
-                setFields(7);
-                showAndHide();
-                break;
-            }
-            case 16: case 17: case 18: {
-                random = getRandom(10000000, 100000000);
-                setFields(8);
-                showAndHide();
-                break;
-            }
-            default: {
-                random = getRandom(100000000, 1000000000);
-                setFields(9);
-                showAndHide();
-                break;
+        if (level == 1) {
+            random = getRandom(level + 2);
+            setFields(level + 2);
+        } else {
+            if (level % 2 == 1){
+                random = getRandom((level + 1) / 2 + 2);
+                setFields((level + 1) / 2 + 2);
+            } else {
+                random = getRandom((level / 2) + 2);
+                setFields((level / 2) + 2);
             }
         }
+        showAndHide();
     }
 
     private void setFields(int num) {
@@ -228,12 +234,12 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     private void showAndHide() {
         pauseTimer();
         slovo.setVisibility(View.VISIBLE);
-        slovo.setText(String.valueOf(random));
+        slovo.setText(random);
         hideAllViews();
         showBtn.setEnabled(false);
         pauseImg.setEnabled(false);
 
-        new Handler().postDelayed(()-> {
+        new Handler().postDelayed(() -> {
             resumeTimer();
             showBtn.setEnabled(true);
             slovo.setVisibility(View.INVISIBLE);
@@ -253,8 +259,12 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         slovo_new.setVisibility(View.INVISIBLE);
     }
 
-    private int getRandom(int start, int end) {
-        return new Random().nextInt(end - start) + start;
+    private String getRandom(int n) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i <= n; i++) {
+            builder.append(new Random().nextInt(10 - 1) + 1);
+        }
+        return builder.toString();
     }
 
     @Override
@@ -285,45 +295,13 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getChisloRecord(getApplication());
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setChisoRecord(getApplication(), String.valueOf(score));
@@ -342,7 +320,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
-        overridePendingTransition(0,0);
+        startActivity(myIntent());
+        overridePendingTransition(0, 0);
     }
 }

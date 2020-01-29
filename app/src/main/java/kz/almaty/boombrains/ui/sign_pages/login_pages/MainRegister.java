@@ -17,11 +17,11 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.models.auth_models.MainLoginModel;
-import kz.almaty.boombrains.models.auth_models.register.LocalRecords;
-import kz.almaty.boombrains.models.auth_models.register.RegisterModel;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.data.models.auth_models.MainLoginModel;
+import kz.almaty.boombrains.data.models.auth_models.register.LocalRecords;
+import kz.almaty.boombrains.data.models.auth_models.register.RegisterModel;
 import kz.almaty.boombrains.viewmodel.auth_view_models.register_view_model.RegisterView;
 import kz.almaty.boombrains.viewmodel.auth_view_models.register_view_model.RegisterViewModel;
 

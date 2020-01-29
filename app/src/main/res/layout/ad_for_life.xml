@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="360dp"
+    android:layout_gravity="center"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    android:background="@drawable/friend_req_back">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/closeConst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/closeImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/topFind"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dialog_close" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:adjustViewBounds="true"
+        android:alpha="0.78"
+        android:tint="#BE1856"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/life_finished" />
+
+    <TextView
+        android:id="@+id/contentTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:gravity="center"
+        android:text="@string/LifeEnded"
+        android:textColor="@color/topFind"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/cardCont"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardFinish"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="24dp"
+        app:cardBackgroundColor="@color/topFind"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0.8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardCont">
+
+        <TextView
+            android:id="@+id/lifeFinTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto"
+            android:text="@string/Finish"
+            android:textColor="#FFF"
+            android:textSize="17sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCont"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        app:cardBackgroundColor="@color/topFind"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0.8dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardFinish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentTxt">
+
+        <TextView
+            android:id="@+id/lifeConTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto"
+            android:text="@string/Continue"
+            android:textColor="#FFF"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/imageView21"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/add_icon" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

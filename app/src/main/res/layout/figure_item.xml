@@ -13,9 +13,10 @@
         android:id="@+id/shape"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:tint="@android:color/transparent"
+        android:elevation="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/circle_shape" />
 </androidx.constraintlayout.widget.ConstraintLayout>

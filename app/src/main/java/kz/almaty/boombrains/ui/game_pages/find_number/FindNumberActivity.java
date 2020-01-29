@@ -1,7 +1,6 @@
 package kz.almaty.boombrains.ui.game_pages.find_number;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -25,9 +24,9 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 import static android.view.animation.Animation.INFINITE;
@@ -49,6 +48,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     @BindView(R.id.life3) ImageView life3;
 
     private int lifes = 3;
+    private boolean lifeUsed = false;
 
     private int position;
     private List<Integer> numbersList = new ArrayList<>();
@@ -56,7 +56,6 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     private int currentLevel = 1;
     private int score = 0;
     private int errors = 0;
-    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,9 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         loadGoogleAd();
         pauseImg.setOnClickListener(v -> showPauseDialog());
         setupRecycler();
+
+        setupLifeDialog(this, R.color.topFind);
+        loadAddForLife();
 
         container.getLayoutParams().height = height() / 4;
     }
@@ -227,45 +229,15 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getFindRecord(getApplication());
+
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
+
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setFindRecord(getApplication(), String.valueOf(score));
@@ -284,7 +256,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
+        startActivity(myIntent());
         overridePendingTransition(0,0);
     }
 
@@ -323,7 +295,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
             new Handler().postDelayed(()-> {
                 setAudio(R.raw.click);
                 randomNumberTxt.setTextColor(Color.WHITE);
-                score += 1;
+                score += 100;
                 currentLevel += 1;
                 recordTxt.setText("" + score);
                 setRecyclerByLevel(currentLevel);
@@ -344,7 +316,11 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
                 }
                 lifeRemained(lifes);
                 if (lifes == 0) {
-                    gameFinished();
+                    if (!lifeUsed) {
+                        showLifeDialog(this);
+                    } else {
+                        startNewActivity();
+                    }
                 }
                 currentLevel += 1;
                 setRecyclerByLevel(currentLevel);
@@ -358,5 +334,13 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         if (i >= 0) {
             lifes[i].setImageResource(R.drawable.life_border);
         }
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        resumeTimer();
     }
 }

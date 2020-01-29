@@ -1,34 +1,28 @@
 package kz.almaty.boombrains.ui.main_pages;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Group;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordView;
 import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordViewModel;
 import kz.almaty.boombrains.viewmodel.records.send_minutes.SendSecondView;
@@ -48,16 +42,14 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
     @BindView(R.id.view3) View view1;
     @BindView(R.id.view4) View view2;
     @BindView(R.id.finishTxt) TextView finishTxt;
-    @BindView(R.id.addImg) ImageView addImg;
-    @BindView(R.id.lifeEndTxt) TextView lifeEndTxt;
     @BindView(R.id.group) Group group;
+    @BindView(R.id.coinTxt) TextView coin;
 
     private String lang;
     private int position;
     private InterstitialAd mInterstitialAd;
     private String name;
     private String second;
-    private boolean lifeEnd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,59 +70,24 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
         int score = getIntent().getIntExtra("score", 0);
         int error = getIntent().getIntExtra("errors", 0);
         String message = getIntent().getStringExtra("record");
-        lifeEnd = getIntent().getBooleanExtra("lifeEnd", false);
 
         if (SharedPrefManager.isNetworkOnline(this) && SharedPrefManager.isUserLoggedIn(this)) {
             newRecordViewModel.setNewRecord(getGameName(position), score, this, this);
             sendSecondViewModel.sendStatistics(second, this, this);
         }
 
+        coin.setText("" + SharedPrefManager.getCoin(this));
         scoreTxt.setText(getString(R.string.YourScore) + " " + score);
         errors.setText(getString(R.string.Mistakes) + " " + error);
-
-        if (lifeEnd) {
-            lifeEndInfo();
-            zanovoBtn.setOnClickListener(v -> {
-                if (!lifeEnd) {
-                    startActivities(position);
-                } else {
-                    loadGoogleAd();
-                }
-            });
-            quitBtn.setOnClickListener(v -> gameFinishedInfo(message));
-
-        } else {
-            gameFinishedInfo(message);
-            zanovoBtn.setOnClickListener(v -> startActivities(position));
-        }
-    }
-
-    private void gameFinishedInfo(String message) {
-        lifeEnd = false;
-        addImg.setVisibility(View.GONE);
-        quitBtn.setText(getString(R.string.Exit));
-        group.setVisibility(View.VISIBLE);
         setFinishedInfo(message);
-        lifeEndTxt.setVisibility(View.GONE);
-
-        finishTxt.setText(getString(R.string.Again));
 
         quitBtn.setOnClickListener(v -> {
             startActivity(new Intent(this, MainActivity.class));
             finishAffinity();
             overridePendingTransition(0,0);
         });
-    }
 
-    private void lifeEndInfo() {
-        quitBtn.setText(getString(R.string.Finish));
-        finishTxt.setText(getString(R.string.Continue));
-
-        setMeasures(successImg, R.drawable.life_finished);
-
-        lifeEndTxt.setVisibility(View.VISIBLE);
-        group.setVisibility(View.INVISIBLE);
-        addImg.setVisibility(View.VISIBLE);
+        zanovoBtn.setOnClickListener(v -> startActivities(position));
     }
 
     private void setFinishedInfo(String message) {
@@ -160,45 +117,6 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
             case 9: name = "coloredFigures"; break;
         }
         return name;
-    }
-
-    private void loadGoogleAd() {
-        MobileAds.initialize(this, initializationStatus -> Log.d("INITIALIZATION::", "COMPLETED"));
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-7342268862236285/2044423261");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                showGoogleAdd();
-                Log.d("LOADING::", "LOADED");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d("LOADING::", "FAILED");
-            }
-            @Override
-            public void onAdOpened() { }
-            @Override
-            public void onAdClicked() { }
-            @Override
-            public void onAdLeftApplication() { }
-            @Override
-            public void onAdClosed() {
-                mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("life", 1);
-                returnIntent.putExtra("watched", false);
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            }
-        });
-    }
-
-    private void showGoogleAdd() {
-        mInterstitialAd.show();
     }
 
     private void startActivities(int position) {
@@ -334,7 +252,6 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
     private void setColors(int color) {
         finishTxt.setTextColor(getResources().getColor(color));
         quitBtn.setTextColor(getResources().getColor(color));
-        addImg.setColorFilter(getResources().getColor(color));
     }
 
     private void setMeasures(ImageView image, int resource) {
@@ -348,11 +265,9 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
 
     @Override
     public void onBackPressed() {
-        if (!lifeEnd) {
-            finishAffinity();
-            startActivity(new Intent(getApplication(), MainActivity.class));
-            overridePendingTransition(0, 0);
-        }
+        finishAffinity();
+        startActivity(new Intent(getApplication(), MainActivity.class));
+        overridePendingTransition(0, 0);
     }
 
     @Override

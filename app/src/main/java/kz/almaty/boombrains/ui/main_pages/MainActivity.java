@@ -30,8 +30,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_fragments.MainFragment;
 import kz.almaty.boombrains.ui.main_fragments.profile_pages.FriendDetailsFragment;
 import kz.almaty.boombrains.ui.main_fragments.profile_pages.ProfileEditFragment;
@@ -207,6 +207,12 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
             SharedPrefManager.setNeverShowAgain(getApplication(), false);
             dialog.dismiss();
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dialog.dismiss();
     }
 
     @Override

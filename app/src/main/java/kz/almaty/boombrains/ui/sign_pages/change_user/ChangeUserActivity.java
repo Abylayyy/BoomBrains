@@ -1,6 +1,5 @@
 package kz.almaty.boombrains.ui.sign_pages.change_user;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -13,18 +12,12 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.github.ybq.android.spinkit.SpinKitView;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.viewmodel.password_view_model.change_pass_view_model.ChangeViewModel;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
 import kz.almaty.boombrains.viewmodel.password_view_model.username_view_model.ChangeUserView;
 import kz.almaty.boombrains.viewmodel.password_view_model.username_view_model.ChangeUserViewModel;
 

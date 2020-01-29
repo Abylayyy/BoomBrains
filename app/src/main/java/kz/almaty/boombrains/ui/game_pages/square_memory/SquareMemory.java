@@ -3,7 +3,6 @@ package kz.almaty.boombrains.ui.game_pages.square_memory;
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -22,11 +21,11 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
-import kz.almaty.boombrains.models.game_models.SquareModel;
+import kz.almaty.boombrains.data.models.game_models.SquareModel;
 
 @SuppressLint("SetTextI18n")
 public class SquareMemory extends DialogHelperActivity implements SquareAdapter.SquareListener {
@@ -53,7 +52,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
     private SquareAdapter adapter;
     private List<SquareModel> numbersList;
     private int currentLevel = 1;
-    private boolean watched = true;
+    private boolean lifeUsed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +61,11 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
         setupDialog(this, R.style.squareTheme, R.drawable.pause_square, position, "");
-        startTimer(60000, timeTxt);
+        setupLifeDialog(this, R.color.topSquare);
+        startTimer(15000, timeTxt);
         setCount();
         loadGoogleAd();
+        loadAddForLife();
 
         pauseImg.setOnClickListener(v -> showPauseDialog());
         container.getLayoutParams().height = width();
@@ -106,13 +107,21 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
                     if (count == selectedList.size()) {
                         currentLevel += 1;
                         nextNum.setText(getString(R.string.Level) + " " + currentLevel);
-                        count = 0; setGameLevels();
+                        count = 0;
+                        if (lifes > 0) {
+                            setGameLevels();
+                            startNewQuestion();
+                        }
                     }
                 },600);
             } else {
                 setErrorColor(view);
                 new Handler().postDelayed(()-> {
-                    count = 0; setErrors(); setGameLevels();
+                    count = 0; setErrors();
+                    if (lifes > 0) {
+                        setGameLevels();
+                        startNewQuestion();
+                    }
                 }, 600);
             }
         }
@@ -120,7 +129,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
 
     private void setCorrectResults() {
         setAudio(R.raw.click);
-        score += 1;
+        score += 100;
         recordTxt.setText("" + score);
     }
 
@@ -133,7 +142,11 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         }
         lifeRemained(lifes);
         if (lifes == 0) {
-            gameFinished();
+            if (!lifeUsed) {
+                showLifeDialog(this);
+            } else {
+                startNewActivity();
+            }
         }
         recordTxt.setText("" + score);
     }
@@ -143,6 +156,20 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         if (i >= 0) {
             lifes[i].setImageResource(R.drawable.life_border);
         }
+    }
+
+    private void startNewQuestion() {
+        cancel();
+        startTimer(15000, timeTxt);
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        startNewQuestion();
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        setGameLevels();
     }
 
     private void setGameLevels() {
@@ -162,12 +189,12 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
 
     private void setErrorColor(View view) {
         flipView(view);
-        new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_error), 400);
+        new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_error), 200);
     }
 
     private void setSuccessColor(View view) {
         flipView(view);
-        new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_success), 400);
+        new Handler().postDelayed(()-> view.setBackgroundResource(R.drawable.square_success), 200);
     }
 
     @Override
@@ -196,14 +223,14 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
     private void flipView(View view) {
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipping);
         anim.setTarget(view);
-        anim.setDuration(500);
+        anim.setDuration(300);
         anim.start();
     }
 
     private void flipReverse(View view) {
         ObjectAnimator anim = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipping_reverse);
         anim.setTarget(view);
-        anim.setDuration(500);
+        anim.setDuration(300);
         anim.start();
     }
 
@@ -236,45 +263,13 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getSquareRecord(getApplication());
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setSquareRecord(getApplication(), String.valueOf(score));
@@ -293,7 +288,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
+        startActivity(myIntent());
         overridePendingTransition(0,0);
     }
 

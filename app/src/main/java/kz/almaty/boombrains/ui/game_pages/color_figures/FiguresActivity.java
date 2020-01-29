@@ -1,12 +1,12 @@
 package kz.almaty.boombrains.ui.game_pages.color_figures;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,12 +21,12 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.helpers.SpaceItemDecoration;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.SpaceItemDecoration;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
-import kz.almaty.boombrains.models.game_models.FigureModel;
+import kz.almaty.boombrains.data.models.game_models.FigureModel;
 
 @SuppressLint("SetTextI18n")
 public class FiguresActivity extends DialogHelperActivity implements FigureAdapter.FigureListener {
@@ -43,6 +43,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @BindView(R.id.life3) ImageView life3;
 
     private int lifes = 3;
+    private boolean lifeUsed = false;
 
     private int position;
     private int score = 0;
@@ -60,7 +61,6 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     List<Integer> randomFigures;
     int transparent;
     private int errors = 0;
-    private boolean watched = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,9 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        setupLifeDialog(this, R.color.topShape);
+        loadAddForLife();
 
         transparent = android.R.color.transparent;
         numbersList = new ArrayList<>();
@@ -161,25 +164,11 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
     public void updateNumbers(View view, int tint) {
         if (tint == thisLevelColors.get(maxColorIndex)) {
             setAudio(R.raw.click);
             maxColorIndex += 1;
-            score += 1;
+            score += 100;
             recordTxt.setText(""+score);
             makeInvisible(tint);
         } else {
@@ -191,10 +180,29 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             }
             lifeRemained(lifes);
             if (lifes == 0) {
-                gameFinished();
+                if (!lifeUsed) {
+                    showLifeDialog(this);
+                } else {
+                    startNewActivity();
+                }
             }
             recordTxt.setText("" + score);
         }
+    }
+
+    private void lifeRemained(int i) {
+        ImageView[] lifes = {life1, life2, life3};
+        if (i >= 0) {
+            lifes[i].setImageResource(R.drawable.life_border);
+        }
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        resumeTimer();
     }
 
     @Override
@@ -224,31 +232,15 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
     }
 
-    private void lifeRemained(int i) {
-        ImageView[] lifes = {life1, life2, life3};
-        if (i >= 0) {
-            lifes[i].setImageResource(R.drawable.life_border);
-        }
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getFigureRecord(getApplication());
+
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
+
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setFigureRecord(getApplication(), String.valueOf(score));
@@ -262,19 +254,13 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
                 intent.putExtra("record", getString(R.string.CongratulationNewRecord));
             }
         }
+
         return intent;
     }
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
-        overridePendingTransition(0,0);
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
+        startActivity(myIntent());
         overridePendingTransition(0,0);
     }
 

@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
 import kz.almaty.boombrains.ui.sign_pages.login_pages.MainLoginActivity;
 
 public class SplashScreen extends AppCompatActivity {

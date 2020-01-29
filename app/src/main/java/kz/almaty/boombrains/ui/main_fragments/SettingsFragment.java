@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,9 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.helpers.StatefulFragment;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.StatefulFragment;
 import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutView;
 import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutViewModel;
 
@@ -179,6 +178,12 @@ public class SettingsFragment extends StatefulFragment implements LogoutView {
         });
         cancel.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dialog.dismiss();
     }
 
     @Override

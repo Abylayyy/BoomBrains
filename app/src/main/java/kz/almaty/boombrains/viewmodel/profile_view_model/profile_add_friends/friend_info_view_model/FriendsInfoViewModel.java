@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import kz.almaty.boombrains.models.profile_model.ProfileRatingModel;
-import kz.almaty.boombrains.services.RetrofitClass;
+import kz.almaty.boombrains.data.models.profile_model.ProfileRatingModel;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

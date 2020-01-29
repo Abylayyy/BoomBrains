@@ -2,7 +2,7 @@ package kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.re
 
 import java.util.List;
 
-import kz.almaty.boombrains.models.add_friend_models.RequestListModel;
+import kz.almaty.boombrains.data.models.add_friend_models.RequestListModel;
 
 public interface RequestListView {
     void showLoading();

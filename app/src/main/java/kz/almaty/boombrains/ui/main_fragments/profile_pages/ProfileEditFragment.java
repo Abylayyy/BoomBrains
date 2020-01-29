@@ -17,7 +17,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
 import kz.almaty.boombrains.ui.sign_pages.change_user.ChangePasswordActivity;
 import kz.almaty.boombrains.ui.sign_pages.change_user.ChangeUserActivity;

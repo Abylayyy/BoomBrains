@@ -2,18 +2,20 @@ package kz.almaty.boombrains.viewmodel.profile_view_model.profile_ratings;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import kz.almaty.boombrains.models.profile_model.ProfileRatingModel;
-import kz.almaty.boombrains.services.RetrofitClass;
+import kz.almaty.boombrains.data.models.profile_model.ProfileRatingModel;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileRatingViewModel extends ViewModel {
+
     public void getProfileRatings(Context context, ProfileRatingView view) {
         final MutableLiveData<ProfileRatingModel> data = new MutableLiveData<>();
         view.loadingData();
@@ -35,8 +37,12 @@ public class ProfileRatingViewModel extends ViewModel {
                     }
                 } else {
                     switch (response.code()) {
-                        case 404: view.onErrorOccurred(404); break;
-                        case 401: view.onErrorOccurred(401); break;
+                        case 404:
+                            view.onErrorOccurred(404);
+                            break;
+                        case 401:
+                            view.onErrorOccurred(401);
+                            break;
                     }
                 }
             }

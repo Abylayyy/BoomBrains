@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
-import kz.almaty.boombrains.models.rating_model.WorldRecordResponse;
-import kz.almaty.boombrains.services.APIService;
-import kz.almaty.boombrains.services.RetrofitClass;
+import kz.almaty.boombrains.data.models.rating_model.WorldRecordResponse;
+import kz.almaty.boombrains.data.services.APIService;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

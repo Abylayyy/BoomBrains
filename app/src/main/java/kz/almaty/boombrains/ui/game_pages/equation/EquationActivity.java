@@ -1,7 +1,6 @@
 package kz.almaty.boombrains.ui.game_pages.equation;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -21,9 +20,9 @@ import javax.script.ScriptException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")
@@ -51,7 +50,7 @@ public class EquationActivity extends DialogHelperActivity {
     private ArrayList<String> symbols;
     private TextView[] variants;
     private int errors = 0;
-    private boolean watched = true;
+    private boolean lifeUsed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +59,13 @@ public class EquationActivity extends DialogHelperActivity {
         ButterKnife.bind(this);
         position = getIntent().getIntExtra("position", 0);
         setupDialog(this, R.style.equationTheme, R.drawable.pause_equation, position, "");
-        startTimer(60000, timeTxt);
+        startTimer(15000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        loadAddForLife();
+        setupLifeDialog(this, R.color.topEquation);
+
         symbols = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
         variants = new TextView[] {plusBtn, minusBtn, multBtn, divBtn};
 
@@ -174,12 +177,27 @@ public class EquationActivity extends DialogHelperActivity {
     private void countSuccess(TextView view) {
         setAudio(R.raw.click);
         currentLevel += 1;
-        score += 1;
+        setScore(currentLevel);
         view.setBackgroundResource(R.drawable.find_item_back);
         view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
-        getLevels(currentLevel);
+        if (lifes > 0) {
+            getLevels(currentLevel);
+            startNewQuestion();
+        }
+    }
+
+    private void setScore(int level) {
+        if (level <= 5) { score += 100;}
+        else if (level <= 10) {score += 200;}
+        else if (level <= 15) {score += 300;}
+        else if (level <= 20) {score += 400;}
+        else if (level <= 25) {score += 500;}
+        else if (level <= 30) {score += 600;}
+        else if (level <= 35) {score += 700;}
+        else if (level <= 40) {score += 800;}
+        else {score += 900;}
     }
 
     private void setBackgroundError(TextView view) {
@@ -197,12 +215,19 @@ public class EquationActivity extends DialogHelperActivity {
         }
         lifeRemained(lifes);
         if (lifes == 0) {
-            gameFinished();
+            if (!lifeUsed) {
+                showLifeDialog(this);
+            } else {
+                startNewActivity();
+            }
         }
         view.setBackgroundResource(R.drawable.find_item_back);
         view.setTextColor(Color.parseColor("#BE1856"));
         recordTxt.setText("" + score);
-        getLevels(currentLevel);
+        if (lifes > 0) {
+            getLevels(currentLevel);
+            startNewQuestion();
+        }
     }
 
     private void lifeRemained(int i) {
@@ -212,49 +237,33 @@ public class EquationActivity extends DialogHelperActivity {
         }
     }
 
+    private void startNewQuestion() {
+        cancel();
+        startTimer(15000, timeTxt);
+    }
+
+    @Override
+    public void startWithLife() {
+        lifeUsed = true;
+        startNewQuestion();
+        lifes = 1;
+        life1.setImageResource(R.drawable.life_full);
+        getLevels(currentLevel);
+    }
+
     private void getLevels(int level) {
-        switch(level) {
-            case 1: case 2: case 3: case 4: case 5: {
-                setTextSizes(21);
-                generate(2);
-                break;
-            }
-            case 6: case 7: case 8: case 9: case 10: {
-                setTextSizes(22);
-                generate(3);
-                break;
-            }
-            case 11: case 12: case 13: case 14: case 15: {
-                setTextSizes(23);
-                generate(4);
-                break;
-            }
-            case 16: case 17: case 18: case 19: case 20: {
-                setTextSizes(24);
-                generate(5);
-                break;
-            }
-            case 21: case 22: case 23: case 24: case 25: {
-                setTextSizes(25);
-                generate(6);
-                break;
-            }
-            case 26: case 27: case 28: case 29: case 30: {
-                setTextSizes(26);
-                generate(7);
-                break;
-            }
-            case 31: case 32: case 33: case 34: case 35: {
-                setTextSizes(27);
-                generate(8);
-                break;
-            }
-            default: {
-                setTextSizes(28);
-                generate(9);
-                break;
-            }
-        }
+        int size, length;
+        if (level <= 5) { size = 21; length = 2; }
+        else if (level <= 10) {size = 22; length = 3; }
+        else if (level <= 15) {size = 23; length = 4; }
+        else if (level <= 20) {size = 24; length = 5; }
+        else if (level <= 25) {size = 25; length = 6; }
+        else if (level <= 30) {size = 26; length = 7; }
+        else if (level <= 35) {size = 27; length = 8; }
+        else if (level <= 40) {size = 28; length = 9; }
+        else {size = 29; length = 10;}
+        setTextSizes(size);
+        generate(length);
     }
 
     private void setTextSizes(float size) {
@@ -289,45 +298,15 @@ public class EquationActivity extends DialogHelperActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                lifes = data.getIntExtra("result", 0);
-                watched = data.getBooleanExtra("watched", false);
-                life1.setImageResource(R.drawable.life_full);
-                showPauseDialog();
-            }
-        }
-    }
-
-    @Override
-    public void gameFinished() {
-        pauseTimer();
-        startActivityForResult(intentErrorInfo(), 1);
-        overridePendingTransition(0,0);
-    }
-
-    private Intent intentErrorInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", watched);
-        return intent;
-    }
-
-    private Intent intentFinishInfo() {
-        Intent intent = myIntent();
-        intent.putExtra("lifeEnd", false);
-        return intent;
-    }
-
     private Intent myIntent() {
         Intent intent = new Intent(getApplication(), FinishedActivity.class);
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
         String oldScore = SharedPrefManager.getEquationRecord(getApplication());
+
+        SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
+
         if (oldScore != null) {
             if (score > Integer.parseInt(oldScore)) {
                 SharedPrefManager.setEquationRecord(getApplication(), String.valueOf(score));
@@ -346,7 +325,7 @@ public class EquationActivity extends DialogHelperActivity {
 
     @Override
     public void startNewActivity() {
-        startActivity(intentFinishInfo());
+        startActivity(myIntent());
         overridePendingTransition(0,0);
     }
 

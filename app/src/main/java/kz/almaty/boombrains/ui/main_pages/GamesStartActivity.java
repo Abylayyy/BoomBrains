@@ -30,15 +30,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.adapters.profile_adapters.games_start.SingleFriendAdapter;
-import kz.almaty.boombrains.adapters.profile_adapters.games_start.SingleWorldAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleFriendAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleWorldAdapter;
 import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.models.rating_model.WorldRecord;
-import kz.almaty.boombrains.models.rating_model.WorldRecordResponse;
-import kz.almaty.boombrains.models.records_model.RecordResponse;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.data.models.rating_model.WorldRecord;
+import kz.almaty.boombrains.data.models.rating_model.WorldRecordResponse;
+import kz.almaty.boombrains.data.models.records_model.RecordResponse;
 import kz.almaty.boombrains.ui.sign_pages.login_pages.MainLoginActivity;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.add_view_model.AddFriendView;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.add_view_model.AddFriendViewModel;
@@ -73,6 +73,7 @@ public class GamesStartActivity extends AppCompatActivity implements WorldRating
     @BindView(R.id.friendRecord) TextView friendRecord;
     @BindView(R.id.worldName) TextView worldNameTxt;
     @BindView(R.id.worldRecord) TextView worldRecordTxt;
+    @BindView(R.id.coinTxt) TextView coin;
 
     SingleFriendAdapter friendsAdapter;
     SingleWorldAdapter worldAdapter;
@@ -105,6 +106,8 @@ public class GamesStartActivity extends AppCompatActivity implements WorldRating
         setNetWorkData();
 
         loadAdFriendDialog();
+
+        coin.setText("" + SharedPrefManager.getCoin(this));
 
         backToMain.setOnClickListener(v -> onBackPressed());
 

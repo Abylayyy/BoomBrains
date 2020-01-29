@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import kz.almaty.boombrains.models.add_friend_models.RequestListModel;
-import kz.almaty.boombrains.services.APIService;
-import kz.almaty.boombrains.services.RetrofitClass;
+import kz.almaty.boombrains.data.models.add_friend_models.RequestListModel;
+import kz.almaty.boombrains.data.services.APIService;
+import kz.almaty.boombrains.data.services.RetrofitClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

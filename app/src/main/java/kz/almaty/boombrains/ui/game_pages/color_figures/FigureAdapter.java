@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.models.game_models.FigureModel;
+import kz.almaty.boombrains.data.models.game_models.FigureModel;
 
 public class FigureAdapter extends RecyclerView.Adapter<FigureAdapter.FigureViewHolder> {
 

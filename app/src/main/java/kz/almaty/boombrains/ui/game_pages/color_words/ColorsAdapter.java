@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.models.game_models.ColorModel;
+import kz.almaty.boombrains.data.models.game_models.ColorModel;
 
 public class ColorsAdapter extends RecyclerView.Adapter<ColorsAdapter.ColorViewHolder> {
 

@@ -42,22 +42,21 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.adapters.profile_adapters.profile_start.AchieveAdapter;
-import kz.almaty.boombrains.adapters.profile_adapters.profile_start.FriendRequestsAdapter;
-import kz.almaty.boombrains.adapters.profile_adapters.profile_start.FriendsAdapter;
-import kz.almaty.boombrains.adapters.profile_adapters.profile_start.PotionAdapter;
-import kz.almaty.boombrains.adapters.profile_adapters.profile_start.WorldAdapter;
-import kz.almaty.boombrains.files.RememberWordsRu;
-import kz.almaty.boombrains.helpers.SharedPrefManager;
-import kz.almaty.boombrains.helpers.SharedUpdate;
-import kz.almaty.boombrains.helpers.SpaceItemDecoration;
-import kz.almaty.boombrains.models.profile_model.PotionModel;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.AchieveAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.FriendRequestsAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.FriendsAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.PotionAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.WorldAdapter;
+import kz.almaty.boombrains.util.files.RememberWordsRu;
+import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.data.models.profile_model.PotionModel;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
-import kz.almaty.boombrains.models.add_friend_models.RequestListModel;
-import kz.almaty.boombrains.models.profile_model.Achievement;
-import kz.almaty.boombrains.models.profile_model.ProfileRatingModel;
-import kz.almaty.boombrains.models.profile_model.ProfileWorldRecord;
-import kz.almaty.boombrains.models.records_model.RecordResponse;
+import kz.almaty.boombrains.data.models.add_friend_models.RequestListModel;
+import kz.almaty.boombrains.data.models.profile_model.Achievement;
+import kz.almaty.boombrains.data.models.profile_model.ProfileRatingModel;
+import kz.almaty.boombrains.data.models.profile_model.ProfileWorldRecord;
+import kz.almaty.boombrains.data.models.records_model.RecordResponse;
 import kz.almaty.boombrains.ui.sign_pages.login_pages.MainSignInActivity;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.accept_view_model.AcceptView;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.accept_view_model.AcceptViewModel;
@@ -75,10 +74,10 @@ import kz.almaty.boombrains.viewmodel.profile_view_model.profile_ratings.Profile
  */
 
 @SuppressLint("SetTextI18n")
-public class ProfileFragment extends Fragment implements ProfileRatingView,
+public class ProfileFragment extends Fragment implements
         AchieveAdapter.AchieveListener, WorldAdapter.WorldListener,
         FriendsAdapter.FriendsListener, FriendRequestsAdapter.RequestsListener,
-        AddFriendView, RequestListView, AcceptView, RejectView, PotionAdapter.PotionListener, SwipeRefreshLayout.OnRefreshListener {
+        AddFriendView, RequestListView, AcceptView, RejectView, PotionAdapter.PotionListener, SwipeRefreshLayout.OnRefreshListener, ProfileRatingView {
 
     // profMainInfo
     @BindView(R.id.swipe) SwipeRefreshLayout swipeLayout;
@@ -112,10 +111,12 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
     @BindView(R.id.mainLoading) SpinKitView loadingIcon;
     @BindView(R.id.worldName) TextView worldNameTxt;
     @BindView(R.id.worldRecord) TextView worldRecordTxt;
+    @BindView(R.id.coinTxt) TextView coin;
 
     // stat
     @BindView(R.id.moreSt) TextView moreStat;
     @BindView(R.id.moreTxt) TextView moreTxt;
+
     // dialog views
     private RecyclerView requestRecycler;
     private EditText userDialogEdit;
@@ -135,6 +136,8 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
     private RejectViewModel rejectViewModel;
     private RequestListViewModel requestListViewModel;
     private ProfileRatingViewModel profileRatingViewModel;
+
+
 
     public ProfileFragment() { }
 
@@ -156,11 +159,14 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
 
         mCallback.recordLoaded();
 
+        coin.setText("" + SharedPrefManager.getCoin(getActivity()));
+
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
 
         profileRatingViewModel = ViewModelProviders.of(this).get(ProfileRatingViewModel.class);
         loadAdFriendDialog();
@@ -438,7 +444,7 @@ public class ProfileFragment extends Fragment implements ProfileRatingView,
 
     @Override
     public void setFriendClicked(ProfileWorldRecord record) {
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("username", record.getUsername());
         bundle.putInt("record", record.getTotalRecord());
         FriendDetailsFragment detailsFragment = new FriendDetailsFragment();

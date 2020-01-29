@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.models.game_models.SquareModel;
+import kz.almaty.boombrains.data.models.game_models.SquareModel;
 
 public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.SquareViewHolder> {
 
