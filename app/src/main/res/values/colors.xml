@@ -92,7 +92,7 @@
     <!-- Color words colors-->
     <color name="pinkColor">#FD9DFF</color>
     <color name="violetColor">#9100B6</color>
-    <color name="orangeColor">#FFE604</color>
+    <color name="orangeColor">#FFA500</color>
     <color name="brownColor">#C47C29</color>
     <color name="greenColor">#17E006</color>
     <color name="blackColor">#000000</color>
@@ -114,5 +114,7 @@
     <color name="requestedEmails">#838383</color>
     <color name="profEditColors">#AAAAAA</color>
     <color name="profInfoColor">#3D3D3D</color>
+    <color name="duel_color">#F63871</color>
+    <color name="potion_text">#6D6D6D</color>
 
 </resources>

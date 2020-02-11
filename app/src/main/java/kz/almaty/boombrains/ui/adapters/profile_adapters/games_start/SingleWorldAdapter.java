@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.data.models.rating_model.WorldRecord;
 
 public class SingleWorldAdapter extends RecyclerView.Adapter<SingleWorldAdapter.SingleWorldViewHolder> {

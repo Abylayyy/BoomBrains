@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 
 public class HowToPlayActivity extends AppCompatActivity {
 

@@ -1,14 +1,34 @@
 package kz.almaty.boombrains.data.models.profile_model;
 
+import android.content.Intent;
+
 public class PotionModel {
     private String name;
+    private String desc;
     private Integer image;
-    private boolean enabled;
+    private Integer cost;
 
-    public PotionModel(String name, Integer image, boolean enabled) {
+    public PotionModel(String name, Integer image, String desc, Integer cost) {
         this.name = name;
         this.image = image;
-        this.enabled = enabled;
+        this.desc = desc;
+        this.cost = cost;
+    }
+
+    public Integer getCost() {
+        return cost;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getName() {
@@ -25,13 +45,5 @@ public class PotionModel {
 
     public void setImage(Integer image) {
         this.image = image;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }

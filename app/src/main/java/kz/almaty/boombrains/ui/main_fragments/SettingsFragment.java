@@ -26,9 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
-import kz.almaty.boombrains.util.helpers.StatefulFragment;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.list_helper.StatefulFragment;
 import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutView;
 import kz.almaty.boombrains.viewmodel.auth_view_models.logout_view_model.LogoutViewModel;
 

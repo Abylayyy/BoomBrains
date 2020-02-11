@@ -23,10 +23,10 @@ import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.util.files.RememberWordsEn;
 import kz.almaty.boombrains.util.files.RememberWordsKz;
 import kz.almaty.boombrains.util.files.RememberWordsRu;
-import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
-import kz.almaty.boombrains.util.helpers.SpaceItemDecoration;
+import kz.almaty.boombrains.util.helpers.dialog_helper.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.list_helper.SpaceItemDecoration;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")

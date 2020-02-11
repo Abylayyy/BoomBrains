@@ -18,9 +18,9 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.util.helpers.DialogHelperActivity;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.dialog_helper.DialogHelperActivity;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.ui.main_pages.FinishedActivity;
 
 @SuppressLint("SetTextI18n")

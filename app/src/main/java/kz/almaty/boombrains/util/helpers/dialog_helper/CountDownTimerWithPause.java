@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.util.helpers;
+package kz.almaty.boombrains.util.helpers.dialog_helper;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;

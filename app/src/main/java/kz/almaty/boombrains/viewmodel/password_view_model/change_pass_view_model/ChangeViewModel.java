@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import org.jetbrains.annotations.NotNull;
 
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.data.models.auth_models.ChangePassModel;
 import kz.almaty.boombrains.data.services.APIService;
 import kz.almaty.boombrains.data.services.RetrofitClass;

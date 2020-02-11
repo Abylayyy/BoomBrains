@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.util.helpers;
+package kz.almaty.boombrains.util.helpers.list_helper;
 
 import android.graphics.Rect;
 import android.view.View;

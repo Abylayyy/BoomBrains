@@ -54,16 +54,14 @@ public class PotionAdapter extends RecyclerView.Adapter<PotionAdapter.PotionView
         void bind(PotionModel model) {
             nameTxt.setText(model.getName());
             img.setImageResource(model.getImage());
-
-            if (!model.isEnabled()) {
-                img.setColorFilter(Color.parseColor("#C4C4C4"), android.graphics.PorterDuff.Mode.MULTIPLY);
-            }
-
             listener.setPotionSize(itemView);
+
+            itemView.setOnClickListener(v -> listener.onPotionClicked(model));
         }
     }
 
     public interface PotionListener {
         void setPotionSize(View view);
+        void onPotionClicked(PotionModel model);
     }
 }

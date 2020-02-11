@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -48,8 +50,8 @@ import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.FriendsAd
 import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.PotionAdapter;
 import kz.almaty.boombrains.ui.adapters.profile_adapters.profile_start.WorldAdapter;
 import kz.almaty.boombrains.util.files.RememberWordsRu;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.data.models.profile_model.PotionModel;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
 import kz.almaty.boombrains.data.models.add_friend_models.RequestListModel;
@@ -118,14 +120,16 @@ public class ProfileFragment extends Fragment implements
     @BindView(R.id.moreTxt) TextView moreTxt;
 
     // dialog views
+    private ImageView potionImg;
     private RecyclerView requestRecycler;
     private EditText userDialogEdit;
-    private Button addDialogBtn;
+    private Button addDialogBtn, buyPotion;
     private TextView errorTxt;
-    private Dialog dialogAdd, dialogList;
+    private Dialog dialogAdd, dialogList, dialogPotion;
     private SpinKitView progress;
-    private ConstraintLayout closeAdd, closeList;
-    private TextView emptyTxt;
+    private ConstraintLayout closeAdd, closeList, closePotion;
+    private TextView emptyTxt, potionCount, potionInfo, costTxt;
+    private CardView minusBtn, plusBtn;
 
     private MainActivity mActivity;
     private ProfileCallBack mCallback;
@@ -171,6 +175,7 @@ public class ProfileFragment extends Fragment implements
         profileRatingViewModel = ViewModelProviders.of(this).get(ProfileRatingViewModel.class);
         loadAdFriendDialog();
         loadListDialog();
+        loadPotionDialog();
 
         addFriendViewModel = ViewModelProviders.of(this).get(AddFriendViewModel.class);
         acceptViewModel = ViewModelProviders.of(this).get(AcceptViewModel.class);
@@ -266,6 +271,19 @@ public class ProfileFragment extends Fragment implements
         dialogList.setCanceledOnTouchOutside(true);
     }
 
+    private void loadPotionDialog() {
+        dialogPotion = new Dialog(getActivity(), R.style.dialogTheme);
+        dialogPotion.setContentView(R.layout.potion_view);
+        potionCount = dialogPotion.findViewById(R.id.countPotion);
+        closePotion = dialogPotion.findViewById(R.id.closeConst);
+        minusBtn = dialogPotion.findViewById(R.id.minusBtn);
+        plusBtn = dialogPotion.findViewById(R.id.plusBtn);
+        potionInfo = dialogPotion.findViewById(R.id.potionDesc);
+        buyPotion = dialogPotion.findViewById(R.id.buyBtn);
+        potionImg = dialogPotion.findViewById(R.id.potionImg);
+        costTxt = dialogPotion.findViewById(R.id.costTxt);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -358,10 +376,10 @@ public class ProfileFragment extends Fragment implements
 
     private List<PotionModel> getPotionList() {
         return new ArrayList<>(Arrays.asList(
-                new PotionModel("0 PC", R.drawable.potion_10sec, false),
-                new PotionModel("0 PC", R.drawable.potion_life, true),
-                new PotionModel("0 PC", R.drawable.potion_x2, false),
-                new PotionModel("0 PC", R.drawable.potion_x5, true)
+                new PotionModel("0 PC", R.drawable.potion_10sec, "Adds +10 seconds", 60),
+                new PotionModel("0 PC", R.drawable.potion_life, "Adds an extra life", 30),
+                new PotionModel("0 PC", R.drawable.potion_x2, "Doubles points", 100),
+                new PotionModel("0 PC", R.drawable.potion_x5, "5 times increases points", 400)
         ));
     }
 
@@ -438,6 +456,59 @@ public class ProfileFragment extends Fragment implements
         potionSize(view);
     }
 
+    @Override
+    public void onPotionClicked(PotionModel model) {
+        dialogPotion.show();
+        setPotionInfo(model);
+        potionActions();
+    }
+
+    private void setPotionInfo(PotionModel model) {
+        potionImg.setImageResource(model.getImage());
+        potionInfo.setText(model.getDesc());
+        costTxt.setText(model.getCost() + "");
+    }
+
+    private void potionActions() {
+
+        buyPotion.setOnClickListener(v -> {
+            dialogPotion.dismiss();
+            potionCount.setText("0");
+        });
+
+        int cost = Integer.parseInt(costTxt.getText().toString());
+        final int[] temp = {cost};
+
+        minusBtn.setOnClickListener(v -> {
+            int count = Integer.parseInt(potionCount.getText().toString());
+            if (count > 0) {
+                count --;
+            }
+            if (temp[0] > cost) {
+                temp[0] -= cost;
+            }
+            costTxt.setText(temp[0] + "");
+            potionCount.setText("" + count);
+        });
+
+        plusBtn.setOnClickListener(v -> {
+            int count = Integer.parseInt(potionCount.getText().toString());
+            if (cost * (count + 1) <= SharedPrefManager.getCoin(getActivity())) {
+                count ++;
+                temp[0] = cost * count;
+            } else {
+                SharedUpdate.showToast(4, "You don't have enough coin!", getActivity());
+            }
+            costTxt.setText(temp[0] + "");
+            potionCount.setText("" + count);
+        });
+
+        closePotion.setOnClickListener(v -> {
+            dialogPotion.dismiss();
+            potionCount.setText("0");
+        });
+    }
+
     /* Friend and world adapter listeners */
     @Override
     public void setFriendSize(View view) { setFriendItems(view, friendRecycler); }
@@ -459,7 +530,7 @@ public class ProfileFragment extends Fragment implements
 
     @Override
     public void setWorldClicked(ProfileWorldRecord record) {
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("username", record.getUsername());
         bundle.putInt("record", record.getTotalRecord());
         bundle.putString("world", "world");

@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.util.helpers;
+package kz.almaty.boombrains.util.helpers.preference;
 
 import android.app.Activity;
 import android.content.Context;

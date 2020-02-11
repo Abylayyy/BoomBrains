@@ -139,7 +139,10 @@
             tools:targetApi="n" />
 
         <activity
-            android:name=".ui.main_pages.MainActivity" />
+            android:name=".ui.main_pages.MainActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
 
         <activity
             android:name=".ui.main_pages.SplashScreen"
@@ -152,6 +155,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.game_pages.duel.DuelActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait"
+            tools:targetApi="n" />
 
         <meta-data
             android:name="preloaded_fonts"

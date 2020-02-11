@@ -32,10 +32,11 @@ import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleFriendAdapter;
 import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleWorldAdapter;
+import kz.almaty.boombrains.ui.game_pages.duel.DuelActivity;
 import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
-import kz.almaty.boombrains.util.helpers.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.data.models.rating_model.WorldRecord;
 import kz.almaty.boombrains.data.models.rating_model.WorldRecordResponse;
 import kz.almaty.boombrains.data.models.records_model.RecordResponse;
@@ -463,7 +464,10 @@ public class GamesStartActivity extends AppCompatActivity implements WorldRating
     }
 
     @Override
-    public void setFriendClicked(WorldRecord record) { }
+    public void setFriendClicked(WorldRecord record) {
+        Intent intent = new Intent(this, DuelActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void setWorldSize(View view) {

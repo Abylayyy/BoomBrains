@@ -1,4 +1,4 @@
-package kz.almaty.boombrains.util.helpers;
+package kz.almaty.boombrains.util.helpers.dialog_helper;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -24,6 +24,7 @@ import es.dmoral.toasty.Toasty;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 
 public abstract class DialogHelperActivity extends AppCompatActivity {
 
