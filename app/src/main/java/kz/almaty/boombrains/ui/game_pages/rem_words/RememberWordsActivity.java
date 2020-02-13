@@ -49,7 +49,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     @BindView(R.id.nextNumShulte) TextView nextNum;
     @BindView(R.id.pauseBtn) ConstraintLayout pauseImg;
     @BindView(R.id.shulteRecycler) RecyclerView shulteRecycler;
-    @BindView(R.id.remConst) ConstraintLayout background;
+    @BindView(R.id.remCont) ConstraintLayout background;
     @BindView(R.id.slovo_teksts) TextView slovo;
     @BindView(R.id.wordConst) ConstraintLayout wordLayout;
 
@@ -86,7 +86,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         subList = new ArrayList<>();
         setupList(lang);
 
-        wordLayout.getLayoutParams().height = height() / 3;
+        wordLayout.getLayoutParams().height = (int) (height() / 3.8);
 
         pauseImg.setOnClickListener(v -> showPauseDialog());
         setRecyclerItemFirst();

@@ -95,7 +95,7 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         ));
 
         numbersList = new ArrayList<>();
-        wordLayout.getLayoutParams().height = height() / 4;
+        wordLayout.getLayoutParams().height = (int) (height() / 4.5);
         setRecyclerItem();
 
         pauseImg.setOnClickListener(v -> showPauseDialog());

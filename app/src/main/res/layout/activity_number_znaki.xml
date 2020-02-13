@@ -18,17 +18,59 @@
         app:layout_constraintTop_toBottomOf="@+id/findNumContainer">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/potion_menu_back"
+            android:elevation="3dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <ImageView
+                android:id="@+id/potionLife"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/potion_life" />
+
+            <ImageView
+                android:id="@+id/potionTen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/potion_10sec" />
+
+            <ImageView
+                android:id="@+id/potionX2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/potion_x2" />
+
+            <ImageView
+                android:id="@+id/potionX5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/potion_x5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="8dp"
             android:orientation="vertical"
             android:weightSum="2"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,13 +85,13 @@
 
                 <TextView
                     android:id="@+id/button1"
-                    android:elevation="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|fill"
                     android:layout_margin="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/find_item_back"
+                    android:elevation="1dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="1"
@@ -59,13 +101,13 @@
 
                 <TextView
                     android:id="@+id/button2"
-                    android:elevation="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|fill"
                     android:layout_margin="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/find_item_back"
+                    android:elevation="1dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="2"
@@ -84,13 +126,13 @@
 
                 <TextView
                     android:id="@+id/button3"
-                    android:elevation="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|fill"
                     android:layout_margin="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/find_item_back"
+                    android:elevation="1dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="3"
@@ -100,13 +142,13 @@
 
                 <TextView
                     android:id="@+id/button4"
-                    android:elevation="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|fill"
                     android:layout_margin="2.5dp"
                     android:layout_weight="1"
                     android:background="@drawable/find_item_back"
+                    android:elevation="1dp"
                     android:fontFamily="@font/roboto"
                     android:gravity="center"
                     android:text="4"

@@ -73,7 +73,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         setupLifeDialog(this, R.color.topFind);
         loadAddForLife();
 
-        container.getLayoutParams().height = height() / 4;
+        container.getLayoutParams().height = (int) (height() / 4.5);
     }
 
     private int height() {

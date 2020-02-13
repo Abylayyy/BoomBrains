@@ -128,7 +128,7 @@ public class ProfileFragment extends Fragment implements
     private Dialog dialogAdd, dialogList, dialogPotion;
     private SpinKitView progress;
     private ConstraintLayout closeAdd, closeList, closePotion;
-    private TextView emptyTxt, potionCount, potionInfo, costTxt;
+    private TextView emptyTxt, potionCount, potionInfo, costTxt, cointTxt;
     private CardView minusBtn, plusBtn;
 
     private MainActivity mActivity;
@@ -282,6 +282,7 @@ public class ProfileFragment extends Fragment implements
         buyPotion = dialogPotion.findViewById(R.id.buyBtn);
         potionImg = dialogPotion.findViewById(R.id.potionImg);
         costTxt = dialogPotion.findViewById(R.id.costTxt);
+        cointTxt = dialogPotion.findViewById(R.id.coinTxt);
     }
 
     @Override
@@ -467,6 +468,7 @@ public class ProfileFragment extends Fragment implements
         potionImg.setImageResource(model.getImage());
         potionInfo.setText(model.getDesc());
         costTxt.setText(model.getCost() + "");
+        cointTxt.setText(SharedPrefManager.getCoin(getActivity()) + "");
     }
 
     private void potionActions() {

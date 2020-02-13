@@ -78,7 +78,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
 
         setTextSizes(20);
         generate(2);
-        container.getLayoutParams().height = (int) (height("y") / 2.8);
+        container.getLayoutParams().height = (int) (height("y") / 3.5);
     }
 
     private int height(String type) {
