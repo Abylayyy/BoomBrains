@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toTopOf="@+id/textView32"
+        app:layout_constraintBottom_toTopOf="@+id/duelGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                 app:srcCompat="@drawable/duel_back" />
 
             <TextView
-                android:id="@+id/textView36"
+                android:id="@+id/oName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -68,12 +68,12 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView37"
+                app:layout_constraintBottom_toTopOf="@+id/oRecord"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
                 app:layout_constraintTop_toBottomOf="@+id/duelTxt" />
 
             <TextView
-                android:id="@+id/textView38"
+                android:id="@+id/oReady"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -85,11 +85,11 @@
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/boyImg"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
-                app:layout_constraintTop_toBottomOf="@+id/textView37"
+                app:layout_constraintTop_toBottomOf="@+id/oRecord"
                 tools:ignore="SmallSp" />
 
             <TextView
-                android:id="@+id/textView37"
+                android:id="@+id/oRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -98,9 +98,9 @@
                 android:fontFamily="@font/roboto"
                 android:text="Record: 4300"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/textView38"
+                app:layout_constraintBottom_toTopOf="@+id/oReady"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
-                app:layout_constraintTop_toBottomOf="@+id/textView36" />
+                app:layout_constraintTop_toBottomOf="@+id/oName" />
 
             <View
                 android:id="@+id/view22"
@@ -175,7 +175,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/view22" />
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/myName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -186,12 +186,12 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView34"
+                app:layout_constraintBottom_toTopOf="@+id/myRecord"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
                 app:layout_constraintTop_toTopOf="@+id/girlImg" />
 
             <TextView
-                android:id="@+id/textView34"
+                android:id="@+id/myRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -199,12 +199,12 @@
                 android:fontFamily="@font/roboto"
                 android:text="Record: 4000"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/textView35"
+                app:layout_constraintBottom_toTopOf="@+id/myReady"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
-                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+                app:layout_constraintTop_toBottomOf="@+id/myName" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/myReady"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -216,7 +216,7 @@
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/girlImg"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
-                app:layout_constraintTop_toBottomOf="@+id/textView34"
+                app:layout_constraintTop_toBottomOf="@+id/myRecord"
                 tools:ignore="SmallSp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -242,7 +242,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
 
     <TextView
-        android:id="@+id/textView32"
+        android:id="@+id/duelGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/chewy"

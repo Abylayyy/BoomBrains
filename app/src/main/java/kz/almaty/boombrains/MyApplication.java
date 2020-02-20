@@ -9,7 +9,7 @@ import io.socket.client.Socket;
 
 public class MyApplication extends Application {
 
-    public static final String URL = "http://192.168.1.220:3000";
+    public static final String URL = "http://192.168.1.220:3000/online:battle";
 
     private Socket mSocket;
     {

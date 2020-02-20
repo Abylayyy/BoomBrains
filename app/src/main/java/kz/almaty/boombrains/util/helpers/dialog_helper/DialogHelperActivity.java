@@ -25,8 +25,9 @@ import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.ui.main_pages.MainActivity;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 
-public abstract class DialogHelperActivity extends AppCompatActivity {
+public abstract class DialogHelperActivity extends SocketManager {
 
     TextView returnGame, restart, sound, exit, contentTxt;
     LinearLayout pauseBack;

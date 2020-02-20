@@ -15,39 +15,34 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.github.ybq.android.spinkit.SpinKitView;
-
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
-import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleFriendAdapter;
-import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleWorldAdapter;
-import kz.almaty.boombrains.ui.game_pages.duel.DuelActivity;
-import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel;
-import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
-import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
-import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.data.models.rating_model.WorldRecord;
 import kz.almaty.boombrains.data.models.rating_model.WorldRecordResponse;
 import kz.almaty.boombrains.data.models.records_model.RecordResponse;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleFriendAdapter;
+import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleWorldAdapter;
+import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel;
+import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.ui.sign_pages.login_pages.MainLoginActivity;
+import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
+import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.add_view_model.AddFriendView;
 import kz.almaty.boombrains.viewmodel.profile_view_model.profile_add_friends.add_view_model.AddFriendViewModel;
 import kz.almaty.boombrains.viewmodel.rating_view_model.WorldRatingView;
 import kz.almaty.boombrains.viewmodel.rating_view_model.WorldRatingViewModel;
 
 @SuppressLint("SetTextI18n")
-public class GamesStartActivity extends AppCompatActivity implements WorldRatingView, AddFriendView,
+public class GamesStartActivity extends SocketManager implements WorldRatingView, AddFriendView,
         SingleFriendAdapter.SingleFriendsListener, SingleWorldAdapter.SingleWorldListener {
 
     @BindView(R.id.name_of_game) TextView nameOfGame;
@@ -465,8 +460,7 @@ public class GamesStartActivity extends AppCompatActivity implements WorldRating
 
     @Override
     public void setFriendClicked(WorldRecord record) {
-        Intent intent = new Intent(this, DuelActivity.class);
-        startActivity(intent);
+        showChallengeDialog(record.getUsername(), getGameName(position));
     }
 
     @Override

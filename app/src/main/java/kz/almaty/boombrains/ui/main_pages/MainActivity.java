@@ -1,6 +1,8 @@
 package kz.almaty.boombrains.ui.main_pages;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -41,9 +43,9 @@ import kz.almaty.boombrains.ui.main_fragments.profile_pages.FriendDetailsFragmen
 import kz.almaty.boombrains.ui.main_fragments.profile_pages.ProfileEditFragment;
 import kz.almaty.boombrains.ui.main_fragments.profile_pages.ProfileFragment;
 import kz.almaty.boombrains.ui.main_fragments.SettingsFragment;
+import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class MainActivity extends AppCompatActivity implements MainFragment.MainCallBack,
+public class MainActivity extends SocketManager implements MainFragment.MainCallBack,
         ProfileFragment.ProfileCallBack, ProfileEditFragment.ProfEditCallback, FriendDetailsFragment.FriendDetailsCallback {
 
     @BindView(R.id.mainBtn) ImageView main;
@@ -68,10 +70,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        MyApplication application = (MyApplication) getApplication();
-        mSocket = application.getSocket();
-
         connectSocket();
 
 
@@ -81,13 +79,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         }
 
         loadLocale();
-
-        dialog = new Dialog(this, R.style.mytheme);
-        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-        dialog.setContentView(R.layout.rating_layout);
-        rateTxt = dialog.findViewById(R.id.rate_app);
-        cancelTxt = dialog.findViewById(R.id.cancel_rate);
-        rateStars = dialog.findViewById(R.id.rateStarConst);
+        loadRateDialog();
 
         loadGoogleAd();
         showRateAppDialog();
@@ -95,14 +87,16 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         replaceFragment(new MainFragment(), "main_fragment", false);
     }
 
-    private void connectSocket() {
-        mSocket.on(Socket.EVENT_CONNECT, onConnect);
-        mSocket.on(Socket.EVENT_RECONNECT, onReconnect);
-        mSocket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.connect();
+    private void loadRateDialog() {
+        dialog = new Dialog(this, R.style.mytheme);
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+        dialog.setContentView(R.layout.rating_layout);
+        rateTxt = dialog.findViewById(R.id.rate_app);
+        cancelTxt = dialog.findViewById(R.id.cancel_rate);
+        rateStars = dialog.findViewById(R.id.rateStarConst);
     }
+
+
 
     private void loadGoogleAd() {
         MobileAds.initialize(this, initializationStatus -> Log.d("INITIALIZATION::", "COMPLETED"));
@@ -238,15 +232,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
         destroyConnection();
     }
 
-    private void destroyConnection() {
-        mSocket.disconnect();
-        mSocket.off(Socket.EVENT_RECONNECT, onReconnect);
-        mSocket.off(Socket.EVENT_CONNECT, onConnect);
-        mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
-        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-    }
-
     @Override
     public void onBackPressed() {
         setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
@@ -292,147 +277,4 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Main
     public void onFriendError() {
 
     }
-
-    private Emitter.Listener onConnect = args -> runOnUiThread(() -> {
-        if(!isConnected) {
-            mSocket.emit("add:user", "Hello, my friend");
-            SharedUpdate.showToast(1, "Connected!!!", this);
-            isConnected = true;
-        }
-    });
-
-    private Emitter.Listener onDisconnect = args -> runOnUiThread(() -> {
-        SharedUpdate.showToast(0, "Disconnected!!!", this);
-        isConnected = false;
-    });
-
-    private Emitter.Listener onReconnect = args -> runOnUiThread(() -> {
-        SharedUpdate.showToast(1,"Reconnected!", this);
-        isConnected = true;
-    });
-
-    private Emitter.Listener onConnectError = args -> runOnUiThread(() -> SharedUpdate.showToast(2, "Error with connection!", this));
-
-    /*private Emitter.Listener onNewMessage = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String username;
-                    String message;
-                    try {
-                        username = data.getString("username");
-                        message = data.getString("message");
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                        return;
-                    }
-
-                    removeTyping(username);
-                    addMessage(username, message);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onUserJoined = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String username;
-                    int numUsers;
-                    try {
-                        username = data.getString("username");
-                        numUsers = data.getInt("numUsers");
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                        return;
-                    }
-
-                    addLog(getResources().getString(R.string.message_user_joined, username));
-                    addParticipantsLog(numUsers);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onUserLeft = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String username;
-                    int numUsers;
-                    try {
-                        username = data.getString("username");
-                        numUsers = data.getInt("numUsers");
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                        return;
-                    }
-
-                    addLog(getResources().getString(R.string.message_user_left, username));
-                    addParticipantsLog(numUsers);
-                    removeTyping(username);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onTyping = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String username;
-                    try {
-                        username = data.getString("username");
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                        return;
-                    }
-                    addTyping(username);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onStopTyping = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    String username;
-                    try {
-                        username = data.getString("username");
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                        return;
-                    }
-                    removeTyping(username);
-                }
-            });
-        }
-    };
-
-    private Runnable onTypingTimeout = new Runnable() {
-        @Override
-        public void run() {
-            if (!mTyping) return;
-
-            mTyping = false;
-            mSocket.emit("stop typing");
-        }
-    };*/
 }

@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".ui.sign_pages.change_user.ChangeUserActivity"
             android:resizeableActivity="false"
             android:screenOrientation="portrait"
