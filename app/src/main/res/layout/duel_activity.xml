@@ -57,27 +57,25 @@
                 app:srcCompat="@drawable/duel_back" />
 
             <TextView
-                android:id="@+id/oName"
+                android:id="@+id/myName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="John Adams"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/oRecord"
+                app:layout_constraintBottom_toTopOf="@+id/myRecord"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
                 app:layout_constraintTop_toBottomOf="@+id/duelTxt" />
 
             <TextView
-                android:id="@+id/oReady"
+                android:id="@+id/myReady"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="Ready"
@@ -85,33 +83,21 @@
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/boyImg"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
-                app:layout_constraintTop_toBottomOf="@+id/oRecord"
+                app:layout_constraintTop_toBottomOf="@+id/myRecord"
                 tools:ignore="SmallSp" />
 
             <TextView
-                android:id="@+id/oRecord"
+                android:id="@+id/myRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="Record: 4300"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/oReady"
+                app:layout_constraintBottom_toTopOf="@+id/myReady"
                 app:layout_constraintEnd_toStartOf="@+id/boyImg"
-                app:layout_constraintTop_toBottomOf="@+id/oName" />
-
-            <View
-                android:id="@+id/view22"
-                android:layout_width="1500dp"
-                android:layout_height="20dp"
-                android:background="#FFFFFF"
-                android:rotation="-15"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView22"
-                app:layout_constraintEnd_toEndOf="@+id/imageView22"
-                app:layout_constraintStart_toStartOf="@+id/imageView22"
-                app:layout_constraintTop_toTopOf="@+id/imageView22" />
+                app:layout_constraintTop_toBottomOf="@+id/myName" />
 
             <com.iambedant.text.OutlineTextView
                 android:id="@+id/duelTxt"
@@ -123,10 +109,10 @@
                 android:textColor="@color/duel_color"
                 android:textSize="48sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/view22"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView22"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/imageView22"
-                app:layout_constraintTop_toTopOf="@+id/view22"
+                app:layout_constraintTop_toTopOf="@+id/imageView22"
                 app:outlineColor="#FFFFFF"
                 app:outlineWidth="3" />
 
@@ -154,7 +140,6 @@
                 android:adjustViewBounds="true"
                 app:civ_border_color="#FFF"
                 app:civ_circle_color="#EEEEEE"
-                app:layout_constraintBottom_toBottomOf="@+id/view22"
                 app:layout_constraintEnd_toEndOf="@id/imageView22"
                 app:layout_constraintHorizontal_bias="0.08"
                 app:layout_constraintStart_toStartOf="@id/imageView22"
@@ -171,44 +156,40 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageView22"
                 app:layout_constraintEnd_toEndOf="@id/imageView22"
                 app:layout_constraintHorizontal_bias="0.92"
-                app:layout_constraintStart_toStartOf="@id/imageView22"
-                app:layout_constraintTop_toBottomOf="@+id/view22" />
+                app:layout_constraintStart_toStartOf="@id/imageView22" />
 
             <TextView
-                android:id="@+id/myName"
+                android:id="@+id/oName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="Emma Watson"
                 android:textColor="@color/colorWhite"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/myRecord"
+                app:layout_constraintBottom_toTopOf="@+id/oRecord"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
                 app:layout_constraintTop_toTopOf="@+id/girlImg" />
 
             <TextView
-                android:id="@+id/myRecord"
+                android:id="@+id/oRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="Record: 4000"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toTopOf="@+id/myReady"
+                app:layout_constraintBottom_toTopOf="@+id/oReady"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
-                app:layout_constraintTop_toBottomOf="@+id/myName" />
+                app:layout_constraintTop_toBottomOf="@+id/oName" />
 
             <TextView
-                android:id="@+id/myReady"
+                android:id="@+id/oReady"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="Ready"
@@ -216,7 +197,7 @@
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="@+id/girlImg"
                 app:layout_constraintStart_toEndOf="@+id/girlImg"
-                app:layout_constraintTop_toBottomOf="@+id/myRecord"
+                app:layout_constraintTop_toBottomOf="@+id/oRecord"
                 tools:ignore="SmallSp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

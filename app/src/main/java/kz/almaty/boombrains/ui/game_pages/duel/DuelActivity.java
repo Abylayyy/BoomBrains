@@ -53,7 +53,7 @@ public class DuelActivity extends SocketManager {
         setMyInfo();
         setHisInfo();
 
-        duelBtn.setOnClickListener(v -> readyAction(SharedPrefManager.getUserName(this), true));
+        duelBtn.setOnClickListener(v -> readyAction());
     }
 
     private void setMyInfo() {
@@ -88,7 +88,6 @@ public class DuelActivity extends SocketManager {
 
     @Override
     public void setReadyUpdate(boolean rec, boolean req) {
-        super.setReadyUpdate(rec, req);
         if (rec) {
             oReadyTv.setText("Ready");
         } else {

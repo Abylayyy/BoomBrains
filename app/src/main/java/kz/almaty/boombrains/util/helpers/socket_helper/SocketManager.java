@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -225,9 +226,14 @@ public abstract class SocketManager extends AppCompatActivity {
 
     public void challengeUser(String username, String gameName) {
         JSONObject object = new JSONObject();
+        JSONArray arr = new JSONArray();
+        arr.put(gameName);
+
         try {
             object.put("recipientUsername", username);
-            object.put("gameName", gameName);
+            object.put("gameNameList", arr);
+            object.put("rounds", 1);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -235,16 +241,8 @@ public abstract class SocketManager extends AppCompatActivity {
         mSocket.emit("challenge-player", object);
     }
 
-    public void readyAction(String username, boolean ready) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("username", username);
-            object.put("ready", ready);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mSocket.emit("ready-set", object);
+    public void readyAction() {
+        mSocket.emit("ready-set");
     }
 
     @Override
