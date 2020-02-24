@@ -36,6 +36,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import kz.almaty.boombrains.MyApplication;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.ui.main_fragments.DuelFragment;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.ui.main_fragments.MainFragment;
@@ -48,11 +49,12 @@ import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 public class MainActivity extends SocketManager implements MainFragment.MainCallBack,
         ProfileFragment.ProfileCallBack, ProfileEditFragment.ProfEditCallback, FriendDetailsFragment.FriendDetailsCallback {
 
-    @BindView(R.id.mainBtn) ImageView main;
     @BindView(R.id.profile) RelativeLayout profile;
     @BindView(R.id.settings) RelativeLayout settings;
     @BindView(R.id.prof_img) ImageView profImg;
     @BindView(R.id.setting_img) ImageView settingImg;
+    @BindView(R.id.mainBtn) ImageView mainImg;
+    @BindView(R.id.duelMain) ImageView duelImg;
 
     Fragment currentFragment;
     private Dialog dialog;
@@ -61,8 +63,6 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     private InterstitialAd mInterstitialAd;
-    private Socket mSocket;
-    private boolean isConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +70,9 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        connectSocket();
-
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
 
         if (!SharedPrefManager.getIsFirstUser(getApplication())) {
             SharedPrefManager.clearSettings(getApplication());
@@ -173,30 +174,38 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
 
     public void onclick(View view) {
         switch (view.getId()) {
-            case R.id.mainBtn: {
-                setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
+            case R.id.mainRel: {
+                setColorsWhenPressed(R.color.disabled, R.color.disabled, R.drawable.duel_off, R.drawable.brain_main);
                 currentFragment = new MainFragment();
                 replaceFragment(currentFragment, "main_fragment", false);
                 break;
             }
             case R.id.settings: {
-                setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.pressed));
+                setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
                 currentFragment = new SettingsFragment();
                 replaceFragment(currentFragment, "settings_fragment", true);
                 break;
             }
             case R.id.profile: {
-                setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+                setColorsWhenPressed(R.color.pressed, R.color.disabled, R.drawable.duel_off, R.drawable.brain_main_off);
                 currentFragment = new ProfileFragment();
                 replaceFragment(currentFragment, "profile_fragment", true);
+                break;
+            }
+            case R.id.duelRel: {
+                setColorsWhenPressed(R.color.disabled, R.color.disabled, R.drawable.duel_icon, R.drawable.brain_main_off);
+                currentFragment = new DuelFragment();
+                replaceFragment(currentFragment, "duel_fragment", true);
                 break;
             }
         }
     }
 
-    private void setColorsWhenPressed(int prof, int setting) {
-        profImg.setColorFilter(prof);
-        settingImg.setColorFilter(setting);
+    private void setColorsWhenPressed(int prof, int setting, int duel, int main) {
+        profImg.setColorFilter(getResources().getColor(prof));
+        settingImg.setColorFilter(getResources().getColor(setting));
+        duelImg.setImageResource(duel);
+        mainImg.setImageResource(main);
     }
 
     private void showRateAppDialog() {
@@ -234,7 +243,7 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
 
     @Override
     public void onBackPressed() {
-        setColorsWhenPressed(getResources().getColor(R.color.disabled), getResources().getColor(R.color.disabled));
+        setColorsWhenPressed(R.color.disabled, R.color.disabled, R.drawable.duel_off, R.drawable.brain_main);
         super.onBackPressed();
     }
 
@@ -250,7 +259,7 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
 
     @Override
     public void recordLoaded() {
-        setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+        setColorsWhenPressed(R.color.pressed, R.color.disabled, R.drawable.duel_off, R.drawable.brain_main_off);
     }
 
     @Override
@@ -270,7 +279,7 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
 
     @Override
     public void onFriendSuccess() {
-        setColorsWhenPressed(getResources().getColor(R.color.pressed), getResources().getColor(R.color.disabled));
+        setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
     }
 
     @Override

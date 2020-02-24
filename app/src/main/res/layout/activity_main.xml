@@ -16,16 +16,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="lollipop" />
+        tools:targetApi="lollipop" >
+
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
         android:background="@drawable/bottom_bar_back"
         android:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,26 +34,55 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:targetApi="lollipop">
 
-        <ImageView
-            android:id="@+id/mainBtn"
-            android:layout_width="36dp"
-            android:layout_height="33dp"
+        <RelativeLayout
+            android:id="@+id/mainRel"
+            android:layout_width="84dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:onClick="onclick"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/duelRel"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/profile"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/mainBtn"
+                android:layout_width="25dp"
+                android:layout_height="23dp"
+                android:tintMode="multiply"
+                app:srcCompat="@drawable/brain_main_off" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/duelRel"
+            android:layout_width="84dp"
+            android:layout_height="40dp"
+            android:gravity="center"
             android:onClick="onclick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/profile"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/brain_main" />
+            app:layout_constraintStart_toEndOf="@+id/mainRel"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/duelMain"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                app:srcCompat="@drawable/duel_off" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/profile"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:onClick="onclick"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mainRel"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -73,10 +102,11 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:onClick="onclick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/duelRel"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 

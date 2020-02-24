@@ -117,4 +117,6 @@
     <color name="duel_color">#F63871</color>
     <color name="potion_text">#6D6D6D</color>
 
+    <color name="duelGameColor">#C8C8C8</color>
+
 </resources>

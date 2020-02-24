@@ -151,6 +151,9 @@
     <string name="potion">Inventory</string>
     <string name="Finish">Finish</string>
     <string name="LifeEnded">You made a mistake 3 times, you can restore one life by watching ads.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Color names -->
 
 </resources>

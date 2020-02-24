@@ -36,7 +36,10 @@ public abstract class SocketManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loadChallengeDialog();
         loadAcceptDialog();
-        initSocket();
+
+        if (SharedPrefManager.isNetworkOnline(this)) {
+            initSocket();
+        }
     }
 
     public void initSocket() {
@@ -239,6 +242,18 @@ public abstract class SocketManager extends AppCompatActivity {
         }
 
         mSocket.emit("challenge-player", object);
+    }
+
+    public void gameUpdate(int record) {
+        mSocket.emit("game-update", record);
+    }
+
+    public void roundEnded() {
+        mSocket.emit("game-round-end");
+    }
+
+    public void giveUp() {
+        mSocket.emit("give-up");
     }
 
     public void readyAction() {
