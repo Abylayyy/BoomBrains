@@ -48,9 +48,6 @@
     <!-- Ratings -->
     <string name="RatingMessage">Сіздің пікіріңіз біз үшін өте маңызды!</string>
     <string name="RateApp">Баға беру</string>
-    <string name="Easy">Оңай</string>
-    <string name="Medium">Орташа</string>
-    <string name="Hard">Қиын</string>
     <string name="Task">Тапсырмалар</string>
     <string name="RatingFriends">Достардың рейтингі</string>
     <string name="Rules">Ереже</string>

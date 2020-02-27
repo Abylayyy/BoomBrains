@@ -9,14 +9,65 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:fillViewport="true"
-        android:paddingBottom="50dp">
+        android:paddingBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/battleFriendConst"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/battle_game_back"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                android:padding="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/rounds"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView17">
+
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="1dp"
+                    android:background="@null"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/choose_friend" />
+
+                <TextView
+                    android:id="@+id/plusTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/roboto"
+                    android:text="+"
+                    android:textColor="@color/duelGameColor"
+                    android:textSize="38sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/spinner"
+                    app:layout_constraintStart_toStartOf="@+id/spinner"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView32"
@@ -36,8 +87,7 @@
                 android:id="@+id/rounds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="Rounds"
                 android:textColor="@color/profBoldColors"
@@ -47,21 +97,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/playerTxt" />
+                app:layout_constraintTop_toBottomOf="@+id/battleFriendConst" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/challengeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/add_draw"
                 android:backgroundTint="#CCCCCC"
+                android:onClick="onClick"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:text="Challenge"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -72,8 +124,10 @@
                 android:id="@+id/constraintLayout13"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                android:layout_marginTop="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/challengeBtn"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rounds">
 
@@ -85,7 +139,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/battle_game_back"
-                    android:elevation="1dp"
+                    android:elevation="2dp"
+                    android:onClick="onClick"
                     app:layout_constraintBottom_toTopOf="@+id/gameRel1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -104,8 +159,9 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/inLayout0"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="115dp"
                         android:background="@drawable/zapomni_draw"
+                        android:onClick="onClick"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -113,9 +169,9 @@
 
                         <ImageView
                             android:id="@+id/gameImg0"
-                            android:layout_width="165dp"
-                            android:layout_height="wrap_content"
-                            android:scaleType="centerInside"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -147,7 +203,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/battle_game_back"
-                    android:elevation="1dp"
+                    android:elevation="2dp"
+                    android:onClick="onClick"
                     app:layout_constraintBottom_toTopOf="@+id/gameRel2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -166,8 +223,9 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/inLayout1"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="115dp"
                         android:background="@drawable/zapomni_draw"
+                        android:onClick="onClick"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -210,7 +268,8 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/battle_game_back"
-                    android:elevation="1dp"
+                    android:elevation="2dp"
+                    android:onClick="onClick"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -229,8 +288,9 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/inLayout2"
                         android:layout_width="match_parent"
-                        android:layout_height="110dp"
+                        android:layout_height="115dp"
                         android:background="@drawable/zapomni_draw"
+                        android:onClick="onClick"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -276,38 +336,48 @@
                 app:layout_constraintTop_toTopOf="@+id/textView32" />
 
             <TextView
-                android:id="@+id/playerTxt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/battle_game_back"
-                android:elevation="1dp"
-                android:fontFamily="@font/roboto"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@color/duelGameColor"
-                android:textSize="33sp"
-                app:layout_constraintBottom_toTopOf="@+id/rounds"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-            <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/roboto"
                 android:text="Player"
                 android:textColor="@color/profBoldColors"
                 android:textSize="17sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/battleFriendConst"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.Large.Circle"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                app:SpinKit_Color="#9C9C9C"
+                app:layout_constraintBottom_toTopOf="@+id/waitTxt"
+                app:layout_constraintEnd_toEndOf="@+id/waitTxt"
+                app:layout_constraintStart_toStartOf="@+id/waitTxt"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13" />
+
+            <TextView
+                android:id="@+id/waitTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:text="Waiting for an opponent"
+                android:textColor="#9C9C9C"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/challengeBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/challengeBtn" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

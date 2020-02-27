@@ -47,10 +47,6 @@
     <string name="NumberZnakiInfo">Calcular es el juego en el que tienes que encontrar la solución a la operación matemática y pulsar sobre el botón correcto.</string>
     <string name="EquationInfo">Ecuación-establecer el orden de las operaciones aritméticas de la lista para que coincida con la respuesta. Usted necesita decidir lo más rápidamente posible con el fin de lograr un gran resultado.</string>
 
-    <string name="Easy">Fácil</string>
-    <string name="Medium">Medio</string>
-    <string name="Hard">Difícil</string>
-
     <string name="Task">Tareas</string>
     <string name="RatingFriends">Calificación de amigos</string>
     <string name="Rules">Reglas</string>

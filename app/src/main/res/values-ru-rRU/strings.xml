@@ -47,9 +47,7 @@
     <string name="EquationInfo">Уравнение - установите порядок арифметических операции из списка так, чтобы он соответствовал ответу. Нужно решить как можно быстрее чтобы достичь большого результата.</string>
     <string name="RatingMessage">Нам очень важно Ваше мнение!</string>
     <string name="RateApp">Оценить</string>
-    <string name="Easy">Легкий</string>
-    <string name="Medium">Средний</string>
-    <string name="Hard">Сложный</string>
+
     <string name="Task">Задания</string>
     <string name="RatingFriends">Рейтинг среди друзей</string>
     <string name="Rules">Правила</string>

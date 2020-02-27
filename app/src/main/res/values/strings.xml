@@ -48,9 +48,6 @@
     <string name="EquationInfo">Equation - set the order of arithmetic operations from the list so that it matches the answer. You need to decide as quickly as possible in order to achieve a great result.</string>
     <string name="RatingMessage">Your opinion is very important to us!</string>
     <string name="RateApp">Rate</string>
-    <string name="Easy">Easy</string>
-    <string name="Medium">Medium</string>
-    <string name="Hard">Hard</string>
     <string name="Task">Tasks</string>
     <string name="RatingFriends">Friends rating</string>
     <string name="Rules">Rules</string>
