@@ -29,6 +29,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.List;
 import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +48,8 @@ import kz.almaty.boombrains.ui.main_fragments.SettingsFragment;
 import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 
 public class MainActivity extends SocketManager implements MainFragment.MainCallBack,
-        ProfileFragment.ProfileCallBack, ProfileEditFragment.ProfEditCallback, FriendDetailsFragment.FriendDetailsCallback {
+        ProfileFragment.ProfileCallBack, ProfileEditFragment.ProfEditCallback,
+        FriendDetailsFragment.FriendDetailsCallback, DuelFragment.DuelCallBack {
 
     @BindView(R.id.profile) RelativeLayout profile;
     @BindView(R.id.settings) RelativeLayout settings;
@@ -86,6 +88,7 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
         showRateAppDialog();
 
         replaceFragment(new MainFragment(), "main_fragment", false);
+        mainImg.setImageResource(R.drawable.brain_main);
     }
 
     private void loadRateDialog() {
@@ -181,9 +184,10 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
                 break;
             }
             case R.id.settings: {
-                setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
+                rejectAction("maitabar");
+                /*setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
                 currentFragment = new SettingsFragment();
-                replaceFragment(currentFragment, "settings_fragment", true);
+                replaceFragment(currentFragment, "settings_fragment", true);*/
                 break;
             }
             case R.id.profile: {
@@ -248,14 +252,15 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
     }
 
     @Override
-    public void loaded() {
-
+    public void sendChallenge(String username, List<String> gameList) {
+        challengeUser(username, gameList);
     }
 
     @Override
-    public void failed() {
+    public void loaded() { }
 
-    }
+    @Override
+    public void failed() { }
 
     @Override
     public void recordLoaded() {
@@ -263,19 +268,13 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
     }
 
     @Override
-    public void loadingFailed() {
-
-    }
+    public void loadingFailed() { }
 
     @Override
-    public void onEditSuccess() {
-
-    }
+    public void onEditSuccess() { }
 
     @Override
-    public void onEditError() {
-
-    }
+    public void onEditError() { }
 
     @Override
     public void onFriendSuccess() {
@@ -283,7 +282,5 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
     }
 
     @Override
-    public void onFriendError() {
-
-    }
+    public void onFriendError() { }
 }

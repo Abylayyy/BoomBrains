@@ -26,25 +26,30 @@ import kz.almaty.boombrains.ui.game_pages.shulte_letter.ShulteLetterActivity;
 import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteActivity;
 import kz.almaty.boombrains.ui.game_pages.square_memory.SquareMemory;
 import kz.almaty.boombrains.ui.game_pages.zapomni_chislo_page.ZapomniChisloActivity;
+import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 
 import static android.view.animation.Animation.INFINITE;
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
 import static android.view.animation.Animation.REVERSE;
 
 @SuppressLint({"DefaultLocale", "SetTextI18n"})
-public class AreYouReadyActivity extends AppCompatActivity {
+public class AreYouReadyActivity extends SocketManager {
 
     @BindView(R.id.mainLayout) ConstraintLayout layout;
     @BindView(R.id.numberStart) TextView numStart;
-    String name;
+    String type = null;
+    String myName = "", oName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         int position = getIntent().getIntExtra("position", 0);
+        type = getIntent().getStringExtra("type");
+        myName = getIntent().getStringExtra("myName");
+        oName = getIntent().getStringExtra("oName");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_are_you_ready);
-        name = getIntent().getStringExtra("name");
 
         ButterKnife.bind(this);
         setBackgrounds(position);
@@ -62,9 +67,7 @@ public class AreYouReadyActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-
-    }
+    public void onBackPressed() { }
 
     public void startTimer(int millSec, TextView timeTxt, int position) {
         Hourglass countDownTimer = new Hourglass(millSec, 1000) {
@@ -103,7 +106,7 @@ public class AreYouReadyActivity extends AppCompatActivity {
 
     private void setGames(int position) {
         switch (position) {
-            case 0: { startShulteIntent(new Intent(this, ShulteActivity.class), position);break; }
+            case 0: { startIntent(new Intent(this, ShulteActivity.class), position);break; }
             case 1: { startIntent(new Intent(this, ZapomniChisloActivity.class), position);break; }
             case 2: { startIntent(new Intent(this, FindNumberActivity.class), position);break; }
             case 3: { startIntent(new Intent(this, NumberZnakiActivity.class), position);break; }
@@ -116,16 +119,13 @@ public class AreYouReadyActivity extends AppCompatActivity {
         }
     }
 
-    private void startShulteIntent(Intent intent, int position) {
-        intent.putExtra("position", position);
-        intent.putExtra("name", name);
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-    }
-
     private void startIntent(Intent intent, int position) {
         intent.putExtra("position", position);
+        intent.putExtra("type", type);
+        intent.putExtra("myName", myName);
+        intent.putExtra("oName", oName);
         startActivity(intent);
+        finish();
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 

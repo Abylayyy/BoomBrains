@@ -47,7 +47,6 @@ public class FinishedActivity extends AppCompatActivity implements NewRecordView
 
     private String lang;
     private int position;
-    private InterstitialAd mInterstitialAd;
     private String name;
     private String second;
 

@@ -70,6 +70,10 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         pauseImg.setOnClickListener(v -> showPauseDialog());
         setupRecycler();
 
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
+
         setupLifeDialog(this, R.color.topFind);
         loadAddForLife();
 

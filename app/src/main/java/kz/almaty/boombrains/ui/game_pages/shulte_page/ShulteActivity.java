@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -46,14 +47,15 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
-    private int lifes = 3;
+    @BindView(R.id.potionLayout) LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
 
     private View view;
-    private int index = 1;
-    private int score = 0;
-    int currentLevel = 1;
-    private String name;
-    private int errors = 0;
+    private int index = 1, score = 0, currentLevel = 1, errors = 0, lifes = 3;
     private boolean lifeUsed = false;
 
     @Override
@@ -66,9 +68,23 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         setCount();
         loadGoogleAd();
 
-        name = getIntent().getStringExtra("name");
+        type = getIntent().getStringExtra("type");
+
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
+
+        if (type != null) {
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+        }
+
         numbersList = new ArrayList<>();
-        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position, name);
+        setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position, "");
 
         setupLifeDialog(this, R.color.topShulte);
         loadAddForLife();
@@ -123,7 +139,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @Override
     public void updateNumbers(TextView text) {
         if (number.equals(String.valueOf(index))) {
-            setSuccess(text, name);
+            setSuccess(text);
         }
         else {
             setError();
@@ -149,10 +165,8 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         vibrate(100);
     }
 
-    private void setSuccess(TextView text, String name) {
-        if (name.equals(getString(R.string.Easy))) { setEasyLevel(text); }
-        else if (name.equals(getString(R.string.Medium))) { success(); }
-        else if (name.equals(getString(R.string.Hard))) { success();setHardLevels(currentLevel); }
+    private void setSuccess(TextView text) {
+        setEasyLevel(text);
     }
 
 
@@ -174,6 +188,13 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
             nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
             setGameLevels(currentLevel);
         }
+        gameUpdate(score);
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
     }
 
     @Override
@@ -227,14 +248,6 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         }
     }
 
-    public void setHardLevels(int level) {
-        setListWithHandler(level + 3);
-    }
-
-    private void setListWithHandler(int i) {
-        new Handler().postDelayed(()-> setupList(i), 100);
-    }
-
     @Override
     public void onStop() {
         super.onStop();
@@ -265,7 +278,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         intent.putExtra("position", position);
         intent.putExtra("score", score);
         intent.putExtra("errors", errors);
-        intent.putExtra("name", name);
+
         String oldScore = SharedPrefManager.getShulteRecord(getApplication());
         SharedPrefManager.setCoin(getApplication(), SharedPrefManager.getCoin(getApplication()) + result(score));
         if (oldScore != null) {
@@ -286,8 +299,12 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
 
     @Override
     public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override

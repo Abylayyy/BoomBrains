@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -42,25 +43,24 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.potionLayout)
+    LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
     private boolean lifeUsed = false;
 
-    private int position;
-    private int score = 0;
-    private int count = 0;
-    boolean isEnabled = false;
+    private int position, score = 0, maxColorIndex = 0, currentLevel = 0, transparent, errors = 0;
     private int[][] levelArray;
-    private List<Integer> thisLevelFigures = new ArrayList<>();
-    private List<Integer> thisLevelColors = new ArrayList<>();
-    private int maxColorIndex = 0;
+    private List<Integer> thisLevelFigures = new ArrayList<>(), thisLevelColors = new ArrayList<>();
 
     FigureAdapter adapter;
     List<FigureModel> numbersList;
-    int currentLevel = 0;
-    List<Integer> randomcolors;
-    List<Integer> randomFigures;
-    int transparent;
-    private int errors = 0;
+    List<Integer> randomcolors, randomFigures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +69,27 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         ButterKnife.bind(this);
 
         position = getIntent().getIntExtra("position", 0);
+
+        type = getIntent().getStringExtra("type");
+
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
+
+        if (type != null) {
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+        }
+
         setupDialog(this, R.style.figureTheme, R.drawable.pause_figure, position, "");
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
+
 
         setupLifeDialog(this, R.color.topShape);
         loadAddForLife();
@@ -171,6 +188,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             score += 100;
             recordTxt.setText(""+score);
             makeInvisible(tint);
+            gameUpdate(score);
         } else {
             vibrate(100);
             setAudio(R.raw.wrong_clicked);
@@ -188,6 +206,12 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             }
             recordTxt.setText("" + score);
         }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
     }
 
     private void lifeRemained(int i) {
@@ -260,8 +284,12 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
 
     @Override
     public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override

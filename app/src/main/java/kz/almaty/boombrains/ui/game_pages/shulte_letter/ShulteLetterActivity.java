@@ -67,6 +67,10 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         position = getIntent().getIntExtra("position", 0);
         lang = SharedUpdate.getLanguage(getApplication());
 
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
+
         startTimer(60000, timeTxt);
 
         setCount();

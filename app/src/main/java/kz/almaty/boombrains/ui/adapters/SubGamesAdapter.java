@@ -22,10 +22,12 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
 
     private List<SubGames> gameList;
     private Context context;
+    private SubGameListener listener;
 
-    public SubGamesAdapter(List<SubGames> gameList, Context context) {
+    public SubGamesAdapter(List<SubGames> gameList, Context context, SubGameListener listener) {
         this.gameList = gameList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -39,19 +41,14 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
     public void onBindViewHolder(@NonNull MySubGamesViewHolder holder, int position) {
         SubGames types = gameList.get(position);
 
-        holder.nameTxt.setText(types.getName());
+        holder.nameTxt.setText(context.getString(types.getName()));
         holder.gameImage.setImageResource(types.getImage());
 
         holder.inLayout.setBackgroundResource(types.getIn());
         holder.outLayout.setBackgroundResource(types.getOut());
         holder.recordTxt.setText(types.getRecord());
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, GamesStartActivity.class);
-            intent.putExtra("position", position);
-            intent.putExtra("gameName", types.getName());
-            context.startActivity(intent);
-        });
+        holder.itemView.setOnClickListener(v ->listener.onSubGameClicked(position, types));
     }
 
     @Override
@@ -74,5 +71,9 @@ public class SubGamesAdapter extends RecyclerView.Adapter<SubGamesAdapter.MySubG
             outLayout = itemView.findViewById(R.id.outLayout);
             inLayout = itemView.findViewById(R.id.inLayout);
         }
+    }
+
+    public interface SubGameListener {
+        void onSubGameClicked(int position, SubGames types);
     }
 }

@@ -30,7 +30,6 @@ import kz.almaty.boombrains.data.models.rating_model.WorldRecordResponse;
 import kz.almaty.boombrains.data.models.records_model.RecordResponse;
 import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleFriendAdapter;
 import kz.almaty.boombrains.ui.adapters.profile_adapters.games_start.SingleWorldAdapter;
-import kz.almaty.boombrains.ui.game_pages.shulte_page.ShulteLevel;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.ui.sign_pages.login_pages.MainLoginActivity;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
@@ -98,6 +97,10 @@ public class GamesStartActivity extends SocketManager implements WorldRatingView
         gameName = getIntent().getStringExtra("gameName");
         nameOfGame.setText(gameName);
         setBackgrounds(position);
+
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
 
         setNetWorkData();
 
@@ -206,11 +209,7 @@ public class GamesStartActivity extends SocketManager implements WorldRatingView
 
     private void setGames(int position) {
         switch (position) {
-            case 0: {
-                startIntent(new Intent(this, ShulteLevel.class), position);
-                break;
-            }
-            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
+            case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
                 startIntent(new Intent(this, AreYouReadyActivity.class), position);
                 break;
             }
@@ -459,9 +458,7 @@ public class GamesStartActivity extends SocketManager implements WorldRatingView
     }
 
     @Override
-    public void setFriendClicked(WorldRecord record) {
-        showChallengeDialog(record.getUsername(), getGameName(position));
-    }
+    public void setFriendClicked(WorldRecord record) { }
 
     @Override
     public void setWorldSize(View view) {

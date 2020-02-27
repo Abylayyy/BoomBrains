@@ -2,6 +2,7 @@ package kz.almaty.boombrains.ui.main_fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.adapters.SubGamesAdapter;
+import kz.almaty.boombrains.ui.main_pages.GamesStartActivity;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.util.helpers.list_helper.StatefulFragment;
@@ -50,7 +52,7 @@ import kz.almaty.boombrains.viewmodel.records.update_record.UpdateRecordViewMode
  * A simple {@link Fragment} subclass.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-public class MainFragment extends StatefulFragment implements RecordView, UpdateRecordView {
+public class MainFragment extends StatefulFragment implements RecordView, UpdateRecordView, SubGamesAdapter.SubGameListener {
 
     @BindView(R.id.underRecycler) RecyclerView typeRecycler;
     @BindView(R.id.progressSpin) SpinKitView progress;
@@ -159,26 +161,34 @@ public class MainFragment extends StatefulFragment implements RecordView, Update
         }
     }
 
+    @Override
+    public void onSubGameClicked(int position, SubGames types) {
+        Intent intent = new Intent(getContext(), GamesStartActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("gameName", types.getName());
+        startActivity(intent);
+    }
+
     private void loadData() {
         if(gameTypesList != null && gameTypesList.size() > 0){
             gameTypesList.clear();
         }
         gameTypesList = new ArrayList<>(Arrays.asList(
-                new SubGames(getString(R.string.AttentionSchulteTable), shulteRecord, R.drawable.shulte_icon, R.drawable.shulte_draw, R.drawable.shulte_draw_back),
-                new SubGames(getString(R.string.MemoryRemNum), zapomniChisloRecord, R.drawable.find_icon, R.drawable.zapomni_draw, R.drawable.zapomni_draw_back),
-                new SubGames(getString(R.string.AttentionFigure), findNumRecord, R.drawable.zap_chislo_icon, R.drawable.find_num_draw, R.drawable.find_num_draw_back),
-                new SubGames(getString(R.string.NumberZnaki), numZnakiRecord, R.drawable.num_znaki_icon, R.drawable.num_znaki_draw, R.drawable.num_znaki_draw_back),
-                new SubGames(getString(R.string.Equation), equationRecord, R.drawable.equation_icon, R.drawable.equation_draw, R.drawable.equation_draw_back),
-                new SubGames(getString(R.string.ShulteLetters), shulteLetterRecord, R.drawable.shulte_letter_icon, R.drawable.letter_draw, R.drawable.letter_draw_back),
-                new SubGames(getString(R.string.RememberWords), remWordsRecord, R.drawable.rem_words_icon, R.drawable.rem_words_draw, R.drawable.rem_words_draw_back),
-                new SubGames(getString(R.string.SquareMemory), squareRecord, R.drawable.square_icon, R.drawable.square_draw, R.drawable.square_draw_back),
-                new SubGames(getString(R.string.Colors), colorRecord, R.drawable.color_icon, R.drawable.color_draw, R.drawable.color_draw_back),
-                new SubGames(getString(R.string.Figures), figureRecord, R.drawable.shape_icon, R.drawable.shape_draw, R.drawable.shape_draw_back)
+                new SubGames(R.string.AttentionSchulteTable, shulteRecord, R.drawable.shulte_icon, R.drawable.shulte_draw, R.drawable.shulte_draw_back),
+                new SubGames(R.string.MemoryRemNum, zapomniChisloRecord, R.drawable.find_icon, R.drawable.zapomni_draw, R.drawable.zapomni_draw_back),
+                new SubGames(R.string.AttentionFigure, findNumRecord, R.drawable.zap_chislo_icon, R.drawable.find_num_draw, R.drawable.find_num_draw_back),
+                new SubGames(R.string.NumberZnaki, numZnakiRecord, R.drawable.num_znaki_icon, R.drawable.num_znaki_draw, R.drawable.num_znaki_draw_back),
+                new SubGames(R.string.Equation, equationRecord, R.drawable.equation_icon, R.drawable.equation_draw, R.drawable.equation_draw_back),
+                new SubGames(R.string.ShulteLetters, shulteLetterRecord, R.drawable.shulte_letter_icon, R.drawable.letter_draw, R.drawable.letter_draw_back),
+                new SubGames(R.string.RememberWords, remWordsRecord, R.drawable.rem_words_icon, R.drawable.rem_words_draw, R.drawable.rem_words_draw_back),
+                new SubGames(R.string.SquareMemory, squareRecord, R.drawable.square_icon, R.drawable.square_draw, R.drawable.square_draw_back),
+                new SubGames(R.string.Colors, colorRecord, R.drawable.color_icon, R.drawable.color_draw, R.drawable.color_draw_back),
+                new SubGames(R.string.Figures, figureRecord, R.drawable.shape_icon, R.drawable.shape_draw, R.drawable.shape_draw_back)
         ));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        SubGamesAdapter adapter = new SubGamesAdapter(gameTypesList, getContext());
+        SubGamesAdapter adapter = new SubGamesAdapter(gameTypesList, getContext(), this);
         typeRecycler.setAdapter(adapter);
         typeRecycler.setLayoutManager(layoutManager);
         typeRecycler.setItemAnimator(new DefaultItemAnimator());

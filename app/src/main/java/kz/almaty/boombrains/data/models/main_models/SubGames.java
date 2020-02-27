@@ -1,10 +1,10 @@
 package kz.almaty.boombrains.data.models.main_models;
 
 public class SubGames {
-    private String name, record;
-    private int image, in, out;
+    private String record;
+    private int image, in, out, name;
 
-    public SubGames(String name, String record, int image, int in, int out) {
+    public SubGames(int name, String record, int image, int in, int out) {
         this.name = name;
         this.record = record;
         this.image = image;
@@ -24,11 +24,11 @@ public class SubGames {
         return record;
     }
 
-    public String getName() {
+    public int getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(int name) {
         this.name = name;
     }
 
