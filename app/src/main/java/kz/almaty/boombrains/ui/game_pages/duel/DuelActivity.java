@@ -93,14 +93,14 @@ public class DuelActivity extends SocketManager {
             myRecordTv.setText(myRecord + "");
             oNameTv.setText(oName);
             oRecordTv.setText(oRecord + "");
+            winTxt.setText(myWin + " : " + oWin);
         } else {
             myNameTv.setText(oName);
             myRecordTv.setText(oRecord + "");
             oNameTv.setText(myName);
             oRecordTv.setText(myRecord + "");
+            winTxt.setText(oWin + " : " + myWin);
         }
-
-        winTxt.setText(myWin + " : " + oWin);
 
         duelGame.setText(getString(
                 getGameName(

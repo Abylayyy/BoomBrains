@@ -77,7 +77,6 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zapomni_chislo);
-
         ButterKnife.bind(this);
 
         position = getIntent().getIntExtra("position", 0);
