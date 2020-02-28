@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.zerobranch.layout.SwipeLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,17 +51,17 @@ public class DuelFragment extends Fragment implements ProfileRatingView {
     @BindView(R.id.spinner) Spinner spinner;
 
     // games layout
-    @BindView(R.id.gameRel0) RelativeLayout gameRel0;
+    @BindView(R.id.swipe0) SwipeLayout gameRel0;
     @BindView(R.id.inLayout0) ConstraintLayout inLayout0;
     @BindView(R.id.gameImg0) ImageView gameImg0;
     @BindView(R.id.gameName0) TextView gameName0;
 
-    @BindView(R.id.gameRel1) RelativeLayout gameRel1;
+    @BindView(R.id.swipe1) SwipeLayout gameRel1;
     @BindView(R.id.inLayout1) ConstraintLayout inLayout1;
     @BindView(R.id.gameImg1) ImageView gameImg1;
     @BindView(R.id.gameName1) TextView gameName1;
 
-    @BindView(R.id.gameRel2) RelativeLayout gameRel2;
+    @BindView(R.id.swipe2) SwipeLayout gameRel2;
     @BindView(R.id.inLayout2) ConstraintLayout inLayout2;
     @BindView(R.id.gameImg2) ImageView gameImg2;
     @BindView(R.id.gameName2) TextView gameName2;
@@ -110,20 +109,87 @@ public class DuelFragment extends Fragment implements ProfileRatingView {
 
     @SuppressLint("ClickableViewAccessibility")
     private void setViewListeners() {
-        gameRel0.setOnClickListener(this::onClick);
-        gameRel1.setOnClickListener(this::onClick);
-        gameRel2.setOnClickListener(this::onClick);
-        challengeBtn.setOnClickListener(this::onClick);
+        gameRel0.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
+            @Override
+            public void onOpen(int direction, boolean isContinuous) {
+                gameRel0.close(false);
+                setBacks(inLayout0, gameImg0, gameName0);
+                games.set(0, "");
+            }
+            @Override
+            public void onClose() { }
+        });
 
+        gameRel1.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
+            @Override
+            public void onOpen(int direction, boolean isContinuous) {
+                gameRel1.close(false);
+                setBacks(inLayout1, gameImg1, gameName1);
+                games.set(1, "");
+            }
+            @Override
+            public void onClose() { }
+        });
+        gameRel2.setOnActionsListener(new SwipeLayout.SwipeActionsListener() {
+            @Override
+            public void onOpen(int direction, boolean isContinuous) {
+                gameRel2.close(false);
+                setBacks(inLayout2, gameImg2, gameName2);
+                games.set(2, "");
+            }
+            @Override
+            public void onClose() { }
+        });
+
+        challengeBtn.setOnClickListener(this::onClick);
         inLayout0.setOnClickListener(this::onClick);
         inLayout1.setOnClickListener(this::onClick);
         inLayout2.setOnClickListener(this::onClick);
     }
 
-    private void swipeLeft(View view) {
-        Animation animation = new TranslateAnimation(0f, -10000f, 0f, 0f);
-        animation.setDuration(500);
-        view.startAnimation(animation);
+    private void setBacks(ConstraintLayout l, ImageView i, TextView t) {
+        l.setBackgroundResource(R.drawable.trans_color);
+        i.setImageResource(R.drawable.trans_color);
+        t.setText("");
+    }
+
+    private void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.inLayout0: {
+                resultIntent(GAME0_RESULT);
+                break;
+            }
+            case R.id.inLayout1: {
+                resultIntent(GAME1_RESULT);
+                break;
+            }
+            case R.id.inLayout2: {
+                resultIntent(GAME2_RESULT);
+                break;
+            }
+            case R.id.challengeBtn: {
+                List<String> gamesList = new ArrayList<>();
+                for (String i : games) {
+                    if (!i.equals("")) {
+                        gamesList.add(i);
+                    }
+                }
+                if (username != null && gamesList.size() > 0) {
+                    mCallback.sendChallenge(username, gamesList);
+                    hideLoading();
+                    gamesList.clear();
+                } else {
+                    disableBtn();
+                }
+                break;
+            }
+        }
+    }
+
+    private void disableBtn() {
+        challengeBtn.setEnabled(false);
+        areGamesSelected = false;
+        challengeBtn.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.disbled_color)));
     }
 
     @Override
@@ -214,6 +280,8 @@ public class DuelFragment extends Fragment implements ProfileRatingView {
         }
     }
 
+
+
     private String getGameName(int game) {
         String name = "";
         switch (game) {
@@ -229,37 +297,6 @@ public class DuelFragment extends Fragment implements ProfileRatingView {
             case R.string.Figures: name = "coloredFigures"; break;
         }
         return name;
-    }
-
-    private void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.gameRel0: case R.id.inLayout0: {
-                resultIntent(GAME0_RESULT);
-                break;
-            }
-            case R.id.gameRel1: case R.id.inLayout1: {
-                resultIntent(GAME1_RESULT);
-                break;
-            }
-            case R.id.gameRel2: case R.id.inLayout2: {
-                resultIntent(GAME2_RESULT);
-                break;
-            }
-            case R.id.challengeBtn: {
-                List<String> gamesList = new ArrayList<>();
-                for (String i : games) {
-                    if (!i.equals("")) {
-                        gamesList.add(i);
-                    }
-                }
-                if (username != null && gamesList.size() > 0) {
-                    mCallback.sendChallenge(username, gamesList);
-                    hideLoading();
-                    gamesList.clear();
-                }
-                break;
-            }
-        }
     }
 
     private void hideLoading() {
@@ -310,11 +347,10 @@ public class DuelFragment extends Fragment implements ProfileRatingView {
 
     @Override
     public void onFriendsRecord(List<ProfileWorldRecord> records) {
-        if (isAdded() && getActivity() != null) {
-            showSpinner(records);
-        }
+        if (isAdded() && getActivity() != null) { showSpinner(records); }
     }
 
+    // Not necessary callbacks
     @Override
     public void onAchievements(List<Achievement> achievements) { }
 

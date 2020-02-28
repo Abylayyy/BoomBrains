@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,12 +56,20 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout)
+    LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
 
     private boolean visible = true;
-    private int currentLevel = 1, score = 0;
+    private int currentLevel = 1, score = 0, errors = 0;
     private String random;
-    private int errors = 0;
 
     private boolean lifeUsed = false;
 
@@ -79,10 +88,10 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
         setCount();
         loadGoogleAd();
 
+        setTypeAndLayout();
+
         setupLifeDialog(this, R.color.topSlovo);
         loadAddForLife();
-
-        pauseImg.setOnClickListener(v -> showPauseDialog());
 
         for (View view : numbers) {
             view.setOnClickListener(v -> {
@@ -151,7 +160,7 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
 
             if (lifes == 0) {
                 if (!lifeUsed) {
-                    showLifeDialog(this);
+                    showLifeDialog(this, type);
                 } else {
                     startNewActivity();
                 }
@@ -177,8 +186,53 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
     private void successClicked(String word) {
         nextNum.setText(getString(R.string.Level) + " " + currentLevel);
         recordTxt.setText("" + score);
+        updateSocketScore(score);
         showSuccess(word);
         setAudio(R.raw.level_complete);
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     private void startNewQuestion() {
@@ -316,11 +370,5 @@ public class ZapomniChisloActivity extends DialogHelperActivity {
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0, 0);
     }
 }

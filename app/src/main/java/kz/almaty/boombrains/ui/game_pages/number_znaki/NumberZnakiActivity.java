@@ -7,7 +7,9 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.ArrayList;
@@ -44,15 +46,21 @@ public class NumberZnakiActivity extends DialogHelperActivity {
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout) LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
 
-    private int position;
-    private int score = 0, currentLevel = 1;
+    private int position, score = 0, currentLevel = 1, errors = 0;
     private List<String> numbersList = new ArrayList<>();
     private List<String> randomList = new ArrayList<>();
     private String[] symbols;
     private TextView[] variants;
-    private int errors = 0;
 
     private boolean lifeUsed = false;
 
@@ -67,12 +75,13 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         setCount();
         loadGoogleAd();
 
+        setTypeAndLayout();
+
         setupLifeDialog(this, R.color.topNumZnaki);
         loadAddForLife();
 
         symbols = new String[] {"+", "-", "*", "/"};
         variants = new TextView[] {first, second, third, forth};
-        pauseImg.setOnClickListener(v -> showPauseDialog());
 
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
 
@@ -149,6 +158,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         view.setTextColor(Color.parseColor("#2CB0B2"));
         recordTxt.setText("" + score);
         levelTxt.setText(getString(R.string.Level) + " " + currentLevel);
+        updateSocketScore(score);
         if (lifes > 0) {
             getLevels(currentLevel);
             startNewQuestion();
@@ -183,7 +193,7 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         lifeRemained(lifes);
         if (lifes == 0) {
             if (!lifeUsed) {
-                showLifeDialog(this);
+                showLifeDialog(this, type);
             } else {
                 startNewActivity();
             }
@@ -194,6 +204,50 @@ public class NumberZnakiActivity extends DialogHelperActivity {
         if (lifes > 0) {
             getLevels(currentLevel);
             startNewQuestion();
+        }
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -309,12 +363,6 @@ public class NumberZnakiActivity extends DialogHelperActivity {
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
     }
 
     @Override

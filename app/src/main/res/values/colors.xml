@@ -119,5 +119,6 @@
 
     <color name="duelGameColor">#C8C8C8</color>
     <color name="duelDivider">#80D7D7D7</color>
+    <color name="disbled_color">#CCCCCC</color>
 
 </resources>

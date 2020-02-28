@@ -16,48 +16,150 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/findNumContainer">
 
-        <LinearLayout
-            android:id="@+id/potionLayout"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/duelLayout"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/potion_menu_back"
-            android:elevation="3dp"
-            android:orientation="horizontal"
-            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:id="@+id/potionLife"
+            <View
+                android:id="@+id/view22"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/duelDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/girlImg2"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:adjustViewBounds="true"
+                app:civ_border_color="#FFF"
+                app:civ_circle_color="#EEEEEE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/view22"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/boy_1" />
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/girlImg3"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:adjustViewBounds="true"
+                app:civ_border_color="#FFF"
+                app:civ_circle_color="#EEEEEE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/view22"
+                app:layout_constraintStart_toStartOf="@+id/view22"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/girl_1" />
+
+            <TextView
+                android:id="@+id/meTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/potion_life" />
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="me"
+                android:textColor="#7A7A7A"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/meRecord"
+                app:layout_constraintEnd_toStartOf="@+id/girlImg2"
+                app:layout_constraintTop_toTopOf="@+id/girlImg2" />
 
-            <ImageView
-                android:id="@+id/potionTen"
+            <TextView
+                android:id="@+id/opTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/potion_10sec" />
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="op"
+                android:textColor="#7A7A7A"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/opRecord"
+                app:layout_constraintStart_toEndOf="@+id/girlImg3"
+                app:layout_constraintTop_toTopOf="@+id/girlImg3" />
 
-            <ImageView
-                android:id="@+id/potionX2"
+            <TextView
+                android:id="@+id/opRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/potion_x2" />
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="0"
+                android:textColor="#A6A6A6"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/girlImg3"
+                app:layout_constraintStart_toEndOf="@+id/girlImg3"
+                app:layout_constraintTop_toBottomOf="@+id/opTxt" />
 
-            <ImageView
-                android:id="@+id/potionX5"
+            <TextView
+                android:id="@+id/meRecord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/potion_x5" />
-        </LinearLayout>
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="0"
+                android:textColor="#A6A6A6"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/girlImg2"
+                app:layout_constraintEnd_toStartOf="@+id/girlImg2"
+                app:layout_constraintTop_toBottomOf="@+id/meTxt" />
+
+            <LinearLayout
+                android:id="@+id/potionLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/potion_menu_back"
+                android:elevation="3dp"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/potionLife"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/potion_life" />
+
+                <ImageView
+                    android:id="@+id/potionTen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/potion_10sec" />
+
+                <ImageView
+                    android:id="@+id/potionX2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/potion_x2" />
+
+                <ImageView
+                    android:id="@+id/potionX5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/potion_x5" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -69,7 +171,7 @@
             android:layout_marginBottom="8dp"
             android:orientation="vertical"
             android:weightSum="2"
-            app:layout_constraintBottom_toTopOf="@+id/potionLayout"
+            app:layout_constraintBottom_toTopOf="@+id/duelLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,6 +239,7 @@
                     android:text="×"
                     android:textColor="#BE1856"
                     android:textSize="50sp"
+                    tools:ignore="NestedWeights"
                     tools:targetApi="lollipop" />
 
                 <TextView
@@ -215,7 +318,6 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pauseBtn"
             app:layout_constraintStart_toEndOf="@+id/view13"
@@ -226,9 +328,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -241,7 +341,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -256,7 +355,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/life3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -270,7 +368,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:text="0"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
@@ -297,7 +394,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:text="@string/Score"
             android:textColor="@color/colorWhite"
             android:textSize="13dp"
@@ -311,7 +407,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/viewColor"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -323,7 +418,6 @@
             android:layout_width="1dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/viewColor"
@@ -340,10 +434,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/pauseImg"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/pause_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

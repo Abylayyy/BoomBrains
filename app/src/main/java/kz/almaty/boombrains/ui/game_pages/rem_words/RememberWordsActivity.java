@@ -57,13 +57,18 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout) LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
 
-    private int currentLevel = 1;
+    private int currentLevel = 1, score = 0, errors = 0;
     private String random;
-    private int score = 0;
-    private int errors = 0;
-
     private boolean lifeUsed = false;
 
     @Override
@@ -78,6 +83,8 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         setCount();
         loadGoogleAd();
 
+        setTypeAndLayout();
+
         setupLifeDialog(this, R.color.topRemWords);
         loadAddForLife();
 
@@ -88,7 +95,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
 
         wordLayout.getLayoutParams().height = (int) (height() / 3.8);
 
-        pauseImg.setOnClickListener(v -> showPauseDialog());
         setRecyclerItemFirst();
         nextNum.setText(getString(R.string.Level) + " " + currentLevel);
     }
@@ -102,22 +108,10 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
 
     private void setupList(String lang) {
         switch (lang) {
-            case "en": {
-                numbersList = RememberWordsEn.wordsEnList;
-                break;
-            }
-            case "es": {
-                numbersList = RememberWordsSpain.wordsESList;
-                break;
-            }
-            case "ru": {
-                numbersList = RememberWordsRu.wordsRuList;
-                break;
-            }
-            case "kk": {
-                numbersList = RememberWordsKz.wordsKzList;
-                break;
-            }
+            case "en": { numbersList = RememberWordsEn.wordsEnList; break; }
+            case "es": { numbersList = RememberWordsSpain.wordsESList; break; }
+            case "ru": { numbersList = RememberWordsRu.wordsRuList; break; }
+            case "kk": { numbersList = RememberWordsKz.wordsKzList; break; }
         }
     }
 
@@ -214,6 +208,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             }
             score += 100;
             recordTxt.setText(score + "");
+            updateSocketScore(score);
         } else {
             view.setBackgroundResource(R.drawable.card_background_error);
             text.setTextColor(Color.WHITE);
@@ -244,7 +239,7 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             lifeRemained(lifes);
             if (lifes == 0) {
                 if (!lifeUsed) {
-                    showLifeDialog(this);
+                    showLifeDialog(this, type);
                 } else {
                     startNewActivity();
                 }
@@ -276,6 +271,50 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
         lifes = 1;
         life1.setImageResource(R.drawable.life_full);
         setRecyclerSizes(currentLevel);
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override
@@ -346,12 +385,6 @@ public class RememberWordsActivity extends DialogHelperActivity implements Slovo
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
     }
 
     @Override

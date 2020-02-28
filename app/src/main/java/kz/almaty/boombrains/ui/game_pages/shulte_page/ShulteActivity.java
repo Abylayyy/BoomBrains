@@ -47,6 +47,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
     @BindView(R.id.potionLayout) LinearLayout potionLayout;
     @BindView(R.id.meTxt) TextView myName;
     @BindView(R.id.opTxt) TextView opName;
@@ -68,20 +69,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         setCount();
         loadGoogleAd();
 
-        type = getIntent().getStringExtra("type");
-
-        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
-            connectSocket();
-        }
-
-        if (type != null) {
-            potionLayout.setVisibility(View.GONE);
-            myName.setText(getIntent().getStringExtra("myName"));
-            opName.setText(getIntent().getStringExtra("oName"));
-
-        } else {
-            potionLayout.setVisibility(View.VISIBLE);
-        }
+        setTypeAndLayout();
 
         numbersList = new ArrayList<>();
         setupDialog(this, R.style.shulteTheme, R.drawable.pause_shulte, position, "");
@@ -90,8 +78,6 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         loadAddForLife();
 
         setRecycler();
-
-        pauseImg.setOnClickListener(v -> showPauseDialog());
         nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
     }
 
@@ -154,7 +140,7 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
         lifeRemained(lifes);
         if (lifes == 0) {
             if (!lifeUsed) {
-                showLifeDialog(this);
+                showLifeDialog(this, type);
             } else {
                 startNewActivity();
             }
@@ -188,13 +174,51 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
             nextNum.setText(getString(R.string.SchulteNextNumber) + " " + index);
             setGameLevels(currentLevel);
         }
-        gameUpdate(score);
+        updateSocketScore(score);
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
     }
 
     @Override
     public void setRecordUpdates(int reqRecord, int recRecord) {
         meRecord.setText("" + reqRecord);
         opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override
@@ -295,16 +319,6 @@ public class ShulteActivity extends DialogHelperActivity implements ShulteAdapte
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        if (type != null) {
-            roundEnded();
-        } else {
-            startActivity(myIntent());
-            overridePendingTransition(0, 0);
-        }
     }
 
     @Override

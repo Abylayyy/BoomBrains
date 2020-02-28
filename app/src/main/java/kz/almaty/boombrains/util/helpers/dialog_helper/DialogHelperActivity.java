@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,11 +32,15 @@ public abstract class DialogHelperActivity extends SocketManager {
 
     TextView returnGame, restart, sound, exit, contentTxt;
     LinearLayout pauseBack;
-    Dialog dialog, dialogLife;
+    Dialog dialog, dialogLife, dialogExit;
 
     CardView cardCont, cardFinish;
     ImageView closeImg;
     ConstraintLayout closeConst;
+
+    private Button stayBtn, leaveBtn;
+    private TextView errorTxt, topTxt;
+    private ConstraintLayout closeAdd;
 
     private static final String format = "%02d:%02d";
     CountDownTimerWithPause countDownTimer;
@@ -71,10 +76,44 @@ public abstract class DialogHelperActivity extends SocketManager {
         });
     }
 
-    public void showLifeDialog(Context context) {
+    @SuppressLint("SetTextI18n")
+    public void setupLeaveDialog(Context context) {
+        dialogExit = new Dialog(context, R.style.dialogTheme);
+        dialogExit.setContentView(R.layout.challenge_layout);
+        stayBtn = dialogExit.findViewById(R.id.acceptChallenge);
+        leaveBtn = dialogExit.findViewById(R.id.rejectChallenge);
+        errorTxt = dialogExit.findViewById(R.id.errorTxt);
+        topTxt = dialogExit.findViewById(R.id.topTxt);
+        closeAdd = dialogExit.findViewById(R.id.closeConst);
+
+        topTxt.setText("Leave");
+        errorTxt.setText("If you leave the duel, you will be considered defeated.");
+        stayBtn.setText("Stay");
+        leaveBtn.setText("Leave");
+
+        stayBtn.setOnClickListener(v -> dialogExit.dismiss());
+        leaveBtn.setOnClickListener(v -> {
+            giveUp();
+            dialogExit.dismiss();
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(new Intent(context, MainActivity.class));
+        });
+        closeAdd.setOnClickListener(v -> dialogExit.dismiss());
+    }
+
+    public void showLeaveDialog() {
+        dialogExit.show();
+    }
+
+    public void showLifeDialog(Context context, String type) {
         pauseTimer();
         if (SharedPrefManager.isNetworkOnline(context)) {
-            dialogLife.show();
+            if (type != null) {
+                roundEnded();
+            } else {
+                dialogLife.show();
+            }
         } else {
             startNewActivity();
         }
@@ -202,6 +241,7 @@ public abstract class DialogHelperActivity extends SocketManager {
     public void dismissDialog() {
         dialog.dismiss();
         dialogLife.dismiss();
+        dialogExit.dismiss();
     }
 
     public void startNewActivity() {

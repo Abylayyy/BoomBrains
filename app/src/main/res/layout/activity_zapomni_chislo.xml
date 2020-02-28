@@ -300,7 +300,6 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/pauseBtn"
             app:layout_constraintStart_toEndOf="@+id/view21"
@@ -311,9 +310,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -326,7 +323,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -341,7 +337,6 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/life3"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -355,7 +350,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:text="0"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
@@ -382,7 +376,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:text="@string/Score"
             android:textColor="@color/colorWhite"
             android:textSize="13dp"
@@ -396,7 +389,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
             android:background="@color/viewColor"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -408,7 +400,6 @@
             android:layout_width="1dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/viewColor"
@@ -425,10 +416,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/pauseImg"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:src="@drawable/pause_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -452,16 +443,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
-    <!--<GridLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:columnCount="1"
-        android:rowCount="4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/zapomniContainer"
         android:layout_width="0dp"
@@ -478,7 +459,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:textColor="@color/colorWhite"
-            android:textSize="36dp"
+            android:textSize="36sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

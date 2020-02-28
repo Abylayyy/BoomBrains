@@ -74,6 +74,7 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
 
         if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
             connectSocket();
+            loadAcceptDialog(this);
         }
 
         if (!SharedPrefManager.getIsFirstUser(getApplication())) {
@@ -184,10 +185,9 @@ public class MainActivity extends SocketManager implements MainFragment.MainCall
                 break;
             }
             case R.id.settings: {
-                rejectAction("maitabar");
-                /*setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
+                setColorsWhenPressed(R.color.disabled, R.color.pressed, R.drawable.duel_off, R.drawable.brain_main_off);
                 currentFragment = new SettingsFragment();
-                replaceFragment(currentFragment, "settings_fragment", true);*/
+                replaceFragment(currentFragment, "settings_fragment", true);
                 break;
             }
             case R.id.profile: {

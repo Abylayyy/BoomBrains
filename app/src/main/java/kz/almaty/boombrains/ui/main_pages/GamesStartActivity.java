@@ -100,6 +100,7 @@ public class GamesStartActivity extends SocketManager implements WorldRatingView
 
         if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
             connectSocket();
+            loadAcceptDialog(this);
         }
 
         setNetWorkData();

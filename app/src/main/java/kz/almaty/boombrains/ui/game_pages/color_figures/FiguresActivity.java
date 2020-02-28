@@ -43,8 +43,8 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
-    @BindView(R.id.potionLayout)
-    LinearLayout potionLayout;
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout) LinearLayout potionLayout;
     @BindView(R.id.meTxt) TextView myName;
     @BindView(R.id.opTxt) TextView opName;
     @BindView(R.id.meRecord) TextView meRecord;
@@ -70,29 +70,16 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
 
         position = getIntent().getIntExtra("position", 0);
 
-        type = getIntent().getStringExtra("type");
-
-        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
-            connectSocket();
-        }
-
-        if (type != null) {
-            potionLayout.setVisibility(View.GONE);
-            myName.setText(getIntent().getStringExtra("myName"));
-            opName.setText(getIntent().getStringExtra("oName"));
-
-        } else {
-            potionLayout.setVisibility(View.VISIBLE);
-        }
-
         setupDialog(this, R.style.figureTheme, R.drawable.pause_figure, position, "");
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
 
+        setTypeAndLayout();
 
         setupLifeDialog(this, R.color.topShape);
         loadAddForLife();
+        loadAcceptDialog(this);
 
         transparent = android.R.color.transparent;
         numbersList = new ArrayList<>();
@@ -109,7 +96,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         randomcolors = new ArrayList<>(Arrays.asList(R.color.orangeFigure, R.color.blueFigure, R.color.greenFigure, R.color.redFigure));
         randomFigures = new ArrayList<>(Arrays.asList(R.drawable.rectangle, R.drawable.circle_shape, R.drawable.triangle, R.drawable.romb_shape));
 
-        pauseImg.setOnClickListener(v -> showPauseDialog());
+
         nextNum.setText(getString(R.string.Level) + " " + (currentLevel + 1));
 
         setRecycler();
@@ -188,7 +175,8 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             score += 100;
             recordTxt.setText(""+score);
             makeInvisible(tint);
-            gameUpdate(score);
+            updateSocketScore(score);
+
         } else {
             vibrate(100);
             setAudio(R.raw.wrong_clicked);
@@ -199,7 +187,7 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
             lifeRemained(lifes);
             if (lifes == 0) {
                 if (!lifeUsed) {
-                    showLifeDialog(this);
+                    showLifeDialog(this, type);
                 } else {
                     startNewActivity();
                 }
@@ -208,10 +196,48 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
     }
 
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
     @Override
     public void setRecordUpdates(int reqRecord, int recRecord) {
         meRecord.setText("" + reqRecord);
         opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     private void lifeRemained(int i) {
@@ -280,16 +306,6 @@ public class FiguresActivity extends DialogHelperActivity implements FigureAdapt
         }
 
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        if (type != null) {
-            roundEnded();
-        } else {
-            startActivity(myIntent());
-            overridePendingTransition(0, 0);
-        }
     }
 
     @Override

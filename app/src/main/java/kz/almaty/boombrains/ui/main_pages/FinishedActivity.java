@@ -23,13 +23,14 @@ import kz.almaty.boombrains.R;
 import kz.almaty.boombrains.ui.game_pages.start_page.AreYouReadyActivity;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
+import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
 import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordView;
 import kz.almaty.boombrains.viewmodel.records.new_record_model.NewRecordViewModel;
 import kz.almaty.boombrains.viewmodel.records.send_minutes.SendSecondView;
 import kz.almaty.boombrains.viewmodel.records.send_minutes.SendSecondViewModel;
 
 @SuppressLint("SetTextI18n")
-public class FinishedActivity extends AppCompatActivity implements NewRecordView, SendSecondView {
+public class FinishedActivity extends SocketManager implements NewRecordView, SendSecondView {
 
     @BindView(R.id.successImg) ImageView successImg;
     @BindView(R.id.successMessTxt) TextView successMessage;

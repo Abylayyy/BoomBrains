@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.util.helpers.socket_helper;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +40,6 @@ public abstract class SocketManager extends AppCompatActivity {
         if (SharedPrefManager.isNetworkOnline(this)) {
             initSocket();
         }
-        loadAcceptDialog();
     }
 
     public void initSocket() {
@@ -119,7 +119,7 @@ public abstract class SocketManager extends AppCompatActivity {
             Log.e("SOCKET:", e.getMessage());
         }
         MainActivity activity = new MainActivity();
-        if (!this.getApplicationContext().equals(activity.getApplicationContext())) {
+        if (!this.equals(activity)) {
             this.finish();
         }
         Intent intent = new Intent(this, DuelActivity.class);
@@ -198,9 +198,7 @@ public abstract class SocketManager extends AppCompatActivity {
         mSocket.emit("game-end");
     }
 
-    public void giveUp() {
-        mSocket.emit("give-up");
-    }
+    public void giveUp() { mSocket.emit("give-up"); }
 
     public void readyAction() {
         mSocket.emit("ready-set");
@@ -237,13 +235,16 @@ public abstract class SocketManager extends AppCompatActivity {
     }
 
     private void putExtras(Intent intent, JSONObject object, JSONObject request, JSONObject recip) {
+
         intent.putExtra("myName", MyJson.getName(request));
         intent.putExtra("myRecord", MyJson.getRecord(request));
         intent.putExtra("myReady", MyJson.getReady(request));
+        intent.putExtra("myWin", MyJson.getWinCount(request));
 
         intent.putExtra("oName", MyJson.getName(recip));
         intent.putExtra("oRecord", MyJson.getRecord(recip));
         intent.putExtra("oReady", MyJson.getReady(recip));
+        intent.putExtra("oWin", MyJson.getWinCount(recip));
 
         intent.putStringArrayListExtra("gameList", MyJson.getGameList(object));
         intent.putExtra("roomId", MyJson.getRoomId(object));
@@ -287,8 +288,8 @@ public abstract class SocketManager extends AppCompatActivity {
         mSocket.connect();
     }
 
-    public void loadAcceptDialog() {
-        dialogAdd = new Dialog(this, R.style.dialogTheme);
+    public void loadAcceptDialog(Context context) {
+        dialogAdd = new Dialog(context, R.style.dialogTheme);
         dialogAdd.setContentView(R.layout.challenge_layout);
         acceptBtn = dialogAdd.findViewById(R.id.acceptChallenge);
         rejectBtn = dialogAdd.findViewById(R.id.rejectChallenge);

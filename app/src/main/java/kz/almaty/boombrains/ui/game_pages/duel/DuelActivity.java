@@ -1,6 +1,7 @@
 package kz.almaty.boombrains.ui.game_pages.duel;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kz.almaty.boombrains.R;
+import kz.almaty.boombrains.ui.main_pages.MainActivity;
 import kz.almaty.boombrains.util.helpers.preference.SharedPrefManager;
 import kz.almaty.boombrains.util.helpers.preference.SharedUpdate;
 import kz.almaty.boombrains.util.helpers.socket_helper.SocketManager;
@@ -28,6 +30,7 @@ public class DuelActivity extends SocketManager {
     @BindView(R.id.boyImg) CircularImageView boyImg;
     @BindView(R.id.duelBtn) Button duelBtn;
     @BindView(R.id.imageView22) ImageView backImg;
+    @BindView(R.id.winTxt) TextView winTxt;
 
     // Main duel views
     @BindView(R.id.duelGame) TextView duelGame;
@@ -51,28 +54,29 @@ public class DuelActivity extends SocketManager {
         result = getIntent().getStringExtra("result");
         disconnected = getIntent().getBooleanExtra("disconnected", false);
 
+        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+            connectSocket();
+        }
+
         if (isFinished != null && result != null) {
             duelTxt.setText(result);
             duelBtn.setText("Finish");
             duelBtn.setOnClickListener(v -> {
                 gameEnded();
+                startActivity(new Intent(this, MainActivity.class));
+                overridePendingTransition(0, 0);
                 finish();
             });
         } else {
             duelBtn.setOnClickListener(v -> readyAction());
+            duelTxt.setText("Round " + (getIntent().getIntExtra("currentRound", 1) + 1));
         }
 
-        if (disconnected) {
-            backImg.setImageResource(R.drawable.duel_disconnect);
-        }
+        if (disconnected) { backImg.setImageResource(R.drawable.duel_disconnect); }
 
-        Glide.with(this).load(R.drawable.boy_1)
-                .into(boyImg);
+        Glide.with(this).load(R.drawable.boy_1).into(boyImg);
+        Glide.with(this).load(R.drawable.girl_1).into(girlImg);
 
-        Glide.with(this).load(R.drawable.girl_1)
-                .into(girlImg);
-
-        connectSocket();
         setMyInfo();
     }
 
@@ -81,6 +85,8 @@ public class DuelActivity extends SocketManager {
         int myRecord = getIntent().getIntExtra("myRecord", 0);
         String oName = getIntent().getStringExtra("oName");
         int oRecord = getIntent().getIntExtra("oRecord", 0);
+        int myWin = getIntent().getIntExtra("myWin", 0);
+        int oWin = getIntent().getIntExtra("oWin", 0);
 
         if (myChallenge()) {
             myNameTv.setText(myName);
@@ -93,6 +99,9 @@ public class DuelActivity extends SocketManager {
             oNameTv.setText(myName);
             oRecordTv.setText(myRecord + "");
         }
+
+        winTxt.setText(myWin + " : " + oWin);
+
         duelGame.setText(getString(
                 getGameName(
                     getIntent().getStringExtra("currentGame")
@@ -120,26 +129,21 @@ public class DuelActivity extends SocketManager {
 
     @Override
     public void setReadyUpdate(boolean rec, boolean req) {
-        setMyReady(req);
-        setHisReady(rec);
-        duelTxt.setText("Round " + getIntent().getIntExtra("currentRound", 1));
+        setReady(rec, req);
     }
 
-    private void setMyReady(boolean req) {
-        if (req) {
-            myReadyTv.setText("Ready");
+    private void setReady(boolean rec, boolean req) {
+        if (myChallenge()) {
+            if (req) { myReadyTv.setText("Ready"); }
+            if (rec) { oReadyTv.setText("Ready"); }
         } else {
-            myReadyTv.setText("Not Ready");
+            if (req) { oReadyTv.setText("Ready"); }
+            if (rec) { myReadyTv.setText("Ready"); }
         }
     }
 
-    private void setHisReady(boolean rec) {
-        if (rec) {
-            oReadyTv.setText("Ready");
-        } else {
-            oReadyTv.setText("Not Ready");
-        }
-    }
+    @Override
+    public void onBackPressed() { }
 
     @Override
     protected void onDestroy() {

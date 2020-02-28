@@ -3,13 +3,25 @@ package kz.almaty.boombrains.util.helpers.socket_helper;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class MyJson {
+class MyJson {
+
+    static int getWinCount(@NonNull JSONObject object) {
+        int count = 0;
+        try {
+            count = object.getInt("winningCount");
+        } catch (JSONException e) {
+            Log.e("SOCKET", e.getMessage());
+        }
+        return count;
+    }
 
     static String getName(@NotNull JSONObject object) {
         String myName = "";
@@ -95,7 +107,7 @@ public class MyJson {
         return round;
     }
 
-    public static String gameResult(@NotNull JSONObject object) {
+    static String gameResult(@NotNull JSONObject object) {
         String current = "";
         try {
             current = object.getString("gameResult");
@@ -105,7 +117,7 @@ public class MyJson {
         return current;
     }
 
-    public static boolean enemyError(@NotNull JSONObject object) {
+    static boolean enemyError(@NotNull JSONObject object) {
         boolean ready = false;
         try {
             ready = object.getBoolean("isEnemyDisconnected");

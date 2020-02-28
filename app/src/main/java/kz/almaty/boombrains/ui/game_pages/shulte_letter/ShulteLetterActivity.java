@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -48,16 +49,22 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout)
+    LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
     private boolean lifeUsed = false;
 
     private View view;
-    private int index = 0;
-    private int score = 0;
-    private int currentLevel = 1;
+    private int index = 0, score = 0, currentLevel = 1, errors = 0;
     private List<String> letters;
     String lang;
-    private int errors = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +74,6 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         position = getIntent().getIntExtra("position", 0);
         lang = SharedUpdate.getLanguage(getApplication());
 
-        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
-            connectSocket();
-        }
-
         startTimer(60000, timeTxt);
 
         setCount();
@@ -79,14 +82,14 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         numbersList = new ArrayList<>();
         setupDialog(this, R.style.shulteLetterTheme, R.drawable.pause_letter, position, "");
 
+        setTypeAndLayout();
+
         setupLifeDialog(this, R.color.topShulteLetter);
         loadAddForLife();
 
         setListByLang(lang);
-
         setRecycler();
 
-        pauseImg.setOnClickListener(v -> showPauseDialog());
         nextNum.setText(getString(R.string.NextLetter) + " " + letters.get(index));
     }
 
@@ -151,6 +154,7 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
             index += 1;
             recordTxt.setText(score + "");
             nextNum.setText(getString(R.string.NextLetter) + " " + letters.get(index));
+            updateSocketScore(score);
             if (number.equals(String.valueOf(letters.get(numbersList.size() - 1)))) {
                 currentLevel += 1;
                 index = 0;
@@ -160,13 +164,11 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
         }
         else {
             errors += 1;
-            if (lifes > 0) {
-                lifes -= 1;
-            }
+            if (lifes > 0) { lifes -= 1; }
             lifeRemained(lifes);
             if (lifes == 0) {
                 if (!lifeUsed) {
-                    showLifeDialog(this);
+                    showLifeDialog(this, type);
                 } else {
                     startNewActivity();
                 }
@@ -175,6 +177,50 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
             setBackgroundError(view);
             setAudio(R.raw.wrong_clicked);
             vibrate(100);
+        }
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -327,12 +373,6 @@ public class ShulteLetterActivity extends DialogHelperActivity implements Letter
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
     }
 
     @Override

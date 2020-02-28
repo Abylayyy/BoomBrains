@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,16 +56,20 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout) LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
     private int lifes = 3;
     private boolean lifeUsed = false;
 
-    private int currentLevel = 1;
-    private int score = 0;
-    private int selectedColor;
-    private int errors = 0;
+    private int currentLevel = 1, score = 0, selectedColor, errors = 0;
 
-    public ColorWordsActivity() {
-    }
+    public ColorWordsActivity() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,8 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
+
+        setTypeAndLayout();
 
         setupLifeDialog(this, R.color.topColor);
         loadAddForLife();
@@ -97,8 +104,6 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
         numbersList = new ArrayList<>();
         wordLayout.getLayoutParams().height = (int) (height() / 4.5);
         setRecyclerItem();
-
-        pauseImg.setOnClickListener(v -> showPauseDialog());
         nextNum.setText(getString(R.string.Level) + " " + currentLevel);
     }
 
@@ -190,7 +195,7 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
             lifeRemained(lifes);
             if (lifes == 0) {
                 if (!lifeUsed) {
-                    showLifeDialog(this);
+                    showLifeDialog(this, type);
                 } else {
                     startNewActivity();
                 }
@@ -221,8 +226,53 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
             score += 100;
             recordTxt.setText(""+score);
             nextNum.setText(getString(R.string.Level) + " " + currentLevel);
+            updateSocketScore(score);
             setRecyclerItem();
         },200);
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     @Override
@@ -254,12 +304,6 @@ public class ColorWordsActivity extends DialogHelperActivity implements ColorsAd
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
     }
 
     @Override

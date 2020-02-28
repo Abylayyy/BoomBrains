@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -42,12 +43,17 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
-    private int lifes = 3;
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout)
+    LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
 
-    private int position;
-    private int score = 0;
-    private int count = 0;
-    private int errors = 0;
+    private int lifes = 3;
+    private int position, score = 0, count = 0, errors = 0;
 
     private SquareAdapter adapter;
     private List<SquareModel> numbersList;
@@ -64,10 +70,12 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         setupLifeDialog(this, R.color.topSquare);
         startTimer(15000, timeTxt);
         setCount();
+
+        setTypeAndLayout();
+
         loadGoogleAd();
         loadAddForLife();
 
-        pauseImg.setOnClickListener(v -> showPauseDialog());
         container.getLayoutParams().height = width();
 
         numbersList = new ArrayList<>();
@@ -131,6 +139,7 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         setAudio(R.raw.click);
         score += 100;
         recordTxt.setText("" + score);
+        updateSocketScore(score);
     }
 
     private void setErrors() {
@@ -143,12 +152,56 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
         lifeRemained(lifes);
         if (lifes == 0) {
             if (!lifeUsed) {
-                showLifeDialog(this);
+                showLifeDialog(this, type);
             } else {
                 startNewActivity();
             }
         }
         recordTxt.setText("" + score);
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
+        }
     }
 
     private void lifeRemained(int i) {
@@ -284,12 +337,6 @@ public class SquareMemory extends DialogHelperActivity implements SquareAdapter.
             }
         }
         return intent;
-    }
-
-    @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
     }
 
     @Override

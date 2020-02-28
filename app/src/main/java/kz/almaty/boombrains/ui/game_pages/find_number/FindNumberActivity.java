@@ -7,10 +7,12 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -47,15 +49,21 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     @BindView(R.id.life2) ImageView life2;
     @BindView(R.id.life3) ImageView life3;
 
-    private int lifes = 3;
+    @BindView(R.id.pauseImg) ImageView pauseIcon;
+    @BindView(R.id.potionLayout)
+    LinearLayout potionLayout;
+    @BindView(R.id.meTxt) TextView myName;
+    @BindView(R.id.opTxt) TextView opName;
+    @BindView(R.id.meRecord) TextView meRecord;
+    @BindView(R.id.opRecord) TextView opRecord;
+    private String type = null;
+
+    private int lifes = 3, position;
     private boolean lifeUsed = false;
 
-    private int position;
     private List<Integer> numbersList = new ArrayList<>();
     private FindNumberAdapter adapter;
-    private int currentLevel = 1;
-    private int score = 0;
-    private int errors = 0;
+    private int currentLevel = 1, score = 0, errors = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +75,10 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
         startTimer(60000, timeTxt);
         setCount();
         loadGoogleAd();
-        pauseImg.setOnClickListener(v -> showPauseDialog());
+
+        setTypeAndLayout();
+
         setupRecycler();
-
-        if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
-            connectSocket();
-        }
-
         setupLifeDialog(this, R.color.topFind);
         loadAddForLife();
 
@@ -259,12 +264,6 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
     }
 
     @Override
-    public void startNewActivity() {
-        startActivity(myIntent());
-        overridePendingTransition(0,0);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         dismissDialog();
@@ -302,6 +301,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
                 score += 100;
                 currentLevel += 1;
                 recordTxt.setText("" + score);
+                updateSocketScore(score);
                 setRecyclerByLevel(currentLevel);
             },100);
         } else {
@@ -321,7 +321,7 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
                 lifeRemained(lifes);
                 if (lifes == 0) {
                     if (!lifeUsed) {
-                        showLifeDialog(this);
+                        showLifeDialog(this, type);
                     } else {
                         startNewActivity();
                     }
@@ -330,6 +330,50 @@ public class FindNumberActivity extends DialogHelperActivity implements FindNumb
                 setRecyclerByLevel(currentLevel);
                 recordTxt.setText("" + score);
             },100);
+        }
+    }
+
+    private void setTypeAndLayout() {
+        type = getIntent().getStringExtra("type");
+        setupLeaveDialog(this);
+
+        if (type != null) {
+            if (SharedPrefManager.isUserLoggedIn(this) && SharedPrefManager.isNetworkOnline(this)) {
+                connectSocket();
+                loadAcceptDialog(this);
+            }
+            pauseIcon.setImageResource(R.drawable.exit_icon);
+            potionLayout.setVisibility(View.GONE);
+            myName.setText(getIntent().getStringExtra("myName"));
+            opName.setText(getIntent().getStringExtra("oName"));
+
+            pauseImg.setOnClickListener(v -> showLeaveDialog());
+
+        } else {
+            potionLayout.setVisibility(View.VISIBLE);
+            pauseImg.setOnClickListener(v -> showPauseDialog());
+        }
+    }
+
+    private void updateSocketScore(int score) {
+        if (type != null) {
+            gameUpdate(score);
+        }
+    }
+
+    @Override
+    public void setRecordUpdates(int reqRecord, int recRecord) {
+        meRecord.setText("" + reqRecord);
+        opRecord.setText("" + recRecord);
+    }
+
+    @Override
+    public void startNewActivity() {
+        if (type != null) {
+            roundEnded();
+        } else {
+            startActivity(myIntent());
+            overridePendingTransition(0, 0);
         }
     }
 
